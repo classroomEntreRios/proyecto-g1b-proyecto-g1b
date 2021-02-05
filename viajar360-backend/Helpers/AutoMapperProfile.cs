@@ -1,8 +1,8 @@
 using AutoMapper;
-using WebApi.Entities;
-using WebApi.Models.Users;
+using Viajar360Api.Entities;
+using Viajar360Api.Models.Users;
 
-namespace WebApi.Helpers
+namespace Viajar360Api.Helpers
 {
     public class AutoMapperProfile : Profile
     {

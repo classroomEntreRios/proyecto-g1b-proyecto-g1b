@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace WebApi.Helpers
+namespace Viajar360Api.Helpers
 {
     public class SqliteDataContext : DataContext
     {
@@ -10,7 +10,7 @@ namespace WebApi.Helpers
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             // connect to sqlite database
-            options.UseSqlite(Configuration.GetConnectionString("WebApiDatabase"));
+            options.UseSqlite(Configuration.GetConnectionString("Viajar360Database"));
         }
     }
 }

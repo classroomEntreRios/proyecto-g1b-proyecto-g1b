@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebApi.Entities
+namespace Viajar360Api.Entities
 {
     public enum RoleType
     {
@@ -13,9 +13,11 @@ namespace WebApi.Entities
 
     public class Role : Models.BaseModel
     {
+        [Key]
+        public long RoleId { get; set; }
         [StringLength(50)]
         public string RoleName { set; get; }
-        public bool Active { set; get; }
         public RoleType RoleType { set; get; }
+        public ICollection<User> Users { get; set; }
     }
 }

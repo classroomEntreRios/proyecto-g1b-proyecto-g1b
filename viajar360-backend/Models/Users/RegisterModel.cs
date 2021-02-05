@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApi.Models.Users
+namespace Viajar360Api.Models.Users
 {
     public class RegisterModel
     {
@@ -11,9 +11,12 @@ namespace WebApi.Models.Users
         public string LastName { get; set; }
 
         [Required]
-        public string Username { get; set; }
+        public string UserName { get; set; }
 
         [Required]
         public string Password { get; set; }
+
+        [Required]
+        public string Email { get; set; }
     }
 }

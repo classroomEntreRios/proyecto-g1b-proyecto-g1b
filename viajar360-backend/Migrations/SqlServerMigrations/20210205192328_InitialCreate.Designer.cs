@@ -2,27 +2,32 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Viajar360Api.Helpers;
 
-namespace Viajar360Api.Migrations.SqliteMigrations
+namespace Viajar360Api.Migrations.SqlServerMigrations
 {
-    [DbContext(typeof(SqliteDataContext))]
-    partial class SqliteDataContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(DataContext))]
+    [Migration("20210205192328_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
+                .UseIdentityColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
             modelBuilder.Entity("RoleUser", b =>
                 {
                     b.Property<long>("RolesRoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
 
                     b.Property<long>("UsersUserId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint");
 
                     b.HasKey("RolesRoleId", "UsersUserId");
 
@@ -35,25 +40,26 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                 {
                     b.Property<long>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<bool>("Active")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bit")
                         .HasComment("Esto se implementa para soft delete");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de creación");
 
                     b.Property<string>("RoleName")
                         .HasMaxLength(50)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("RoleType")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
 
                     b.HasKey("RoleId");
@@ -64,7 +70,7 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                         new
                         {
                             RoleId = 1L,
-                            Active = false,
+                            Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Registrado",
                             RoleType = 1,
@@ -73,7 +79,7 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                         new
                         {
                             RoleId = 2L,
-                            Active = false,
+                            Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Administrador",
                             RoleType = 3,
@@ -103,46 +109,44 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                 {
                     b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
 
                     b.Property<bool>("Active")
-                        .HasColumnType("INTEGER")
+                        .HasColumnType("bit")
                         .HasComment("Esto se implementa para soft delete");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de creación");
 
                     b.Property<string>("Email")
                         .HasMaxLength(250)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
-                        .HasColumnType("TEXT");
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<byte[]>("PasswordHash")
-                        .HasColumnType("BLOB");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<byte[]>("PasswordSalt")
-                        .HasColumnType("BLOB");
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("TEXT")
+                        .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(15)
-                        .HasColumnType("TEXT");
-
-                    b.Property<long>("currentRoleId")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("nvarchar(15)");
 
                     b.HasKey("UserId");
 

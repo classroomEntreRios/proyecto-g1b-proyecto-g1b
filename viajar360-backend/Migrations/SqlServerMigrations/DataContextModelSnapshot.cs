@@ -2,9 +2,11 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using WebApi.Helpers;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Viajar360Api.Helpers;
 
-namespace WebApi.Migrations.SqlServerMigrations
+namespace Viajar360Api.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
     partial class DataContextModelSnapshot : ModelSnapshot
@@ -17,18 +19,35 @@ namespace WebApi.Migrations.SqlServerMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("WebApi.Entities.Role", b =>
+            modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("RolesRoleId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("UsersUserId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("RolesRoleId", "UsersUserId");
+
+                    b.HasIndex("UsersUserId");
+
+                    b.ToTable("RoleUser");
+                });
+
+            modelBuilder.Entity("Viajar360Api.Entities.Role", b =>
+                {
+                    b.Property<long>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
 
                     b.Property<bool>("Active")
-                        .HasColumnType("bit");
+                        .HasColumnType("bit")
+                        .HasComment("Esto se implementa para soft delete");
 
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de creación");
 
                     b.Property<string>("RoleName")
                         .HasMaxLength(50)
@@ -38,28 +57,78 @@ namespace WebApi.Migrations.SqlServerMigrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de última actualización");
 
-                    b.HasKey("Id");
+                    b.HasKey("RoleId");
 
-                    b.ToTable("Role");
+                    b.ToTable("Roles");
+
+                    b.HasData(
+                        new
+                        {
+                            RoleId = 1L,
+                            Active = true,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleName = "Registrado",
+                            RoleType = 1,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            RoleId = 2L,
+                            Active = true,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleName = "Administrador",
+                            RoleType = 3,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            RoleId = 3L,
+                            Active = false,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleName = "Moderador",
+                            RoleType = 2,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        },
+                        new
+                        {
+                            RoleId = 4L,
+                            Active = false,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            RoleName = "Anónimo",
+                            RoleType = 0,
+                            UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
-            modelBuilder.Entity("WebApi.Entities.User", b =>
+            modelBuilder.Entity("Viajar360Api.Entities.User", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
+                        .HasColumnType("bigint")
                         .UseIdentityColumn();
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasComment("Esto se implementa para soft delete");
+
                     b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de creación");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -69,30 +138,32 @@ namespace WebApi.Migrations.SqlServerMigrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<int?>("RoleId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de última actualización");
 
-                    b.Property<string>("Username")
+                    b.Property<string>("UserName")
                         .HasMaxLength(15)
                         .HasColumnType("nvarchar(15)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
+                    b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.User", b =>
+            modelBuilder.Entity("RoleUser", b =>
                 {
-                    b.HasOne("WebApi.Entities.Role", "Role")
+                    b.HasOne("Viajar360Api.Entities.Role", null)
                         .WithMany()
-                        .HasForeignKey("RoleId");
+                        .HasForeignKey("RolesRoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Role");
+                    b.HasOne("Viajar360Api.Entities.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

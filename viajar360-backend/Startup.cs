@@ -5,15 +5,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
-using WebApi.Helpers;
-using WebApi.Services;
+using Viajar360Api.Helpers;
+using Viajar360Api.Services;
 using AutoMapper;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System;
 
-namespace WebApi
+namespace Viajar360Api
 {
     public class Startup
     {

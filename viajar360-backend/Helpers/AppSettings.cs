@@ -1,4 +1,4 @@
-namespace WebApi.Helpers
+namespace Viajar360Api.Helpers
 {
     public class AppSettings
     {

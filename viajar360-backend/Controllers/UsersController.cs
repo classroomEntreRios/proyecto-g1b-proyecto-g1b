@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
-using WebApi.Helpers;
+using Viajar360Api.Helpers;
 using Microsoft.Extensions.Options;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using WebApi.Services;
-using WebApi.Entities;
-using WebApi.Models.Users;
+using Viajar360Api.Services;
+using Viajar360Api.Entities;
+using Viajar360Api.Models.Users;
 
-namespace WebApi.Controllers
+namespace Viajar360Api.Controllers
 {
     [Authorize]
     [ApiController]
@@ -38,7 +38,7 @@ namespace WebApi.Controllers
         [HttpPost("authenticate")]
         public IActionResult Authenticate([FromBody]AuthenticateModel model)
         {
-            var user = _userService.Authenticate(model.Username, model.Password);
+            var user = _userService.Authenticate(model.UserName, model.Password);
 
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
@@ -49,8 +49,10 @@ namespace WebApi.Controllers
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, user.Id.ToString())
+                    new Claim(ClaimTypes.Name, user.UserId.ToString()),
+                    new Claim("Rol", user.ToString())
                 }),
+                // TODO make expiration time a Param
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
@@ -60,10 +62,11 @@ namespace WebApi.Controllers
             // return basic user info and authentication token
             return Ok(new
             {
-                Id = user.Id,
-                Username = user.Username,
+                Id = user.UserId,
+                Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
+                Roles = user.Roles,
                 Token = tokenString
             });
         }
@@ -109,7 +112,7 @@ namespace WebApi.Controllers
         {
             // map model to entity and set id
             var user = _mapper.Map<User>(model);
-            user.Id = id;
+            user.UserId = id;
 
             try
             {

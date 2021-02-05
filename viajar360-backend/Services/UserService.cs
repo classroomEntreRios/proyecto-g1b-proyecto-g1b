@@ -1,19 +1,19 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using WebApi.Entities;
-using WebApi.Helpers;
+using Viajar360Api.Entities;
+using Viajar360Api.Helpers;
 
-namespace WebApi.Services
+namespace Viajar360Api.Services
 {
     public interface IUserService
     {
         User Authenticate(string username, string password);
         IEnumerable<User> GetAll();
-        User GetById(int id);
+        User GetById(long id);
         User Create(User user, string password);
         void Update(User user, string password = null);
-        void Delete(int id);
+        void Delete(long id);
     }
 
     public class UserService : IUserService
@@ -30,7 +30,7 @@ namespace WebApi.Services
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.Username == username);
+            var user = _context.Users.SingleOrDefault(x => x.UserName == username);
 
             // check if username exists
             if (user == null)
@@ -49,7 +49,7 @@ namespace WebApi.Services
             return _context.Users;
         }
 
-        public User GetById(int id)
+        public User GetById(long id)
         {
             return _context.Users.Find(id);
         }
@@ -60,15 +60,17 @@ namespace WebApi.Services
             if (string.IsNullOrWhiteSpace(password))
                 throw new AppException("Password is required");
 
-            if (_context.Users.Any(x => x.Username == user.Username))
-                throw new AppException("Username \"" + user.Username + "\" is already taken");
+            if (_context.Users.Any(x => x.UserName == user.UserName))
+                throw new AppException("Username \"" + user.UserName + "\" is already taken");
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-
+            
+            // registered role
+            user.Roles.Add(_context.Roles.Find(1L));
+            user.Active = true;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
-
             _context.Users.Add(user);
             _context.SaveChanges();
 
@@ -77,19 +79,19 @@ namespace WebApi.Services
 
         public void Update(User userParam, string password = null)
         {
-            var user = _context.Users.Find(userParam.Id);
+            var user = _context.Users.Find(userParam.UserId);
 
             if (user == null)
                 throw new AppException("User not found");
 
             // update username if it has changed
-            if (!string.IsNullOrWhiteSpace(userParam.Username) && userParam.Username != user.Username)
+            if (!string.IsNullOrWhiteSpace(userParam.UserName) && userParam.UserName != user.UserName)
             {
                 // throw error if the new username is already taken
-                if (_context.Users.Any(x => x.Username == userParam.Username))
-                    throw new AppException("Username " + userParam.Username + " is already taken");
+                if (_context.Users.Any(x => x.UserName == userParam.UserName))
+                    throw new AppException("Username " + userParam.UserName + " is already taken");
 
-                user.Username = userParam.Username;
+                user.UserName = userParam.UserName;
             }
 
             // update user properties if provided
@@ -98,6 +100,12 @@ namespace WebApi.Services
 
             if (!string.IsNullOrWhiteSpace(userParam.LastName))
                 user.LastName = userParam.LastName;
+
+            if (!string.IsNullOrWhiteSpace(userParam.Email))
+                user.Email = userParam.Email;
+
+            if (!string.IsNullOrWhiteSpace(userParam.Active.ToString()))
+                user.Active = userParam.Active;
 
             // update password if provided
             if (!string.IsNullOrWhiteSpace(password))
@@ -113,7 +121,7 @@ namespace WebApi.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public void Delete(long id)
         {
             var user = _context.Users.Find(id);
             if (user != null)
