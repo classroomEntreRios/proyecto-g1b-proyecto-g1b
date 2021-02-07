@@ -29,12 +29,11 @@ namespace Viajar360Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // use sql server db in production and sqlite db in development
+            // use sql server db in production and sqlite db in development or swap this with if(_env.IsDevelopment)
             if (_env.IsProduction())
                 services.AddDbContext<DataContext>();
             else
-                services.AddDbContext<DataContext>();
-            // services.AddDbContext<DataContext, SqliteDataContext>();
+                services.AddDbContext<DataContext, SqliteDataContext>();
 
             services.AddCors();
             services.AddControllers();
@@ -60,7 +59,7 @@ namespace Viajar360Api
                     {
                         var userService = context.HttpContext.RequestServices.GetRequiredService<IUserService>();
                         var userId = int.Parse(context.Principal.Identity.Name);
-                        var user = userService.GetById(userId);
+                        var user = userService.GetByIdFlat(userId);
                         if (user == null)
                         {
                             // return unauthorized if user no longer exists
@@ -82,6 +81,7 @@ namespace Viajar360Api
 
             // configure DI for application services
             services.AddScoped<IUserService, UserService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -89,7 +89,7 @@ namespace Viajar360Api
         {
             // migrate any database changes on startup (includes initial db creation)
             dataContext.Database.Migrate();
-
+           
             app.UseRouting();
 
             // global cors policy

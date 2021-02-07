@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -16,8 +17,6 @@ namespace Viajar360Api.Entities
         [Key]
         public long RoleId { get; set; }
         [StringLength(50)]
-        public string RoleName { set; get; }
-        public RoleType RoleType { set; get; }
-        public ICollection<User> Users { get; set; }
+        public string RoleName { get; set; }
     }
 }

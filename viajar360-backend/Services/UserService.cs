@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Viajar360Api.Services
         User Create(User user, string password);
         void Update(User user, string password = null);
         void Delete(long id);
+        object GetByIdFlat(long id);
     }
 
     public class UserService : IUserService
@@ -30,7 +32,7 @@ namespace Viajar360Api.Services
             if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
                 return null;
 
-            var user = _context.Users.SingleOrDefault(x => x.UserName == username);
+            var user = _context.Users.Include(u => u.Role).SingleOrDefault(x => x.UserName == username);
 
             // check if username exists
             if (user == null)
@@ -46,12 +48,13 @@ namespace Viajar360Api.Services
 
         public IEnumerable<User> GetAll()
         {
-            return _context.Users;
+            return _context.Users.Include(u => u.Role);
         }
 
         public User GetById(long id)
         {
-            return _context.Users.Find(id);
+            return _context.Users.Include(u => u.Role)
+                .Single(u => u.UserId == id);
         }
 
         public User Create(User user, string password)
@@ -65,9 +68,11 @@ namespace Viajar360Api.Services
 
             byte[] passwordHash, passwordSalt;
             CreatePasswordHash(password, out passwordHash, out passwordSalt);
-            
+
             // registered role
-            user.Roles.Add(_context.Roles.Find(1L));
+            Role role = _context.Roles.Find(1L);
+            user.Role = new Role();
+            user.Role = role;
             user.Active = true;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
@@ -107,6 +112,9 @@ namespace Viajar360Api.Services
             if (!string.IsNullOrWhiteSpace(userParam.Active.ToString()))
                 user.Active = userParam.Active;
 
+            if (!string.IsNullOrWhiteSpace(userParam.RoleId.ToString()))
+                user.RoleId = userParam.RoleId;
+            
             // update password if provided
             if (!string.IsNullOrWhiteSpace(password))
             {
@@ -162,6 +170,12 @@ namespace Viajar360Api.Services
             }
 
             return true;
+        }
+
+        public object GetByIdFlat(long id)
+        {
+            return _context.Users.Find(id);
+            // throw new NotImplementedException();
         }
     }
 }

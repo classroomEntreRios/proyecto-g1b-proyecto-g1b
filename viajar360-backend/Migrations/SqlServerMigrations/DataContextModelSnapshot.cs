@@ -19,21 +19,6 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.2");
 
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<long>("RolesRoleId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("UsersUserId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("RolesRoleId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("RoleUser");
-                });
-
             modelBuilder.Entity("Viajar360Api.Entities.Role", b =>
                 {
                     b.Property<long>("RoleId")
@@ -53,9 +38,6 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("RoleType")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
@@ -71,7 +53,6 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                             Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Registrado",
-                            RoleType = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -80,7 +61,6 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                             Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Administrador",
-                            RoleType = 3,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -89,7 +69,6 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                             Active = false,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Moderador",
-                            RoleType = 2,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -97,8 +76,7 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                             RoleId = 4L,
                             Active = false,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleName = "Anónimo",
-                            RoleType = 0,
+                            RoleName = "An�nimo",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -138,6 +116,9 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<long>("RoleId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
@@ -148,22 +129,20 @@ namespace Viajar360Api.Migrations.SqlServerMigrations
 
                     b.HasKey("UserId");
 
+                    b.HasIndex("RoleId");
+
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("Viajar360Api.Entities.User", b =>
                 {
-                    b.HasOne("Viajar360Api.Entities.Role", null)
+                    b.HasOne("Viajar360Api.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RolesRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Viajar360Api.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

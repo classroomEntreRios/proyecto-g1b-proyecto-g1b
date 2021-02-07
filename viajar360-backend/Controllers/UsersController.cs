@@ -13,6 +13,7 @@ using Viajar360Api.Services;
 using Viajar360Api.Entities;
 using Viajar360Api.Models.Users;
 
+
 namespace Viajar360Api.Controllers
 {
     [Authorize]
@@ -23,8 +24,9 @@ namespace Viajar360Api.Controllers
         private IUserService _userService;
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
+        private readonly DataContext _context;
 
-        public UsersController(
+        public UsersController(DataContext context,
             IUserService userService,
             IMapper mapper,
             IOptions<AppSettings> appSettings)
@@ -32,6 +34,7 @@ namespace Viajar360Api.Controllers
             _userService = userService;
             _mapper = mapper;
             _appSettings = appSettings.Value;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -50,7 +53,7 @@ namespace Viajar360Api.Controllers
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, user.UserId.ToString()),
-                    new Claim("Rol", user.ToString())
+                    new Claim("Role", user.Role.RoleName)
                 }),
                 // TODO make expiration time a Param
                 Expires = DateTime.UtcNow.AddDays(7),
@@ -66,7 +69,7 @@ namespace Viajar360Api.Controllers
                 Username = user.UserName,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Roles = user.Roles,
+                Role = user.Role,
                 Token = tokenString
             });
         }
@@ -100,9 +103,17 @@ namespace Viajar360Api.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(long id)
         {
+            // var user = _context.Users.FindAsync(id);
             var user = _userService.GetById(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }            
+
+            
             var model = _mapper.Map<UserModel>(user);
             return Ok(model);
         }

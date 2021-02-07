@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+ï»¿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Linq;
@@ -26,8 +26,7 @@ namespace Viajar360Api.Helpers
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-        public DbSet<RoleUser> RoleUsers { get; set; }
-
+  
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             OnBeforeSaving();
@@ -51,7 +50,7 @@ namespace Viajar360Api.Helpers
             // Property Configurations SQL Server Express 2019
 
             // USER
-            MB.Entity<User>().Property<long>(u => u.UserId)
+           /* MB.Entity<User>().Property<long>(u => u.UserId)
                       .ValueGeneratedOnAdd()
                       .HasColumnType("bigint")
                       .UseIdentityColumn();
@@ -62,7 +61,7 @@ namespace Viajar360Api.Helpers
 
             MB.Entity<User>().Property<DateTime>(u => u.CreatedDate)
                 .HasColumnType("datetime2")
-                .HasComment("Fecha y hora de creación");
+                .HasComment("Fecha y hora de creaciï¿½n");
 
             MB.Entity<User>().Property<string>(u => u.Email)
                 .HasMaxLength(250)
@@ -86,11 +85,13 @@ namespace Viajar360Api.Helpers
 
             MB.Entity<User>().Property<DateTime>(u => u.UpdatedDate)
                 .HasColumnType("datetime2")
-                .HasComment("Fecha y hora de última actualización");
+                .HasComment("Fecha y hora de ï¿½ltima actualizaciï¿½n");
 
             MB.Entity<User>().Property<string>(u => u.UserName)
                 .HasMaxLength(15)
-                .HasColumnType("nvarchar(15)");  
+                .HasColumnType("nvarchar(15)");
+
+            MB.Entity<User>().Property<Role>(u => u.Role);                
 
             MB.Entity<User>().HasKey(u => u.UserId);
 
@@ -109,28 +110,28 @@ namespace Viajar360Api.Helpers
 
             MB.Entity<Role>().Property<DateTime>(r => r.CreatedDate)
                 .HasColumnType("datetime2")
-                .HasComment("Fecha y hora de creación");
+                .HasComment("Fecha y hora de creaciï¿½n");
 
             MB.Entity<Role>().Property<string>("RoleName")
                 .HasMaxLength(50)
                 .HasColumnType("nvarchar(50)");
 
-            MB.Entity<Role>().Property<int>(r => (int)r.RoleType)
-                .HasColumnType("int");
+           *//* MB.Entity<Role>().Property<int>(r => (int)r.RoleType)
+                .HasColumnType("int");*//*
 
             MB.Entity<Role>().Property<DateTime>(r => r.UpdatedDate)
                 .HasColumnType("datetime2")
-                .HasComment("Fecha y hora de última actualización");
+                .HasComment("Fecha y hora de ï¿½ltima actualizaciï¿½n");
 
             MB.Entity<Role>().HasKey(r => r.RoleId);
 
-            MB.Entity<Role>().ToTable("Roles");
+            MB.Entity<Role>().ToTable("Roles");*/
 
             MB.Entity<Role>().HasData(
-                new Role { RoleId = 1L, RoleName = "Registrado", RoleType = RoleType.Registered, Active = true },
-                new Role { RoleId = 2L, RoleName = "Administrador", RoleType = RoleType.Admin, Active = true },
-                new Role { RoleId = 3L, RoleName = "Moderador", RoleType = RoleType.Moderator, Active = false },
-                new Role { RoleId = 4L, RoleName = "Anónimo", RoleType = RoleType.Anonymous, Active = false }
+                new Role { RoleId = 1L, RoleName = "Registrado", Active = true },
+                new Role { RoleId = 2L, RoleName = "Administrador", Active = true },
+                new Role { RoleId = 3L, RoleName = "Moderador", Active = false },
+                new Role { RoleId = 4L, RoleName = "Anï¿½nimo", Active = false }
                 );
 
             // ROLEUSER
@@ -199,5 +200,6 @@ namespace Viajar360Api.Helpers
                 }
             }
         }
+
     }
 }

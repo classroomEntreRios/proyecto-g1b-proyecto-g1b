@@ -1,104 +1,108 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
-using System.IdentityModel.Tokens.Jwt;
-using Viajar360Api.Helpers;
-using Microsoft.Extensions.Options;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using Microsoft.AspNetCore.Authorization;
-using Viajar360Api.Services;
+using Microsoft.EntityFrameworkCore;
 using Viajar360Api.Entities;
-using Viajar360Api.Models;
-
+using Viajar360Api.Helpers;
 
 namespace Viajar360Api.Controllers
 {
-    [Authorize]
-    [ApiController]
     [Route("[controller]")]
+    [ApiController]
     public class RolesController : ControllerBase
     {
-        private IRoleService _roleService;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+        private readonly DataContext _context;
 
-        public RolesController(
-            IRoleService roleService,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
+        public RolesController(DataContext context)
         {
-            _roleService = roleService;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
+            _context = context;
         }
 
-        [HttpPost]
-        public IActionResult Create([FromBody] Role model)
-        {
-            // map model to entity
-            var role = _mapper.Map<Role>(model);
-
-            try
-            {
-                // create role
-                _roleService.Create(role);
-                return Ok();
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
-            }
-        }
-
-        [AllowAnonymous]
+        // GET: api/Roles
         [HttpGet]
-        public IActionResult GetAll()
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
-            var roles = _roleService.GetAll();
-            var model = _mapper.Map<IList<RoleModel>>(roles);
-            return Ok(model);
+            return await _context.Roles.ToListAsync();
         }
 
+        // GET: api/Roles/5
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<ActionResult<Role>> GetRole(long id)
         {
-            var role = _roleService.GetById(id);
-            var model = _mapper.Map<RoleModel>(role);
-            return Ok(model);
+            var role = await _context.Roles.FindAsync(id);
+
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            return role;
         }
 
+        // PUT: api/Roles/5
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Models.Roles.UpdateRoleModel model)
+        public async Task<IActionResult> PutRole(long id, Role role)
         {
-            // map model to entity and set id
-            var role = _mapper.Map<Role>(model);
-            role.RoleId = id;
+            if (id != role.RoleId)
+            {
+                return BadRequest();
+            }
+
+            _context.Entry(role).State = EntityState.Modified;
 
             try
             {
-                // update role 
-                _roleService.Update(role);
-                return Ok();
+                await _context.SaveChangesAsync();
             }
-            catch (AppException ex)
+            catch (DbUpdateConcurrencyException)
             {
-                // return error message if there was an exception
-                return BadRequest(new { message = ex.Message });
+                if (!RoleExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
             }
+
+            return NoContent();
         }
 
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        // POST: api/Roles
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost]
+        public async Task<ActionResult<Role>> PostRole(Role role)
         {
-            _roleService.Delete(id);
-            return Ok();
+            _context.Roles.Add(role);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetRole", new { id = role.RoleId }, role);
+        }
+
+        // DELETE: api/Roles/5
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteRole(long id)
+        {
+            var role = await _context.Roles.FindAsync(id);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            _context.Roles.Remove(role);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        private bool RoleExists(long id)
+        {
+            return _context.Roles.Any(e => e.RoleId == id);
         }
     }
-
-
-  
 }

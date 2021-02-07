@@ -9,7 +9,7 @@ using Viajar360Api.Helpers;
 namespace Viajar360Api.Migrations.SqliteMigrations
 {
     [DbContext(typeof(SqliteDataContext))]
-    [Migration("20210205150814_InitialCreate")]
+    [Migration("20210207001332_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,21 +17,6 @@ namespace Viajar360Api.Migrations.SqliteMigrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.2");
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<long>("RolesRoleId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<long>("UsersUserId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("RolesRoleId", "UsersUserId");
-
-                    b.HasIndex("UsersUserId");
-
-                    b.ToTable("RoleUser");
-                });
 
             modelBuilder.Entity("Viajar360Api.Entities.Role", b =>
                 {
@@ -51,9 +36,6 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                         .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RoleType")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("TEXT")
                         .HasComment("Fecha y hora de última actualización");
@@ -66,19 +48,17 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                         new
                         {
                             RoleId = 1L,
-                            Active = false,
+                            Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Registrado",
-                            RoleType = 1,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
                         {
                             RoleId = 2L,
-                            Active = false,
+                            Active = true,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Administrador",
-                            RoleType = 3,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -87,7 +67,6 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                             Active = false,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             RoleName = "Moderador",
-                            RoleType = 2,
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         },
                         new
@@ -95,8 +74,7 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                             RoleId = 4L,
                             Active = false,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            RoleName = "Anónimo",
-                            RoleType = 0,
+                            RoleName = "An�nimo",
                             UpdatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
                         });
                 });
@@ -135,6 +113,9 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                     b.Property<byte[]>("PasswordSalt")
                         .HasColumnType("BLOB");
 
+                    b.Property<long>("RoleId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<DateTime>("UpdatedDate")
                         .HasColumnType("TEXT")
                         .HasComment("Fecha y hora de última actualización");
@@ -143,27 +124,22 @@ namespace Viajar360Api.Migrations.SqliteMigrations
                         .HasMaxLength(15)
                         .HasColumnType("TEXT");
 
-                    b.Property<long>("currentRoleId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("UserId");
+
+                    b.HasIndex("RoleId");
 
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RoleUser", b =>
+            modelBuilder.Entity("Viajar360Api.Entities.User", b =>
                 {
-                    b.HasOne("Viajar360Api.Entities.Role", null)
+                    b.HasOne("Viajar360Api.Entities.Role", "Role")
                         .WithMany()
-                        .HasForeignKey("RolesRoleId")
+                        .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Viajar360Api.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Role");
                 });
 #pragma warning restore 612, 618
         }

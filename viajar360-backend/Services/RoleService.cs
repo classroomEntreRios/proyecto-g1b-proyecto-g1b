@@ -30,9 +30,10 @@ namespace Viajar360Api.Services
             if (string.IsNullOrWhiteSpace(role.RoleName))
                 throw new AppException("RoleName is required");
 
-            if (string.IsNullOrWhiteSpace(role.RoleType.ToString()))
-                throw new AppException("RoleType is required");
+            /*if (string.IsNullOrWhiteSpace(role.RoleType.ToString()))
+                throw new AppException("RoleType is required");*/
 
+            role.Active = true;
             _context.Roles.Add(role);
             _context.SaveChanges();
             return role;
@@ -50,7 +51,7 @@ namespace Viajar360Api.Services
 
         IEnumerable<Role> IRoleService.GetAll()
         {
-            return _context.Roles;
+            return _context.Roles.ToList();
         }
 
         Role IRoleService.GetById(long id)
@@ -76,14 +77,14 @@ namespace Viajar360Api.Services
             }
 
             // update role type if provided
-            if (!string.IsNullOrWhiteSpace(roleParam.RoleType.ToString()))
-                role.RoleType = roleParam.RoleType;
+           /* if (!string.IsNullOrWhiteSpace(roleParam.RoleType.ToString()))
+                role.RoleType = roleParam.RoleType;*/
 
             if (!string.IsNullOrWhiteSpace(roleParam.Active.ToString()))
                 role.Active = roleParam.Active;
 
-            if (roleParam.Users.Count > 0)
-                role.Users = roleParam.Users;
+            /*if (roleParam.Users.Count > 0)
+                role.Users = roleParam.Users;*/
 
             // saving updates
             _context.Roles.Update(role);
