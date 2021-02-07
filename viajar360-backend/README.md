@@ -5,6 +5,25 @@ ASP.NET Core 5.0 - REST API for Viajar 360 Content Managment System, Authenticat
 
 More info at https://github.com/classroomEntreRios/proyecto-g1b-proyecto-g1b
 
+## For the SQL Server connections strings...
+First with ***SQL MANAGER*** Enable TCP/IP and open port **1433** under **"IP Addresses"** tab **"IPALL"** 
+also with ***SSMS*** create the new user under Security->Logins  with server roles **public** and **sysadmin**
+
+**Important**: In server properties->Security->Server Authentication set option **"SQL Server and Windows Authentication mode"**
+
+check **"ConnectionStrings"** sections in ***appsettings.json*** and ***appsettings.Development.json***
+files for example 
+
+    "Viajar360Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;User ID=**tuusuario**;Password=**tuclave**;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+
+**Important**: Tip ***Initial Catalog*** refers to the database name for the *InitialCreate* migration.
+
+## For SqlLite connection...
+Uncomment and/or use a single local file in *Development Mode*
+for example
+
+    "Viajar360Database": "Data Source=LocalDatabase.db"
+    
 ## Migrations
 First: Install the tool (CLI) 
 
@@ -37,25 +56,7 @@ drop database
 update database
 
     dotnet ef database update --context SqliteDataContext
-
-## For the SQL Server connections strings...
-First with ***SQL MANAGER*** Enable TCP/IP and open port **1433** under **"IP Addresses"** tab **"IPALL"** 
-also with ***SSMS*** create the new user under Security->Logins  with server roles **public** and **sysadmin**
-
-**Important**: In server properties->Security->Server Authentication set option **"SQL Server and Windows Authentication mode"**
-
-check **"ConnectionStrings"** sections in ***appsettings.json*** and ***appsettings.Development.json***
-files for example 
-
-    "Viajar360Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;User ID=**tuusuario**;Password=**tuclave**;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-
-**Important**: Tip ***Initial Catalog*** refers to the database name for the *InitialCreate* migration.
-
-## For SqlLite connection...
-Uncomment and/or use a single local file in *Development Mode*
-for example
-
-    "Viajar360Database": "Data Source=LocalDatabase.db"
+--
 
 Regards!
 Aníbal.-
