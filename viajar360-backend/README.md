@@ -41,12 +41,13 @@ update database
 ## For the SQL Server connections strings...
 First with ***SQL MANAGER*** Enable TCP/IP and open port **1433** under **"IP Addresses"** tab **"IPALL"** 
 also with ***SSMS*** create the new user under Security->Logins  with server roles **public** and **sysadmin**
+
 **Important**: In server properties->Security->Server Authentication set option **"SQL Server and Windows Authentication mode"**
 
 check **"ConnectionStrings"** sections in ***appsettings.json*** and ***appsettings.Development.json***
 files for example 
 
-    "Viajar360Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;User ID=admin;Password=lexter1972;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
+    "Viajar360Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;User ID=**tuusuario**;Password=**tuclave**;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
 
 **Important**: Tip ***Initial Catalog*** refers to the database name for the *InitialCreate* migration.
 
@@ -57,7 +58,7 @@ for example
     "Viajar360Database": "Data Source=LocalDatabase.db"
 
 Regards!
-Aníbal.-
+AnÃ­bal.-
 
 ***Note**: Make a shortcut for SQL Manager if refuses to start the path in Win 10 64bits is*
 
