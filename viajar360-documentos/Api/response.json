@@ -1,0 +1,15 @@
+
+
+
+
+{"coord":{"lon":-58.5172,"lat":-33.0094},
+
+"weather":[{"id":800,"main":"Clear", "description":"clear sky","icon":"01n"}], "base":"stations",
+
+"main":{"temp":293.71,"feels_like":296.18,"temp_min":293.71,"temp_max":293.71,
+
+    "pressure":1012,"humidity":89},"visibility":10000,"wind":{"speed":0.89,"deg":0,"gust":3.13},
+
+    "clouds":{"all":1},"dt":1613099889,"sys":{"type":3,"id":2019898,"country":"AR","sunrise":1613122091,
+        
+        "sunset":1613170116},"timezone":-10800,"id":3433658,"name":"Gualeguaychú","cod":200}

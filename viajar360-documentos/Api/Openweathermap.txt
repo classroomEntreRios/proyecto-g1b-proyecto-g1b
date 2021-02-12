@@ -1,0 +1,74 @@
+
+
+key 1
+
+f2d1ffb355fd79ada756cde6b3e4fbc0
+
+
+key 2
+
+4de652402d17c22f3c749ef7e711f6d1
+
+
+------------------------------------------------------------------------------------------------------
+
+
+API call  por Lat y Long
+
+api.openweathermap.org/data/2.5/find?lat={lat}&lon={lon}&cnt={cnt}&appid={API key}
+
+
+			------------------------------
+
+
+API call   por Nombre de Ciudad
+
+api.openweathermap.org/data/2.5/weather?q=Concordia&appid=4de652402d17c22f3c749ef7e711f6d1
+
+
+
+------------------------------------------------------------------------------------------------------
+
+
+     	Concordia
+
+
+api.openweathermap.org/data/2.5/weather?q=Concordia&appid=4de652402d17c22f3c749ef7e711f6d1
+
+------------------------------------------------------------------------------------------------------
+
+	Parana
+
+api.openweathermap.org/data/2.5/weather?q=Parana&appid=4de652402d17c22f3c749ef7e711f6d1
+
+
+------------------------------------------------------------------------------------------------------
+
+	Gualeguay
+
+api.openweathermap.org/data/2.5/weather?q=Gualeguay&appid=4de652402d17c22f3c749ef7e711f6d1
+
+
+------------------------------------------------------------------------------------------------------
+
+	Federacion
+
+
+api.openweathermap.org/data/2.5/weather?q=Federacion&appid=4de652402d17c22f3c749ef7e711f6d1
+
+
+------------------------------------------------------------------------------------------------------
+
+	Gualeguaychu
+
+
+api.openweathermap.org/data/2.5/weather?q=Gualeguaychu&appid=4de652402d17c22f3c749ef7e711f6d1
+
+
+------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
