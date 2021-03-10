@@ -7,14 +7,17 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -98,12 +101,30 @@ namespace Viajes365RestApi.Controllers
 
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery] PaginationFilter filter)
         {
             List<UserDto> users = new List<UserDto>();
-            var result = await _context.Users.Include(u => u.Role).ToListAsync();
-            result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
-            return users;
+
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Users.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<UserDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Users
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(u => u.Role)
+            .ToListAsync();
+
+                result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
+                return Ok(new PagedResponse<List<UserDto>>(users, validFilter.PageNumber, validFilter.PageSize));
+            }
         }
 
         [HttpGet("{id}")]
@@ -113,12 +134,11 @@ namespace Viajes365RestApi.Controllers
 
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new Response<UserDto>() { Message = "USUARIO NO ENCONTRADO", ErrorCode = 416 });
             }
 
-
             UserDto model = _mapper.Map<UserDto>(user);
-            return Ok(model);
+            return Ok(new Response<UserDto>(model));
         }
 
         [HttpPut("{id}")]
