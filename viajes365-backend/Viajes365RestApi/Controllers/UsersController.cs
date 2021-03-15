@@ -26,18 +26,21 @@ namespace Viajes365RestApi.Controllers
     [Route("api/[controller]")]
     public class UsersController : ControllerBase
     {
-        private IUserService _userService;
-        private IMapper _mapper;
+        private readonly IUserService _userService;
+        private readonly IMapper _mapper;
+        private readonly IUriService _uriService;
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
 
         public UsersController(DataContext context,
             IUserService userService,
             IMapper mapper,
+            IUriService uriService,
             IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _mapper = mapper;
+            _uriService = uriService;
             _appSettings = appSettings.Value;
             _context = context;
         }
@@ -104,7 +107,7 @@ namespace Viajes365RestApi.Controllers
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery] PaginationFilter filter)
         {
             List<UserDto> users = new List<UserDto>();
-
+            var route = Request.Path.Value;
             var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
             var totalElements = await _context.Users.CountAsync();
 
@@ -121,9 +124,9 @@ namespace Viajes365RestApi.Controllers
             .Take(validFilter.PageSize)
             .Include(u => u.Role)
             .ToListAsync();
-
                 result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
-                return Ok(new PagedResponse<List<UserDto>>(users, validFilter.PageNumber, validFilter.PageSize));
+                PagedResponse<List<UserDto>> pagedResponse = Pagination.CreatePagedReponse<UserDto>(users, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
             }
         }
 

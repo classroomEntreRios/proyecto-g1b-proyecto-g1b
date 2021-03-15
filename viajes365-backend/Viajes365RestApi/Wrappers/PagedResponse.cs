@@ -1,4 +1,6 @@
-﻿namespace Viajes365RestApi.Wrappers
+﻿using System;
+
+namespace Viajes365RestApi.Wrappers
 {
     public class PagedResponse<R>
     {
@@ -7,6 +9,10 @@
         public int PageSize { get; set; }
         public int TotalPages { get; set; }
         public int TotalElements { get; set; }
+        public Uri FirstPage { get; set; }
+        public Uri LastPage { get; set; }
+        public Uri NextPage { get; set; }
+        public Uri PreviousPage { get; set; }
         public bool Succeeded { get; set; }
         public string[] Errors { get; set; }
         public string Message { get; set; }
