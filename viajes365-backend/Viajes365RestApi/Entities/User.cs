@@ -29,9 +29,7 @@ namespace Viajes365RestApi.Entities
         public long RoleId { get; set; }
         public virtual Role Role { get; set; }
 
-        [Required]
         public bool TermsAndConditionsChecked { get; set; }
-        [Required]
         public bool EmailConfirm { get; set; }
 
         //Navigational Property
