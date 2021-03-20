@@ -12,6 +12,7 @@ import { AppComponent } from './app.component';
 import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
+import { NavbarComponent } from './_components/navbar.component';
 
 @NgModule({
   imports: [
@@ -23,7 +24,8 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
   declarations: [
     AppComponent,
     AlertComponent,
-    HomeComponent
+    HomeComponent,
+    NavbarComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
