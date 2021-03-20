@@ -42,15 +42,6 @@ namespace Viajes365RestApi
             else
                 services.AddDbContext<DataContext>();
 
-            // UriService
-            services.AddSingleton<IUriService>(us =>
-            {
-                var accessor = us.GetRequiredService<IHttpContextAccessor>();
-                var request = accessor.HttpContext.Request;
-                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
-                return new UriService(uri);
-            });
-
             services.AddCors();
             services.AddControllers();
             // Automapper DI module
@@ -119,10 +110,7 @@ namespace Viajes365RestApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1");
-                    c.DocumentTitle = "Swagger Viajes 365º ISPC Grupo 1B Sala 2";
-                });
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1"));
             }
 
             // Creates defaults Admin and User
