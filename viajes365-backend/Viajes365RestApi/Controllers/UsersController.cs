@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
+using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 using Viajes365RestApi.Services;
@@ -27,6 +28,10 @@ namespace Viajes365RestApi.Controllers
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
+        const string adminrole = "Administrador";
+        const string userrole = "Usuario";
+        private string _mainrole;
+        private long _userid;
 
         public UsersController(DataContext context,
             IUserService userService,
@@ -96,7 +101,8 @@ namespace Viajes365RestApi.Controllers
             }
         }
 
-
+        // Allow list of users only for role admin
+        [Authorization(adminrole)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
@@ -106,9 +112,16 @@ namespace Viajes365RestApi.Controllers
             return users;
         }
 
+        // Allow only self id for role user and any id for role admin
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(long id)
         {
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
+            {
+                return Unauthorized();
+            }
+
             var user = await _context.Users.FindAsync(id);
 
             if (user == null)
@@ -121,9 +134,17 @@ namespace Viajes365RestApi.Controllers
             return Ok(model);
         }
 
+
+        // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserUpdateDto model)
         {
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
+            {
+                return Unauthorized();
+            }
+
             // map model to entity and set id
             var user = _mapper.Map<User>(model);
             user.UserId = id;
@@ -141,11 +162,27 @@ namespace Viajes365RestApi.Controllers
             }
         }
 
+        // Allow only self id for role user and any id for role admin
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
+            {
+                return Unauthorized();
+            }
+
             _userService.Delete(id);
             return Ok();
+        }
+
+
+        private void setAppUser()
+        {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            _mainrole = claimsIdentity.FindFirst("Role").Value;
+            _userid = long.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
+
         }
     }
 }
