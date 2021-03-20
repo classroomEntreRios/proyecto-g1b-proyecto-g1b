@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
+import { User } from './_models';
+import { AccountService } from './_services/account.service';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent {
-  title = 'viajes365-frontend';
 
-  logout(): void {
-    // ToDo
-    // this.accountService.logout();
+  constructor() {
   }
+
 }

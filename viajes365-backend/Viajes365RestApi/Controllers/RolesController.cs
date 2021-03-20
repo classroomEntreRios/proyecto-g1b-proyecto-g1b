@@ -1,72 +1,48 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
-using Viajes365RestApi.Filters;
+using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Helpers;
-using Viajes365RestApi.Services;
-using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Authorization(adminrole)]
+    [Route("api/[controller]")]
     public class RolesController : ControllerBase
     {
-        private readonly IMapper _mapper;
-        private readonly IUriService _uriService;
         private readonly DataContext _context;
+        const string adminrole = "Administrador";
 
-        public RolesController(DataContext context, IMapper mapper, IUriService uriService)
+        public RolesController(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
-            _uriService = uriService;
         }
 
         // GET: api/Roles
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<RoleDto>>> GetRoles([FromQuery] PaginationFilter filter)
+        public async Task<ActionResult<IEnumerable<Role>>> GetRoles()
         {
-            List<RoleDto> roles = new List<RoleDto>();
-            var route = Request.Path.Value;
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var totalElements = await _context.Roles.CountAsync();
-
-            if (totalElements == 0)
-            {
-
-                return NotFound(new PagedResponse<List<RoleDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
-
-            }
-            else
-            {
-                var result = await _context.Roles
-            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-            .Take(validFilter.PageSize)
-            .ToListAsync();
-                result.ForEach(u => roles.Add(_mapper.Map<RoleDto>(u)));
-                PagedResponse<List<RoleDto>> pagedResponse = Pagination.CreatePagedReponse<RoleDto>(roles, validFilter, totalElements, _uriService, route);
-                return Ok(pagedResponse);
-            }
+            return await _context.Roles.ToListAsync();
         }
+
         // GET: api/Roles/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<RoleDto>> GetRole(long id)
+        public async Task<ActionResult<Role>> GetRole(long id)
         {
             var role = await _context.Roles.FindAsync(id);
 
             if (role == null)
             {
-                return NotFound(new Response<RoleDto>() { Message = "ROL NO ENCONTRADO", ErrorCode = 416 });
+                return NotFound();
             }
 
-            RoleDto model = _mapper.Map<RoleDto>(role);
-            return Ok(new Response<RoleDto>(model));
+            return role;
         }
 
         // PUT: api/Roles/5
