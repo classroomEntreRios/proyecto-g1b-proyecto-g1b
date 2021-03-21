@@ -62,13 +62,13 @@ namespace Viajes365RestApi.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim("Role", user.Role.RoleName)
                 }),
-                // TODO make expiration time a Param
+                // TODO make expiration time a Param 
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
+            
             // return basic user info and authentication token
             return Ok(new
             {
@@ -123,7 +123,6 @@ namespace Viajes365RestApi.Controllers
             }
 
             var user = await _context.Users.FindAsync(id);
-
             if (user == null)
             {
                 return NotFound();
@@ -134,7 +133,6 @@ namespace Viajes365RestApi.Controllers
             return Ok(model);
         }
 
-
         // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserUpdateDto model)
@@ -144,7 +142,6 @@ namespace Viajes365RestApi.Controllers
             {
                 return Unauthorized();
             }
-
             // map model to entity and set id
             var user = _mapper.Map<User>(model);
             user.UserId = id;
@@ -171,18 +168,14 @@ namespace Viajes365RestApi.Controllers
             {
                 return Unauthorized();
             }
-
             _userService.Delete(id);
             return Ok();
         }
 
-
-        private void setAppUser()
-        {
+        private void setAppUser() {
             var claimsIdentity = User.Identity as ClaimsIdentity;
             _mainrole = claimsIdentity.FindFirst("Role").Value;
             _userid = long.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
-
         }
     }
 }

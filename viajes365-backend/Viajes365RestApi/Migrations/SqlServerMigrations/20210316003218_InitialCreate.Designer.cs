@@ -10,7 +10,7 @@ using Viajes365RestApi.Helpers;
 namespace Viajes365RestApi.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210308152338_InitialCreate")]
+    [Migration("20210316003218_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
