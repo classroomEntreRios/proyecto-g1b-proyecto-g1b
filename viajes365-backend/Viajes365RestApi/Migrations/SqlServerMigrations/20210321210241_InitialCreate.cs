@@ -38,6 +38,8 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    TermsAndConditionsChecked = table.Column<bool>(type: "bit", nullable: false),
+                    EmailConfirm = table.Column<bool>(type: "bit", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
                     LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
