@@ -11,6 +11,7 @@ export class RegisterComponent implements OnInit {
     form!: FormGroup;
     loading = false;
     submitted = false;
+    termsLabel = 'No los acepto';
 
     constructor(
         private formBuilder: FormBuilder,
@@ -28,7 +29,8 @@ export class RegisterComponent implements OnInit {
             username: ['', Validators.required],
             email: ['', [Validators.required, Validators.email]],
             password: ['', [Validators.minLength(6), Validators.required]],
-            confirmPassword: ['', Validators.required]
+            confirmPassword: ['', Validators.required],
+            TermsAndConditionsChecked: ['', Validators.required]
         }, formOptions);
     }
 
@@ -38,11 +40,13 @@ export class RegisterComponent implements OnInit {
     onSubmit() {
         this.submitted = true;
 
+
         // reset alerts on submit
         this.alertService.clear();
 
         // stop here if form is invalid
         if (this.form.invalid) {
+            this.termsLabel = this.form.get('TermsAndConditionsChecked')!.value ? 'Leidos y los acepto' : 'Aceptar los Términos y Condiciones es obligatorio';
             return;
         }
 
@@ -59,5 +63,13 @@ export class RegisterComponent implements OnInit {
                     this.loading = false;
                 }
             });
+    }
+
+    termsToggle(): void {
+        this.termsLabel = this.form.get('TermsAndConditionsChecked')!.value ? 'Leidos y los acepto' : 'No los acepto';
+    }
+
+    showTerms(): void {
+        this.alertService.info('Terminos y condiciones: al pie de página');
     }
 }

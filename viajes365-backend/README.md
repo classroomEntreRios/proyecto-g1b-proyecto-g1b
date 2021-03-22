@@ -1,5 +1,5 @@
 
-# Rest Api Viajes 365º 
+# Rest Api Viajes 365 
 
 ASP .NET Core 5.0 - REST API for Viajes 365 Content Managment System, Authentication Registration and Forum
 

@@ -13,6 +13,7 @@ import { AlertComponent } from './_components';
 import { HomeComponent } from './home';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { NavbarComponent } from './_components/navbar.component';
+import { TermsAndConditionsComponent } from './home/terms-and-conditions/terms-and-conditions.component';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { NavbarComponent } from './_components/navbar.component';
     AppComponent,
     AlertComponent,
     HomeComponent,
-    NavbarComponent
+    NavbarComponent,
+    TermsAndConditionsComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

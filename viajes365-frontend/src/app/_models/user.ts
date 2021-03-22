@@ -14,4 +14,5 @@ export class User {
     token!: string;
     active!: boolean;
     returnUrl!: string;
+    TermsAndConditionsChecked!: boolean
 }

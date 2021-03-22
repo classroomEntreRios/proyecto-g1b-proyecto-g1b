@@ -19,6 +19,9 @@ namespace Viajes365RestApi.Dtos
         [Required]
         public string Email { get; set; }
 
+        [Required]
+        public bool TermsAndConditionsChecked { get; set; }
+
         public long RoleId { get; set; }
     }
 }
