@@ -45,9 +45,9 @@
             <br>
             <div class="form-group">
               <div class="form-floating">
-                <label for="email">Email *</label>
                 <input type="text" formControlName="email" class="form-control" id="email" placeholder="email"
                   [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+                <label for="email">Email *</label>
                 <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
                   <div *ngIf="f.email.errors.required">El email es obligatorio</div>
                   <div *ngIf="f.email.errors.email">El email deber ser una dirección válida</div>
@@ -80,6 +80,22 @@
                     </div>
                     <div *ngIf="f.confirmPassword.errors.mustMatch">Las contraseñas deben coincidir
                     </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col">
+                <div
+                  style="display:block; background-color: rgba(255, 255, 255); border-radius: 4px; margin-top: 16px; padding-left: 0.5rem; padding-top: 0.2rem; ">
+                  <label style="color: rgb(0, 0, 0); font-size: medium;" (click)="showTerms()">Términos y Condiciones
+                    *</label>
+                  <div class="form-check form-switch" style="margin-top: 0.3rem;">
+                    <input class="form-check-input" type="checkbox" formControlName="TermsAndConditionsChecked"
+                      [ngClass]="{ 'is-invalid': submitted && !f.TermsAndConditionsChecked.value }"
+                      (change)="termsToggle()">
+                    <label class="form-check-label" for="TermsAndConditionsCheckeds">{{ termsLabel }}</label>
                   </div>
                 </div>
 
