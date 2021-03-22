@@ -77,7 +77,8 @@ namespace Viajes365RestApi.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = user.Role,
-                Token = tokenString
+                Token = tokenString,
+                returnUrl = user.Role.RoleId == 2 ? "admin" : "/"
             });
         }
 

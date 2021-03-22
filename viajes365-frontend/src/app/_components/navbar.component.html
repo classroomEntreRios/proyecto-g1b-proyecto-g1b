@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom" *ngIf="!user.userId">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img class="navbar-logo filter-logo" src="../assets/images/logo_viajes_365.svg"
-                alt="logo 365º" width="32" height="32" title="Logo Viajes 365">Viajar 365</a>
+                alt="logo 365" width="32" height="32" title="Logo Viajes 365">Viajes 365</a>
         <button class="custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -54,7 +54,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom" *ngIf="user.role?.roleId == 1">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img class="navbar-logo filter-logo" src="../assets/images/logo_viajes_365.svg"
-                alt="logo 365º" width="32" height="32" title="Logo Viajes 365">Viajes 365</a>
+                alt="logo 365" width="32" height="32" title="Logo Viajes 365">Viajes 365</a>
         <button class="custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -132,7 +132,7 @@
 <nav class="navbar navbar-expand-lg navbar-custom" *ngIf="user.role?.roleId == 2">
     <div class="container-fluid">
         <a class="navbar-brand" href="#"><img class="navbar-logo filter-logo" src="../assets/images/logo_viajes_365.svg"
-                alt="logo 365º" title="Logo Viajes 365">Viajes 365</a>
+                alt="logo 365" title="Logo Viajes 365">Viajes 365</a>
         <button class="custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -140,11 +140,17 @@
         <div class="collapse navbar-collapse" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
                 <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" routerLink="/admin/dashboard"
+                        routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}"><i class="bi-grid-1x2-fill"
+                            style="color: white; margin-right: 8px;"></i>Dashboard</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}"><i class="bi-house-fill"
                             style="color: white; margin-right: 8px;"></i>Inicio</a>
                 </li>
-                <li class="nav-item dropdown">
+
+                <!-- <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false"><i class="bi-diagram-3-fill"
                             style="color: white; margin-right: 8px;"></i>
@@ -174,7 +180,7 @@
                         <li><a class="dropdown-item" href="#"><i class="bi-images"
                                     style="color: black; margin-right: 8px;"></i>Galería</a></li>
                     </ul>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/topicslist" routerLinkActive="active"><i class="bi-megaphone-fill"
                             style="color: white; margin-right: 8px;"></i>Foro</a>

@@ -6,14 +6,14 @@ import { delay, materialize, dematerialize } from 'rxjs/operators';
 import { Role } from '@app/_models';
 
 // array in local storage for registered users
-const usersKey = 'angular-11-viajar365-users';
+const usersKey = 'angular-11-viajes365-users';
 const usersJSON = localStorage.getItem(usersKey);
 let users: any[] = usersJSON ? JSON.parse(usersJSON) : [{
     id: 1,
     title: 'Sr',
     firstName: 'Juan',
     lastName: 'Perez',
-    email: 'juan@viajar365.com',
+    email: 'juan@viajes365.com',
     role: new Role(),
     password: 'Abc123#'
 }];

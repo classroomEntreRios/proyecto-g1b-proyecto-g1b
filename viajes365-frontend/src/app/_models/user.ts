@@ -13,4 +13,5 @@ export class User {
     isDeleting: boolean = false;
     token!: string;
     active!: boolean;
+    returnUrl!: string;
 }

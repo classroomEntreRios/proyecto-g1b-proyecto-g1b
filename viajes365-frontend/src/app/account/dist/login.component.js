@@ -45,9 +45,10 @@ var LoginComponent = /** @class */ (function () {
         this.accountService.login(this.f.username.value, this.f.password.value)
             .pipe(operators_1.first())
             .subscribe({
-            next: function () {
+            next: function (u) {
                 // get return url from query parameters or default to home page
-                var returnUrl = _this.route.snapshot.queryParams['returnUrl'] || '/';
+                var returnUrl = u.returnUrl || '/';
+                console.log(u.returnUrl);
                 _this.router.navigateByUrl(returnUrl);
             },
             error: function (error) {
