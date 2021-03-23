@@ -29,12 +29,15 @@ namespace Viajes365RestApi.Entities
         public long RoleId { get; set; }
         public virtual Role Role { get; set; }
 
+        public bool TermsAndConditionsChecked { get; set; }
+        public bool EmailConfirm { get; set; }
+
         //Navigational Property
-       // [JsonIgnore]
-       // public virtual ICollection<Topic> Topics { get; set; }
+        // [JsonIgnore]
+        // public virtual ICollection<Topic> Topics { get; set; }
         //Navigational Property
-       // [JsonIgnore]
-       // public virtual ICollection<Comment> Comments { get; set; }
+        // [JsonIgnore]
+        // public virtual ICollection<Comment> Comments { get; set; }
 
     }
 }

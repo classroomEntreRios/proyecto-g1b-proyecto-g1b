@@ -21,7 +21,7 @@ namespace Viajes365RestApi.Controllers
         [HttpGet]
         public ContentResult Index()
         {
-            var Content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Backend Viajes 365º</title></head><body><h3>Backend Ejecutandose</h3><h4>Resumen:</h4><ul>";
+            var Content = "<!DOCTYPE html><html><head><meta charset='UTF-8'><title>Backend Viajes 365</title></head><body><h3>Backend Ejecutandose</h3><h4>Resumen:</h4><ul>";
             Content += "<li> Plataforma: "+ Info.OsPlatform;
             Content += "</li><li> Framework: " + Info.framework;
             Content += "</li><li> Título de Ensamblado: " + Info.Title;

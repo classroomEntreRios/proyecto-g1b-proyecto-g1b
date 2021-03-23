@@ -50,10 +50,10 @@ namespace Viajes365RestApi
             // configure strongly typed settings objects
             var appSettingsSection = _configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
+
             // get custom settings
             var appSettings = appSettingsSection.Get<AppSettings>();
-                                             
+
             // configure jwt authentication
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -89,7 +89,7 @@ namespace Viajes365RestApi
                 };
             });
             services.AddControllers();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Viajes365RestApi", Version = "v1" });
@@ -110,10 +110,7 @@ namespace Viajes365RestApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1");
-                    c.DocumentTitle = "Swagger Viajes 365º ISPC Grupo 1B Sala 2";
-                });
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1"));
             }
 
             // Creates defaults Admin and User

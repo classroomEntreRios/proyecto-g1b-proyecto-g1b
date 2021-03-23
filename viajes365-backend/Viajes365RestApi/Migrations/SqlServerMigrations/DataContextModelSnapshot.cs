@@ -124,6 +124,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<bool>("EmailConfirm")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -146,6 +149,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("TermsAndConditionsChecked")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")

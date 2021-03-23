@@ -7,17 +7,15 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
-using Viajes365RestApi.Filters;
+using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 using Viajes365RestApi.Services;
-using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -30,6 +28,10 @@ namespace Viajes365RestApi.Controllers
         private IMapper _mapper;
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
+        const string adminrole = "Administrador";
+        const string userrole = "Usuario";
+        private string _mainrole;
+        private long _userid;
 
         public UsersController(DataContext context,
             IUserService userService,
@@ -60,13 +62,13 @@ namespace Viajes365RestApi.Controllers
                     new Claim(ClaimTypes.NameIdentifier, user.UserId.ToString()),
                     new Claim("Role", user.Role.RoleName)
                 }),
-                // TODO make expiration time a Param
+                // TODO make expiration time a Param 
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
             var tokenString = tokenHandler.WriteToken(token);
-
+            
             // return basic user info and authentication token
             return Ok(new
             {
@@ -75,7 +77,8 @@ namespace Viajes365RestApi.Controllers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Role = user.Role,
-                Token = tokenString
+                Token = tokenString,
+                returnUrl = user.Role.RoleId == 2 ? "admin" : "/"
             });
         }
 
@@ -99,51 +102,47 @@ namespace Viajes365RestApi.Controllers
             }
         }
 
-
+        // Allow list of users only for role admin
+        [Authorization(adminrole)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery] PaginationFilter filter)
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
         {
             List<UserDto> users = new List<UserDto>();
-
-            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
-            var totalElements = await _context.Users.CountAsync();
-
-            if (totalElements == 0)
-            {
-
-                return NotFound(new PagedResponse<List<UserDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
-
-            }
-            else
-            {
-                var result = await _context.Users
-            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-            .Take(validFilter.PageSize)
-            .Include(u => u.Role)
-            .ToListAsync();
-
-                result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
-                return Ok(new PagedResponse<List<UserDto>>(users, validFilter.PageNumber, validFilter.PageSize));
-            }
+            var result = await _context.Users.Include(u => u.Role).ToListAsync();
+            result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
+            return users;
         }
 
+        // Allow only self id for role user and any id for role admin
         [HttpGet("{id}")]
         public async Task<ActionResult<UserDto>> GetUser(long id)
         {
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
             {
-                return NotFound(new Response<UserDto>() { Message = "USUARIO NO ENCONTRADO", ErrorCode = 416 });
+                return Unauthorized();
             }
 
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+
             UserDto model = _mapper.Map<UserDto>(user);
-            return Ok(new Response<UserDto>(model));
+            return Ok(model);
         }
 
+        // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserUpdateDto model)
         {
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
+            {
+                return Unauthorized();
+            }
             // map model to entity and set id
             var user = _mapper.Map<User>(model);
             user.UserId = id;
@@ -161,11 +160,23 @@ namespace Viajes365RestApi.Controllers
             }
         }
 
+        // Allow only self id for role user and any id for role admin
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
+            setAppUser();
+            if (_mainrole == userrole && _userid != id)
+            {
+                return Unauthorized();
+            }
             _userService.Delete(id);
             return Ok();
+        }
+
+        private void setAppUser() {
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            _mainrole = claimsIdentity.FindFirst("Role").Value;
+            _userid = long.Parse(claimsIdentity.FindFirst(ClaimTypes.NameIdentifier).Value);
         }
     }
 }

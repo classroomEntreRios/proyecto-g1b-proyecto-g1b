@@ -10,7 +10,7 @@ using Viajes365RestApi.Helpers;
 namespace Viajes365RestApi.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210308152338_InitialCreate")]
+    [Migration("20210321210241_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -126,6 +126,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<bool>("EmailConfirm")
+                        .HasColumnType("bit");
+
                     b.Property<string>("FirstName")
                         .IsRequired()
                         .HasMaxLength(100)
@@ -148,6 +151,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
                     b.Property<long>("RoleId")
                         .HasColumnType("bigint");
+
+                    b.Property<bool>("TermsAndConditionsChecked")
+                        .HasColumnType("bit");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
