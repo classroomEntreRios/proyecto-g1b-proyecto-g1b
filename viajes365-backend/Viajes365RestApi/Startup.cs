@@ -110,7 +110,10 @@ namespace Viajes365RestApi
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1"));
+                app.UseSwaggerUI(c => {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Viajes365RestApi v1");
+                    c.DocumentTitle = "Swagger Viajes 365º ISPC Grupo 1B Sala 2";
+                });
             }
 
             // Creates defaults Admin and User
