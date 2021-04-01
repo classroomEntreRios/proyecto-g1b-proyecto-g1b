@@ -10,7 +10,7 @@ using Viajes365RestApi.Helpers;
 namespace Viajes365RestApi.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210321210241_InitialCreate")]
+    [Migration("20210401222756_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,106 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Viajes365RestApi.Entities.City", b =>
+                {
+                    b.Property<long>("CityId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasComment("Esto se implementa para soft delete");
+
+                    b.Property<int>("Code")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de creación");
+
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del creador");
+
+                    b.Property<long>("LastId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del último Editor");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de última actualización");
+
+                    b.HasKey("CityId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Cities");
+
+                    b.HasData(
+                        new
+                        {
+                            CityId = 1L,
+                            Active = true,
+                            Code = 43437,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Colón",
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424)
+                        },
+                        new
+                        {
+                            CityId = 2L,
+                            Active = true,
+                            Code = 42923,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Concordia",
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424)
+                        },
+                        new
+                        {
+                            CityId = 3L,
+                            Active = true,
+                            Code = 42987,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Federación",
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424)
+                        },
+                        new
+                        {
+                            CityId = 4L,
+                            Active = true,
+                            Code = 43034,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Gualeguaychú",
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424)
+                        },
+                        new
+                        {
+                            CityId = 5L,
+                            Active = true,
+                            Code = 43214,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Paraná",
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424)
+                        });
+                });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Role", b =>
                 {
@@ -65,41 +165,41 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             RoleId = 1L,
                             Active = true,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatorId = 0L,
-                            LastId = 0L,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869),
+                            CreatorId = 1L,
+                            LastId = 1L,
                             RoleName = "Usuario",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869)
                         },
                         new
                         {
                             RoleId = 2L,
                             Active = true,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatorId = 0L,
-                            LastId = 0L,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869),
+                            CreatorId = 1L,
+                            LastId = 1L,
                             RoleName = "Administrador",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869)
                         },
                         new
                         {
                             RoleId = 3L,
                             Active = false,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatorId = 0L,
-                            LastId = 0L,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869),
+                            CreatorId = 1L,
+                            LastId = 1L,
                             RoleName = "Moderador",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869)
                         },
                         new
                         {
                             RoleId = 4L,
                             Active = false,
-                            Created = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            CreatorId = 0L,
-                            LastId = 0L,
+                            Created = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869),
+                            CreatorId = 1L,
+                            LastId = 1L,
                             RoleName = "Anónimo",
-                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                            Updated = new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869)
                         });
                 });
 

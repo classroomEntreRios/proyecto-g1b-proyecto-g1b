@@ -8,6 +8,25 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Cities",
+                columns: table => new
+                {
+                    CityId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    Code = table.Column<int>(type: "int", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Cities", x => x.CityId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -58,15 +77,33 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.InsertData(
+                table: "Cities",
+                columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
+                values: new object[,]
+                {
+                    { 1L, true, 43437, new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424), 1L, 1L, "Colón", new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424) },
+                    { 2L, true, 42923, new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424), 1L, 1L, "Concordia", new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424) },
+                    { 3L, true, 42987, new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424), 1L, 1L, "Federación", new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424) },
+                    { 4L, true, 43034, new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424) },
+                    { 5L, true, 43214, new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424), 1L, 1L, "Paraná", new DateTime(2021, 4, 1, 22, 27, 56, 456, DateTimeKind.Utc).AddTicks(2424) }
+                });
+
+            migrationBuilder.InsertData(
                 table: "Roles",
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 0L, "Usuario", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 2L, true, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 0L, "Administrador", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 3L, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 0L, "Moderador", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) },
-                    { 4L, false, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), 0L, 0L, "Anónimo", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified) }
+                    { 1L, true, new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869), 1L, 1L, "Usuario", new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869) },
+                    { 2L, true, new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869), 1L, 1L, "Administrador", new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869) },
+                    { 3L, false, new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869), 1L, 1L, "Moderador", new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869) },
+                    { 4L, false, new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869), 1L, 1L, "Anónimo", new DateTime(2021, 4, 1, 22, 27, 56, 454, DateTimeKind.Utc).AddTicks(3869) }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Cities_Name",
+                table: "Cities",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Roles_RoleName",
@@ -97,6 +134,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Cities");
+
             migrationBuilder.DropTable(
                 name: "Users");
 

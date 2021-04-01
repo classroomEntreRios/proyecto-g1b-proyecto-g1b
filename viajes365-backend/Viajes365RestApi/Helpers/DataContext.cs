@@ -33,7 +33,7 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-       
+        public DbSet<City> Cities { get; set; }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -58,6 +58,7 @@ namespace Viajes365RestApi.Helpers
             // Property Configurations SQL Server Express 2019                    
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
+            new CityBuilder().Configure(mb.Entity<City>());
 
         }
 
@@ -65,6 +66,8 @@ namespace Viajes365RestApi.Helpers
         {
             var entries = ChangeTracker.Entries();
             var utcNow = DateTime.UtcNow;
+            
+            // Get app user
             if (_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier) == null)
                 _currentUser = "1";
             else
