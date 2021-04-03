@@ -1,18 +1,23 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Viajes365RestApi.Entities;
+using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Helpers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Authorization(adminrole)]
+    [Route("api/[controller]")]
     public class CitiesController : ControllerBase
     {
         private readonly DataContext _context;
+        const string adminrole = "Administrador";
 
         public CitiesController(DataContext context)
         {
@@ -86,13 +91,13 @@ namespace Viajes365RestApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(long id)
         {
-            var city = await _context.Cities.FindAsync(id);
+            var city = await _context.Weathers.FindAsync(id);
             if (city == null)
             {
                 return NotFound();
             }
 
-            _context.Cities.Remove(city);
+            _context.Weathers.Remove(city);
             await _context.SaveChangesAsync();
 
             return NoContent();

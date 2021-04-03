@@ -34,6 +34,9 @@ namespace Viajes365RestApi.Helpers
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<City> Cities { get; set; }
+        public DbSet<Weather> Weathers { get; set; }
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<Locality> Localities { get; set; }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -59,6 +62,10 @@ namespace Viajes365RestApi.Helpers
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
             new CityBuilder().Configure(mb.Entity<City>());
+            new DayBuilder().Configure(mb.Entity<Day>());
+            new HourBuilder().Configure(mb.Entity<Hour>());
+            new InformationBuilder().Configure(mb.Entity<Information>());
+            new LocalityBuilder().Configure(mb.Entity<Locality>());
 
         }
 

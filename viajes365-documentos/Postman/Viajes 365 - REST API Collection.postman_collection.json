@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4938e543-a33f-44d1-9991-0b2dbf2e9fed",
+		"_postman_id": "7f92f229-7c1b-4e6d-ae17-7f4821c813d7",
 		"name": "Viajes 365 - REST API Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -636,6 +636,272 @@
 							],
 							"path": [
 								"8"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CITIES",
+			"item": [
+				{
+					"name": "listado de Ciudades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una Ciudad",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Potosi\",\r\n    \"code\": 3333  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por City Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cityId\": 6,\r\n    \"name\": \"Clorinda\",\r\n    \"code\": 3335  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por City Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por City Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "WEATHERS",
+			"item": [
+				{
+					"name": "listado de Climas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}weathers",
+							"host": [
+								"{{LOCAL_SERVER}}weathers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un Clima",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"copyright\": \"Tutiempo Network, S.L.\",\r\n    \"use\": \"Se autoriza el uso de estos datos citando a https://www.tutiempo.net como fuente de los mismos.\",\r\n    \"information\": {\r\n        \"temperature\": \"ºC\",\r\n        \"wind\": \"km/h\",\r\n        \"humidity\": \"%\",\r\n        \"pressure\": \"hPa\"\r\n    },\r\n    \"web\": \"https://www.tutiempo.net\",\r\n    \"language\": \"es\",\r\n    \"locality\": {\r\n        \"name\": \"Paraná\",\r\n        \"url_weather_forecast_15_days\": \"https://www.tutiempo.net/parana.html\",\r\n        \"url_hourly_forecast\": \"https://www.tutiempo.net/parana.html?datos=por-horas\",\r\n        \"country\": \"Argentina\",\r\n        \"url_country\": \"https://www.tutiempo.net/argentina.html\"\r\n    },\r\n    \"day1\": {\r\n        \"date\": \"2021-4-2\",\r\n        \"temperature_max\": 25,\r\n        \"temperature_min\": 17,\r\n        \"icon\": \"2\",\r\n        \"text\": \"Nubes dispersas\",\r\n        \"humidity\": 61,\r\n        \"wind\": 14,\r\n        \"wind_direction\": \"Sureste\",\r\n        \"icon_wind\": \"SE\",\r\n        \"sunrise\": \"7:13\",\r\n        \"sunset\": \"19:00\",\r\n        \"moonrise\": \"22:54\",\r\n        \"moonset\": \"12:37\",\r\n        \"moon_phases_icon\": \"hs/20\"\r\n    },\r\n    \"day2\": {\r\n        \"date\": \"2021-4-3\",\r\n        \"temperature_max\": 26,\r\n        \"temperature_min\": 16,\r\n        \"icon\": \"6\",\r\n        \"text\": \"Muy nuboso\",\r\n        \"humidity\": 68,\r\n        \"wind\": 15,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:13\",\r\n        \"sunset\": \"18:58\",\r\n        \"moonrise\": \"23:52\",\r\n        \"moonset\": \"13:42\",\r\n        \"moon_phases_icon\": \"hs/21\"\r\n    },\r\n    \"day3\": {\r\n        \"date\": \"2021-4-4\",\r\n        \"temperature_max\": 27,\r\n        \"temperature_min\": 16,\r\n        \"icon\": \"7\",\r\n        \"text\": \"Cubierto\",\r\n        \"humidity\": 65,\r\n        \"wind\": 13,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:14\",\r\n        \"sunset\": \"18:57\",\r\n        \"moonrise\": \"----\",\r\n        \"moonset\": \"14:40\",\r\n        \"moon_phases_icon\": \"hs/22\"\r\n    },\r\n    \"day4\": {\r\n        \"date\": \"2021-4-5\",\r\n        \"temperature_max\": 26,\r\n        \"temperature_min\": 18,\r\n        \"icon\": \"19\",\r\n        \"text\": \"Cubierto con lluvias\",\r\n        \"humidity\": 73,\r\n        \"wind\": 17,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:15\",\r\n        \"sunset\": \"18:56\",\r\n        \"moonrise\": \"00:52\",\r\n        \"moonset\": \"15:32\",\r\n        \"moon_phases_icon\": \"hs/23\"\r\n    },\r\n    \"day5\": {\r\n        \"date\": \"2021-4-6\",\r\n        \"temperature_max\": 29,\r\n        \"temperature_min\": 18,\r\n        \"icon\": \"2\",\r\n        \"text\": \"Nubes dispersas\",\r\n        \"humidity\": 77,\r\n        \"wind\": 16,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:15\",\r\n        \"sunset\": \"18:55\",\r\n        \"moonrise\": \"01:55\",\r\n        \"moonset\": \"16:14\",\r\n        \"moon_phases_icon\": \"hs/24\"\r\n    },\r\n    \"day6\": {\r\n        \"date\": \"2021-4-7\",\r\n        \"temperature_max\": 30,\r\n        \"temperature_min\": 19,\r\n        \"icon\": \"7\",\r\n        \"text\": \"Cubierto\",\r\n        \"humidity\": 67,\r\n        \"wind\": 15,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:16\",\r\n        \"sunset\": \"18:53\",\r\n        \"moonrise\": \"02:57\",\r\n        \"moonset\": \"16:52\",\r\n        \"moon_phases_icon\": \"hs/25\"\r\n    },\r\n    \"day7\": {\r\n        \"date\": \"2021-4-8\",\r\n        \"temperature_max\": 30,\r\n        \"temperature_min\": 19,\r\n        \"icon\": \"7\",\r\n        \"text\": \"Cubierto\",\r\n        \"humidity\": 62,\r\n        \"wind\": 15,\r\n        \"wind_direction\": \"Nordeste\",\r\n        \"icon_wind\": \"NE\",\r\n        \"sunrise\": \"7:17\",\r\n        \"sunset\": \"18:52\",\r\n        \"moonrise\": \"03:57\",\r\n        \"moonset\": \"17:25\",\r\n        \"moon_phases_icon\": \"hs/26\"\r\n    },\r\n    \"hour_hour\": {\r\n        \"hour1\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"9:00\",\r\n            \"temperature\": 19,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 64,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"1\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour2\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"10:00\",\r\n            \"temperature\": 21,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 58,\r\n            \"pressure\": 1019,\r\n            \"icon\": \"1\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour3\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"11:00\",\r\n            \"temperature\": 22,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 54,\r\n            \"pressure\": 1019,\r\n            \"icon\": \"1\",\r\n            \"wind\": 13,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour4\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"12:00\",\r\n            \"temperature\": 23,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 51,\r\n            \"pressure\": 1019,\r\n            \"icon\": \"1\",\r\n            \"wind\": 13,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour5\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"13:00\",\r\n            \"temperature\": 24,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 47,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"1\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour6\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"14:00\",\r\n            \"temperature\": 25,\r\n            \"text\": \"Nubes dispersas\",\r\n            \"humidity\": 44,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"2\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour7\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"15:00\",\r\n            \"temperature\": 25,\r\n            \"text\": \"Nubes dispersas\",\r\n            \"humidity\": 43,\r\n            \"pressure\": 1016,\r\n            \"icon\": \"2\",\r\n            \"wind\": 9,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour8\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"16:00\",\r\n            \"temperature\": 25,\r\n            \"text\": \"Nubes dispersas\",\r\n            \"humidity\": 42,\r\n            \"pressure\": 1016,\r\n            \"icon\": \"2\",\r\n            \"wind\": 9,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour9\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"17:00\",\r\n            \"temperature\": 25,\r\n            \"text\": \"Nubes dispersas\",\r\n            \"humidity\": 46,\r\n            \"pressure\": 1016,\r\n            \"icon\": \"2\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour10\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"18:00\",\r\n            \"temperature\": 23,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 57,\r\n            \"pressure\": 1016,\r\n            \"icon\": \"1\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Sureste\",\r\n            \"icon_wind\": \"SE\"\r\n        },\r\n        \"hour11\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"19:00\",\r\n            \"temperature\": 20,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 62,\r\n            \"pressure\": 1016,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 13,\r\n            \"wind_direction\": \"Sureste\",\r\n            \"icon_wind\": \"SE\"\r\n        },\r\n        \"hour12\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"20:00\",\r\n            \"temperature\": 19,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 67,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 14,\r\n            \"wind_direction\": \"Sureste\",\r\n            \"icon_wind\": \"SE\"\r\n        },\r\n        \"hour13\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"21:00\",\r\n            \"temperature\": 18,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 70,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 14,\r\n            \"wind_direction\": \"Sureste\",\r\n            \"icon_wind\": \"SE\"\r\n        },\r\n        \"hour14\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"22:00\",\r\n            \"temperature\": 18,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 76,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 13,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour15\": {\r\n            \"date\": \"2021-4-2\",\r\n            \"hour_data\": \"23:00\",\r\n            \"temperature\": 17,\r\n            \"text\": \"Muy nuboso\",\r\n            \"humidity\": 79,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"6n\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Sureste\",\r\n            \"icon_wind\": \"SE\"\r\n        },\r\n        \"hour16\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"0:00\",\r\n            \"temperature\": 17,\r\n            \"text\": \"Muy nuboso\",\r\n            \"humidity\": 80,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"6n\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour17\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"1:00\",\r\n            \"temperature\": 17,\r\n            \"text\": \"Cubierto\",\r\n            \"humidity\": 81,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"7\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour18\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"2:00\",\r\n            \"temperature\": 17,\r\n            \"text\": \"Cubierto\",\r\n            \"humidity\": 82,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"7\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour19\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"3:00\",\r\n            \"temperature\": 17,\r\n            \"text\": \"Muy nuboso\",\r\n            \"humidity\": 82,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"6n\",\r\n            \"wind\": 10,\r\n            \"wind_direction\": \"Este\",\r\n            \"icon_wind\": \"E\"\r\n        },\r\n        \"hour20\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"4:00\",\r\n            \"temperature\": 16,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 83,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 10,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour21\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"5:00\",\r\n            \"temperature\": 16,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 84,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 11,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour22\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"6:00\",\r\n            \"temperature\": 16,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 84,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour23\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"7:00\",\r\n            \"temperature\": 16,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 85,\r\n            \"pressure\": 1017,\r\n            \"icon\": \"1n\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour24\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"8:00\",\r\n            \"temperature\": 16,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 84,\r\n            \"pressure\": 1018,\r\n            \"icon\": \"1\",\r\n            \"wind\": 12,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        },\r\n        \"hour25\": {\r\n            \"date\": \"2021-4-3\",\r\n            \"hour_data\": \"9:00\",\r\n            \"temperature\": 19,\r\n            \"text\": \"Despejado\",\r\n            \"humidity\": 75,\r\n            \"pressure\": 1019,\r\n            \"icon\": \"1\",\r\n            \"wind\": 15,\r\n            \"wind_direction\": \"Nordeste\",\r\n            \"icon_wind\": \"NE\"\r\n        }\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}weathers",
+							"host": [
+								"{{LOCAL_SERVER}}weathers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por Weather Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"weatherId\": 1,\r\n    \"copyright\": \"Sin dueño, S.A.\",\r\n    \"active\": false  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}weathers/1",
+							"host": [
+								"{{LOCAL_SERVER}}weathers"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por Weather Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}weathers/1",
+							"host": [
+								"{{LOCAL_SERVER}}weathers"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Weather Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}weathers/1",
+							"host": [
+								"{{LOCAL_SERVER}}weathers"
+							],
+							"path": [
+								"1"
 							]
 						}
 					},
