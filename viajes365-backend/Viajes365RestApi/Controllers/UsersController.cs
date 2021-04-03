@@ -7,15 +7,18 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -26,6 +29,7 @@ namespace Viajes365RestApi.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
+        private readonly IUriService _uriService;
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
@@ -36,10 +40,12 @@ namespace Viajes365RestApi.Controllers
         public UsersController(DataContext context,
             IUserService userService,
             IMapper mapper,
+            IUriService uriService,
             IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _mapper = mapper;
+            _uriService = uriService;
             _appSettings = appSettings.Value;
             _context = context;
         }
@@ -105,12 +111,30 @@ namespace Viajes365RestApi.Controllers
         // Allow list of users only for role admin
         [Authorization(adminrole)]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetUsers([FromQuery] PaginationFilter filter)
         {
             List<UserDto> users = new List<UserDto>();
-            var result = await _context.Users.Include(u => u.Role).ToListAsync();
-            result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
-            return users;
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Users.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<UserDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Users
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(u => u.Role)
+            .ToListAsync();
+                result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
+                PagedResponse<List<UserDto>> pagedResponse = Pagination.CreatePagedReponse<UserDto>(users, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
+            }
         }
 
         // Allow only self id for role user and any id for role admin
@@ -124,16 +148,16 @@ namespace Viajes365RestApi.Controllers
             }
 
             var user = await _context.Users.FindAsync(id);
+
             if (user == null)
             {
-                return NotFound();
+                return NotFound(new Response<UserDto>() { Message = "USUARIO NO ENCONTRADO", ErrorCode = 416 });
             }
 
-
             UserDto model = _mapper.Map<UserDto>(user);
-            return Ok(model);
+            return Ok(new Response<UserDto>(model));
         }
-
+      
         // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] UserUpdateDto model)

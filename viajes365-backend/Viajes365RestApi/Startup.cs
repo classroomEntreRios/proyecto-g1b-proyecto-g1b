@@ -42,6 +42,15 @@ namespace Viajes365RestApi
             else
                 services.AddDbContext<DataContext>();
 
+            // UriService
+            services.AddSingleton<IUriService>(us =>
+            {
+                var accessor = us.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(uri);
+            });
+
             services.AddCors();
             services.AddControllers();
             // Automapper DI module
