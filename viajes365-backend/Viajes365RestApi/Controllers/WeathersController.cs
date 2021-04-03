@@ -9,7 +9,10 @@ using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Helpers;
+using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -20,28 +23,46 @@ namespace Viajes365RestApi.Controllers
     public class WeathersController : ControllerBase
     {
         private IMapper _mapper;
+        private readonly IUriService _uriService;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public WeathersController(DataContext context, IMapper mapper)
+        public WeathersController(DataContext context, IMapper mapper, IUriService uriService)
         {
             _context = context;
             _mapper = mapper;
+            _uriService = uriService;
         }
 
         // GET: api/Weathers
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Weather>>> GetWeathers()
+        public async Task<ActionResult<IEnumerable<UserDto>>> GetWeathers([FromQuery] PaginationFilter filter)
         {
             List<Weather> weathers = new List<Weather>();
-            var result = await _context.Weathers
-                .Include(w => w.Information)
-                .Include(w => w.Locality)
-                .Include(w => w.Days.OrderBy(w => w.Name))
-                .Include(w => w.Hours.OrderBy(w => w.Name))
-                .ToListAsync();
-            result.ForEach(w=> weathers.Add(w));
-            return weathers;
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Weathers.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<Weather>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Weathers
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(w => w.Information)
+            .Include(w => w.Locality)
+            .Include(w => w.Days.OrderBy(w => w.Name))
+            .Include(w => w.Hours.OrderBy(w => w.Name))
+            .ToListAsync();
+                result.ForEach(w => weathers.Add(w));
+                PagedResponse<List<Weather>> pagedResponse = Pagination.CreatePagedReponse<Weather>(weathers, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
+            }
         }
 
         // GET: api/Weathers/5
@@ -52,7 +73,7 @@ namespace Viajes365RestApi.Controllers
 
             if (weather == null)
             {
-                return NotFound();
+                return NotFound(new Response<Weather>() { Message = "CLIMA NO ENCONTRADO", ErrorCode = 416 });
             }
 
             weather = await _context.Weathers
@@ -62,9 +83,9 @@ namespace Viajes365RestApi.Controllers
                .Include(w => w.Hours.OrderBy(w => w.Name))
                .SingleAsync(w => w.WeatherId == id);
 
-            return weather;
+            return Ok(new Response<Weather>(weather));
         }
-
+        
         // PUT: api/Weathers/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
@@ -78,7 +99,7 @@ namespace Viajes365RestApi.Controllers
             weather.WeatherId = id;
 
             _context.Entry(weather).State = EntityState.Modified;
-            
+
             // Avoiding FK errors
             _context.Entry(weather).Property(w => w.InformationId).IsModified = false;
             _context.Entry(weather).Property(w => w.LocalityId).IsModified = false;
@@ -105,7 +126,7 @@ namespace Viajes365RestApi.Controllers
         // POST: api/Weathers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Weather>> PostWeather([FromBody]  WeatherDto model)
+        public async Task<ActionResult<Weather>> PostWeather([FromBody] WeatherDto model)
         {
             // map model to entity
             var weather = _mapper.Map<Weather>(model);
@@ -136,7 +157,7 @@ namespace Viajes365RestApi.Controllers
 
             _context.Informations.Remove(weather.Information);
             _context.Localities.Remove(weather.Locality);
-            
+
             _context.Weathers.Remove(weather);
             await _context.SaveChangesAsync();
 
@@ -145,7 +166,7 @@ namespace Viajes365RestApi.Controllers
 
         private bool WeatherExists(long id)
         {
-            return  _context.Weathers.Any(c => c.WeatherId == id);
+            return _context.Weathers.Any(c => c.WeatherId == id);
         }
     }
 }

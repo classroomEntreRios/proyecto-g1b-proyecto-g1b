@@ -6,7 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Helpers;
+using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -17,18 +20,40 @@ namespace Viajes365RestApi.Controllers
     public class CitiesController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IUriService _uriService;
         const string adminrole = "Administrador";
 
-        public CitiesController(DataContext context)
+        public CitiesController(DataContext context, IUriService uriService)
         {
             _context = context;
+            _uriService = uriService;
         }
 
         // GET: api/Cities
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<City>>> GetCities()
+        public async Task<ActionResult<IEnumerable<City>>> GetCities([FromQuery] PaginationFilter filter)
         {
-            return await _context.Cities.ToListAsync();
+            List<City> cities = new List<City>();
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Cities.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<City>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Cities
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .ToListAsync();
+                result.ForEach(c => cities.Add(c));
+                PagedResponse<List<City>> pagedResponse = Pagination.CreatePagedReponse<City>(cities, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
+            }
         }
 
         // GET: api/Cities/5
@@ -39,10 +64,10 @@ namespace Viajes365RestApi.Controllers
 
             if (city == null)
             {
-                return NotFound();
+                return NotFound(new Response<City>() { Message = "CIUDAD NO ENCONTRADA", ErrorCode = 416 });
             }
 
-            return city;
+            return Ok(new Response<City>(city));
         }
 
         // PUT: api/Cities/5
