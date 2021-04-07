@@ -51,6 +51,10 @@ namespace Viajes365RestApi
                 return new UriService(uri);
             });
 
+            // TuTiempo Net
+            services.AddSingleton<IWeatherService, WeatherService>();
+            services.AddHttpClient("TuTiempoNetApi", c => c.BaseAddress = new Uri("https://api.tutiempo.net"));
+
             services.AddCors();
             services.AddControllers();
             // Automapper DI module
