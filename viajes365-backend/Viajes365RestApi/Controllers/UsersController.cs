@@ -160,7 +160,7 @@ namespace Viajes365RestApi.Controllers
       
         // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] UserUpdateDto model)
+        public IActionResult Update(long id, [FromBody] UserUpdateDto model)
         {
             setAppUser();
             if (_mainrole == userrole && _userid != id)
@@ -186,7 +186,7 @@ namespace Viajes365RestApi.Controllers
 
         // Allow only self id for role user and any id for role admin
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(long id)
         {
             setAppUser();
             if (_mainrole == userrole && _userid != id)
