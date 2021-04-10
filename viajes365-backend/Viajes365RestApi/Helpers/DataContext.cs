@@ -33,6 +33,7 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Location> Locations { get; set; }
        
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -58,6 +59,7 @@ namespace Viajes365RestApi.Helpers
             // Property Configurations SQL Server Express 2019                    
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
+            new LocationBuilder().Configure(mb.Entity<Location>());
 
         }
 

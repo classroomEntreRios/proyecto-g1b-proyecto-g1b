@@ -10,7 +10,7 @@ using Viajes365RestApi.Helpers;
 namespace Viajes365RestApi.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210321210241_InitialCreate")]
+    [Migration("20210410224444_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -20,6 +20,60 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.3")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("Viajes365RestApi.Entities.Location", b =>
+                {
+                    b.Property<long>("LocationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasComment("Esto se implementa para soft delete");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de creación");
+
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del creador");
+
+                    b.Property<string>("FullAddress")
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<long>("LastId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del último Editor");
+
+                    b.Property<double>("Latitude")
+                        .HasColumnType("float");
+
+                    b.Property<string>("LocationName")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<double>("Longitude")
+                        .HasColumnType("float");
+
+                    b.Property<byte>("Note")
+                        .HasMaxLength(255)
+                        .HasColumnType("tinyint");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de última actualización");
+
+                    b.HasKey("LocationId");
+
+                    b.HasIndex("LocationName")
+                        .IsUnique();
+
+                    b.ToTable("Locations");
+                });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Role", b =>
                 {
