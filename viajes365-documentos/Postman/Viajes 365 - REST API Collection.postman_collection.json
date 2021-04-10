@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "4938e543-a33f-44d1-9991-0b2dbf2e9fed",
+		"_postman_id": "ab4fc4c3-edaf-448e-9767-8d1ca6142726",
 		"name": "Viajes 365 - REST API Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -402,6 +402,158 @@
 							],
 							"path": [
 								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "LOCATIONS",
+			"item": [
+				{
+					"name": "listado de localidades",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}locations",
+							"host": [
+								"{{LOCAL_SERVER}}locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener localidad por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}locations/1",
+							"host": [
+								"{{LOCAL_SERVER}}locations"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear una localidad",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"locationName\": \"San Jose\",\r\n    \"latitude\": -32.212601,\r\n    \"longitude\": -58.219189,\r\n    \"fullAddress\": \"San Jose Entre Rios\",\r\n    \"note\": 5,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-10T00:00:00\",\r\n    \"updated\": \"2021-04-10T00:00:00\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}locations",
+							"host": [
+								"{{LOCAL_SERVER}}locations"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar localidad por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n     \"locationId\": 2,\r\n    \"locationName\": \"San Jose2\",\r\n    \"latitude\": -32.212601,\r\n    \"longitude\": -58.219189,\r\n    \"fullAddress\": \"San Jose 2 Entre Rios\",\r\n    \"note\": 3,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-10T00:00:00\",\r\n    \"updated\": \"2021-04-10T00:00:00\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}locations/2",
+							"host": [
+								"{{LOCAL_SERVER}}locations"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar localidad por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}locations/4",
+							"host": [
+								"{{LOCAL_SERVER}}locations"
+							],
+							"path": [
+								"4"
 							]
 						}
 					},
