@@ -58,7 +58,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .HasColumnType("float");
 
                     b.Property<byte>("Note")
-                        .HasMaxLength(255)
                         .HasColumnType("tinyint");
 
                     b.Property<DateTime>("Updated")
@@ -155,6 +154,58 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         });
                 });
 
+            modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
+                {
+                    b.Property<long>("TourId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit")
+                        .HasComment("Esto se implementa para soft delete");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de creación");
+
+                    b.Property<long>("CreatorId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del creador");
+
+                    b.Property<string>("Duration")
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<long>("LastId")
+                        .HasColumnType("bigint")
+                        .HasComment("UserId del último Editor");
+
+                    b.Property<long>("LocationId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Summary")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2")
+                        .HasComment("Fecha y hora de última actualización");
+
+                    b.HasKey("TourId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Tours");
+                });
+
             modelBuilder.Entity("Viajes365RestApi.Entities.User", b =>
                 {
                     b.Property<long>("UserId")
@@ -230,6 +281,15 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
+                {
+                    b.HasOne("Viajes365RestApi.Entities.Location", null)
+                        .WithMany("Tours")
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Viajes365RestApi.Entities.User", b =>
                 {
                     b.HasOne("Viajes365RestApi.Entities.Role", "Role")
@@ -239,6 +299,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .IsRequired();
 
                     b.Navigation("Role");
+                });
+
+            modelBuilder.Entity("Viajes365RestApi.Entities.Location", b =>
+                {
+                    b.Navigation("Tours");
                 });
 #pragma warning restore 612, 618
         }

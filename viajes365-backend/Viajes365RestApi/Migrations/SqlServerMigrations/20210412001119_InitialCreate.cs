@@ -17,7 +17,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     Latitude = table.Column<double>(type: "float", nullable: false),
                     Longitude = table.Column<double>(type: "float", nullable: false),
                     FullAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Note = table.Column<byte>(type: "tinyint", maxLength: 255, nullable: false),
+                    Note = table.Column<byte>(type: "tinyint", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
                     LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
@@ -45,6 +45,33 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.RoleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tours",
+                columns: table => new
+                {
+                    TourId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    LocationId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tours", x => x.TourId);
+                    table.ForeignKey(
+                        name: "FK_Tours_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -104,6 +131,17 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 filter: "[RoleName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Tours_LocationId",
+                table: "Tours",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tours_Name",
+                table: "Tours",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
                 table: "Users",
                 column: "Email",
@@ -126,10 +164,13 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Tours");
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "Roles");
