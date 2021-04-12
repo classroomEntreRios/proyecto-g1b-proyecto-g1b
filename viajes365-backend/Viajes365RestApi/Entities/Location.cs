@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Viajes365RestApi.Entities
 {
@@ -18,5 +15,8 @@ namespace Viajes365RestApi.Entities
         [StringLength(150)]
         public string FullAddress { get; set; }
         public byte Note { get; set; }
+
+
+        public ICollection<Tour> Tours { get; set; }
     }
 }
