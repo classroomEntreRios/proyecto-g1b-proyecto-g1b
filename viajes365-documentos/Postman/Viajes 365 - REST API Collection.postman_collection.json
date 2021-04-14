@@ -714,6 +714,158 @@
 			]
 		},
 		{
+			"name": "ATTRACTIONS",
+			"item": [
+				{
+					"name": "listado de atracciones",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener atraccion por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions/3",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear una atraccion",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Atrac2\",\r\n    \"summary\": \"Resume atrac2\",\r\n    \"note\": \"bla bla\",\r\n    \"rating\": 3,\r\n    \"locationId\": 2,\r\n    \"tour_Attractions\": null,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-12T00:00:00\",\r\n    \"updated\": \"2021-04-12T00:00:00\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar atraccion por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"attractionId\": 4,\r\n    \"name\": \"Atrac23\",\r\n    \"summary\": \"Resume atrac3\",\r\n    \"note\": \"bla bla blaa\",\r\n    \"rating\": 3,\r\n    \"locationId\": 2,\r\n    \"tour_Attractions\": null,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-14T02:35:03.5536493Z\",\r\n    \"updated\": \"2021-04-14T02:35:03.5536493Z\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions/4",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar atraccion por Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions/3",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "TOPICS",
 			"item": [
 				{
