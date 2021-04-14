@@ -1,15 +1,18 @@
+
+
 <!-- navbar anonymous -->
-<nav class="navbar navbar-expand-lg navbar-custom" *ngIf="!user.userId">
+
+<nav class="navbar navbar-expand-lg navbar-custom float-left" *ngIf="!user.userId">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img class="navbar-logo filter-logo" src="../assets/images/logo_viajes_365.svg"
-                alt="logo 365" width="32" height="32" title="Logo Viajes 365">Viajes 365</a>
+        <!-- <a class="navbar-brand" href="#"><img class="navbar-logo filter-logo" src="../assets/images/logo_viajes_365.svg"
+                alt="logo 365" width="32" height="32" title="Logo Viajes 365"></a> -->
         <button class="custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll"
             aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarScroll">
+        <div class="collapse navbar-collapse pull-left" id="navbarScroll">
             <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link active" aria-current="page" routerLink="/" routerLinkActive="active"
                         [routerLinkActiveOptions]="{exact: true}"><i class="bi-house-fill"
                             style="color: white; margin-right: 8px;"></i>Inicio</a>
@@ -24,7 +27,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <img src="https://v5i.tutiempo.net/wi/02/40/2n.png" alt="" srcset="">
+                    <!-- <img src="https://v5i.tutiempo.net/wi/02/40/2n.png" alt="" srcset=""> -->
                 <!-- www.tutiempo.net - Ancho:477px - Alto:91px -->
                     <!-- <div id="TT_FyN1E1k1kSQBnFGK7fzzjDzzzWlKLKr2rt1YEsCoKkzo35mom">El tiempo - Tutiempo.net</div>
                     <script type="text/javascript" 
@@ -33,33 +36,27 @@
                 </li>   
 
 
-                <!-- <li class="nav-item ">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        Link
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                
+                 <li class="nav-item ms-5">
+                    <form class="d-flex">
+                        <input class="form-control me-2 my-1" type="search" placeholder="tu consulta aquí..."
+                            aria-label="Buscar">
+                        <button class="btn btn-outline-success my-1" type="submit"><span style="display:inline-flex"><i
+                                    class="bi-search" style="color: white; margin-right: 8px;"></i>Buscar</span></button>
+                    </form>
+
                 </li>
-                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Link</a>
-                </li> -->
             </ul>
-            <form class="d-flex">
-                <input class="form-control me-2 my-1" type="search" placeholder="tu consulta aquí..."
-                    aria-label="Buscar">
-                <button class="btn btn-outline-success my-1" type="submit"><span style="display:inline-flex"><i
-                            class="bi-search" style="color: white; margin-right: 8px;"></i>Buscar</span></button>
-            </form>
+            
+
+            <span class="float-right blanco me-5">Paraná 19°C
+                <img class="ms-1" src="https://v5i.tutiempo.net/wi/02/40/2n.png" alt="" srcset="">
+            </span>      
         </div>
-    </div>
+    </div>   
 </nav>
+
+
 
 <!-- navbar user -->
 <nav class="navbar navbar-expand-lg navbar-custom" *ngIf="user.role?.roleId == 1">
@@ -138,6 +135,9 @@
         </div>
     </div>
 </nav>
+
+
+
 
 <!-- navbar admin -->
 <nav class="navbar navbar-expand-lg navbar-custom" *ngIf="user.role?.roleId == 2">
