@@ -18,5 +18,6 @@ namespace Viajes365RestApi.Entities
 
 
         public ICollection<Tour> Tours { get; set; }
+        public ICollection<Attraction> Attractions { get; set; }
     }
 }
