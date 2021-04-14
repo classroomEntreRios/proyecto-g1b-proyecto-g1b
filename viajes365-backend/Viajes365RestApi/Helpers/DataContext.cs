@@ -35,6 +35,8 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Role> Roles { get; set; }
         public DbSet<Location> Locations { get; set; }
         public DbSet<Tour> Tours { get; set; }
+        public DbSet<Attraction> Attractions { get; set; }
+        public DbSet<Tour_attraction> Tour_attractions { get; set; }
        
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -62,6 +64,8 @@ namespace Viajes365RestApi.Helpers
             new RoleBuilder().Configure(mb.Entity<Role>());
             new LocationBuilder().Configure(mb.Entity<Location>());
             new TourBuilder().Configure(mb.Entity<Tour>());
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
 
         }
 
