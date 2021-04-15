@@ -1,3 +1,6 @@
+using System.ComponentModel.DataAnnotations;
+
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Viajes365RestApi.Entities
 {
     public class Photos : Base
