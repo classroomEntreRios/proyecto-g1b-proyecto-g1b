@@ -1,3 +1,4 @@
+using Microsoft.CodeAnalysis;
 namespace Viajes365RestApi.Dtos
 {
     public class PhotosDto 
