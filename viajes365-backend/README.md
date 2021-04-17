@@ -24,7 +24,8 @@ check **"ConnectionStrings"** sections in ***appsettings.json*** and ***appsetti
 files for example 
 
     "Viajes365Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;User ID=**tuusuario**;Password=**tuclave**;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"
-
+Database=master;
+"Viajes365Database": "Data Source=tcp:127.0.0.1,1433;Initial Catalog=fullstack2;Trusted_Connection=True;
 **Important**: Tip ***Initial Catalog*** refers to the database name for the *InitialCreate* migration.
    
 ## Migrations
