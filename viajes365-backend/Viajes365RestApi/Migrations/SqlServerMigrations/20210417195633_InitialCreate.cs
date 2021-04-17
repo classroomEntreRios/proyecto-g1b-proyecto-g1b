@@ -213,11 +213,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, 43437, new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416), 1L, 1L, "Colón", new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416) },
-                    { 2L, true, 42923, new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416), 1L, 1L, "Concordia", new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416) },
-                    { 3L, true, 42987, new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416), 1L, 1L, "Federación", new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416) },
-                    { 4L, true, 43034, new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416) },
-                    { 5L, true, 43214, new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416), 1L, 1L, "Paraná", new DateTime(2021, 4, 10, 16, 48, 26, 193, DateTimeKind.Utc).AddTicks(1416) }
+                    { 1L, true, 43437, new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447), 1L, 1L, "Colón", new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447) },
+                    { 2L, true, 42923, new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447), 1L, 1L, "Concordia", new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447) },
+                    { 3L, true, 42987, new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447), 1L, 1L, "Federación", new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447) },
+                    { 4L, true, 43034, new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447) },
+                    { 5L, true, 43214, new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447), 1L, 1L, "Paraná", new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447) }
                 });
 
             migrationBuilder.InsertData(
@@ -225,10 +225,10 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989), 1L, 1L, "Usuario", new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989) },
-                    { 2L, true, new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989), 1L, 1L, "Administrador", new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989) },
-                    { 3L, false, new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989), 1L, 1L, "Moderador", new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989) },
-                    { 4L, false, new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989), 1L, 1L, "Anónimo", new DateTime(2021, 4, 10, 16, 48, 26, 189, DateTimeKind.Utc).AddTicks(989) }
+                    { 1L, true, new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793), 1L, 1L, "Usuario", new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793) },
+                    { 2L, true, new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793), 1L, 1L, "Administrador", new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793) },
+                    { 3L, false, new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793), 1L, 1L, "Moderador", new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793) },
+                    { 4L, false, new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793), 1L, 1L, "Anónimo", new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793) }
                 });
 
             migrationBuilder.CreateIndex(
