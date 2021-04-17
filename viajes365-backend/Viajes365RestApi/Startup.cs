@@ -42,6 +42,15 @@ namespace Viajes365RestApi
             else
                 services.AddDbContext<DataContext>();
 
+            // UriService
+            services.AddSingleton<IUriService>(us =>
+            {
+                var accessor = us.GetRequiredService<IHttpContextAccessor>();
+                var request = accessor.HttpContext.Request;
+                var uri = string.Concat(request.Scheme, "://", request.Host.ToUriComponent());
+                return new UriService(uri);
+            });
+
             services.AddCors();
             services.AddControllers();
             // Automapper DI module
@@ -50,10 +59,10 @@ namespace Viajes365RestApi
             // configure strongly typed settings objects
             var appSettingsSection = _configuration.GetSection("AppSettings");
             services.Configure<AppSettings>(appSettingsSection);
-            
+
             // get custom settings
             var appSettings = appSettingsSection.Get<AppSettings>();
-                                             
+
             // configure jwt authentication
             var key = Encoding.ASCII.GetBytes(appSettings.Secret);
             services.AddAuthentication(x =>
@@ -89,7 +98,7 @@ namespace Viajes365RestApi
                 };
             });
             services.AddControllers();
-            
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Viajes365RestApi", Version = "v1" });
