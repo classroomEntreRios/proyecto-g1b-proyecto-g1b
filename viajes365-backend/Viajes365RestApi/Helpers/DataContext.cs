@@ -33,6 +33,8 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Attraction> Attractions { get; set; }
+        public DbSet<Photo> Photos { get; set; }
        
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -58,7 +60,8 @@ namespace Viajes365RestApi.Helpers
             // Property Configurations SQL Server Express 2019                    
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
-
+new AttractionBuilder().Configure(mb.Entity<Attraction>());
+//new PhotoBuilder().Configure(mb.Entity<Photo>());
         }
 
         private void OnBeforeSaving()
