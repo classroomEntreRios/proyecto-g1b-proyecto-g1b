@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 // used to create mock backend
@@ -14,20 +14,23 @@ import { HomeComponent } from './home';
 import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { NavbarComponent } from './_components/navbar.component';
 import { TermsAndConditionsComponent } from './home/terms-and-conditions/terms-and-conditions.component';
+import { ApiclimaComponent } from './_components/apiclima.component';
 
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   declarations: [
     AppComponent,
     AlertComponent,
     HomeComponent,
     NavbarComponent,
-    TermsAndConditionsComponent
+    TermsAndConditionsComponent,
+    ApiclimaComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
