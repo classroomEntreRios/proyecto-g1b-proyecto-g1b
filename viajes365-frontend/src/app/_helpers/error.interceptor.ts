@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, switchAll } from 'rxjs/operators';
 
 import { AlertService } from '@app/_services';
 
@@ -15,8 +15,10 @@ export class ErrorInterceptor implements HttpInterceptor {
       if (error == "Unauthorized") {
         error = "No Autorizado";
       }
-      if (error == "Username or password is incorrect") {
-        error = "Usuario y/o claves incorrectos";
+      if (error == " <Username or password is incorrect") {
+        error = ("Usuario y/o claves incorrecto")
+
+
       }
       this.alertService.error(error);
       console.error(err);

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -20,5 +21,16 @@ namespace Viajes365RestApi.Entities
         public virtual Location Location { get; set; }
 
         public ICollection<Tour_attraction> Tour_Attractions { get; set; }
+=======
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Viajes365RestApi.Entities
+{
+    public class Topic
+    {
+>>>>>>> develop
     }
 }

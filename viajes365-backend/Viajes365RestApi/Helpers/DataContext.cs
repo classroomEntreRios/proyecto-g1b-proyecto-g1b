@@ -33,6 +33,11 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Tour> Tours { get; set; }
+        public DbSet<Attraction> Attractions { get; set; }
+        public DbSet<Tour_attraction> Tour_attractions { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Weather> Weathers { get; set; }
         public DbSet<Information> Informations { get; set; }
@@ -40,6 +45,7 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
+
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -64,6 +70,14 @@ namespace Viajes365RestApi.Helpers
             // Property Configurations SQL Server Express 2019                    
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
+            new LocationBuilder().Configure(mb.Entity<Location>());
+            new TourBuilder().Configure(mb.Entity<Tour>());
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
+
+
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            //new PhotoBuilder().Configure(mb.Entity<Photo>());
             new CityBuilder().Configure(mb.Entity<City>());
             new DayBuilder().Configure(mb.Entity<Day>());
             new HourBuilder().Configure(mb.Entity<Hour>());
@@ -76,7 +90,7 @@ namespace Viajes365RestApi.Helpers
         {
             var entries = ChangeTracker.Entries();
             var utcNow = DateTime.UtcNow;
-            
+
             // Get app user
             if (_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier) == null)
                 _currentUser = "1";
@@ -113,8 +127,5 @@ namespace Viajes365RestApi.Helpers
                 }
             }
         }
-
-
-
     }
 }

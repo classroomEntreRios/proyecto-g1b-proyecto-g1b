@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
         next: (u: User) => {
           // get return url from query parameters or default to home page
           const returnUrl = u.returnUrl || '/';
-          // console.log(u.returnUrl);
+          //console.log(u.returnUrl);
           this.router.navigateByUrl(returnUrl);
         },
         error: error => {

@@ -12,8 +12,11 @@ body {
   font-family: Montserrat;
 }
 
+
+.blanco {color: rgba(255, 255, 255, 0.5);}
 a {
   color: aqua;
+  font-size: 1rem;
 }
 
 a:hover {
@@ -345,4 +348,17 @@ footer {
   .body-pd {
     padding-left: calc(var(--nav-width) + 188px)
   }
+}
+
+//responsive sidebar
+.col {
+  margin-left: 15%;
+}
+
+.card {
+  overflow-wrap: normal;
+}
+
+.card-body {
+  padding: 0%;
 }

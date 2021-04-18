@@ -1,4 +1,10 @@
+<<<<<<< HEAD
 ﻿namespace Viajes365RestApi.Dtos
+=======
+﻿
+
+namespace Viajes365RestApi.Dtos
+>>>>>>> develop
 {
     public class LocationDto
     {

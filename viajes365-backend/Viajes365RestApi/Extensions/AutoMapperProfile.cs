@@ -28,6 +28,12 @@ namespace Viajes365RestApi.Extensions
             CreateMap<Comment, CommentDto>();
             CreateMap<AttractionDto, Attraction>();
             CreateMap<Attraction, AttractionDto>();
+            CreateMap<Location, LocationDto>();
+            CreateMap<LocationDto, Location>();
+            CreateMap<Tour, TourDto>();
+            CreateMap<TourDto, Tour>();
+            CreateMap<Attraction, AttractionDto>();
+            CreateMap<AttractionDto, Attraction>();
             CreateMap<LocalityDto, Locality>();
             CreateMap<InformationDto, Information>();
             CreateMap<WeatherUpdateDto, Weather>();
