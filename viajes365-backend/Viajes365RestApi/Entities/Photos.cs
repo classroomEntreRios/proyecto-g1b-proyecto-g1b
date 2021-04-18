@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Microsoft.CodeAnalysis;
 using System.ComponentModel.DataAnnotations.Schema;
 namespace Viajes365RestApi.Entities
 {
@@ -15,6 +15,6 @@ namespace Viajes365RestApi.Entities
         [ForeignKey("FK_Photos_Location_LocationId")]
         public long LocationId { get; set; }
         public virtual Location Location { get; set; }
-        public ICollections<Attractions> { get; set; }
+        public ICollection<Attraction> Attractions { get; set; }
     }
 }

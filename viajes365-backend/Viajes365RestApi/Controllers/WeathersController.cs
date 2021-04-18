@@ -16,9 +16,7 @@ using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Authorize]
     [ApiController]
-    [Authorization(adminrole)]
     [Route("api/[controller]")]
     public class WeathersController : ControllerBase
     {
@@ -26,7 +24,7 @@ namespace Viajes365RestApi.Controllers
         private readonly IUriService _uriService;
         private IWeatherService _weatherService;
         private readonly DataContext _context;
-        const string adminrole = "Administrador";
+             
 
         public WeathersController(
             DataContext context,

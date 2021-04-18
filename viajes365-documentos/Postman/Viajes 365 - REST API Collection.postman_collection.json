@@ -410,518 +410,6 @@
 			]
 		},
 		{
-			"name": "LOCATIONS",
-			"item": [
-				{
-					"name": "listado de localidades",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}locations",
-							"host": [
-								"{{LOCAL_SERVER}}locations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "obtener localidad por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}locations/1",
-							"host": [
-								"{{LOCAL_SERVER}}locations"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "crear una localidad",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"locationName\": \"San Jose\",\r\n    \"latitude\": -32.212601,\r\n    \"longitude\": -58.219189,\r\n    \"fullAddress\": \"San Jose Entre Rios\",\r\n    \"note\": 5,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-10T00:00:00\",\r\n    \"updated\": \"2021-04-10T00:00:00\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}locations",
-							"host": [
-								"{{LOCAL_SERVER}}locations"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "modificar localidad por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n     \"locationId\": 2,\r\n    \"locationName\": \"San Jose2\",\r\n    \"latitude\": -32.212601,\r\n    \"longitude\": -58.219189,\r\n    \"fullAddress\": \"San Jose 2 Entre Rios\",\r\n    \"note\": 3,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-10T00:00:00\",\r\n    \"updated\": \"2021-04-10T00:00:00\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}locations/2",
-							"host": [
-								"{{LOCAL_SERVER}}locations"
-							],
-							"path": [
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "borrar localidad por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}locations/4",
-							"host": [
-								"{{LOCAL_SERVER}}locations"
-							],
-							"path": [
-								"4"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "TOURS",
-			"item": [
-				{
-					"name": "listado de tours",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "obtener tour por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours/1",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							],
-							"path": [
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "obtener tours por Localidad Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours/location/3",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							],
-							"path": [
-								"location",
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "crear un tour",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Tour7\",\r\n    \"summary\": \"Resumen del tour 7\",\r\n    \"duration\": \"4 horas\",\r\n    \"locationId\": 2,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-03-10T00:00:00\",\r\n    \"updated\": \"2021-03-10T00:00:00\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "modificar tour por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"tourId\": 4,\r\n    \"name\": \"Tour 4 por er\",\r\n    \"summary\": \"Resumen del tour 4\",\r\n    \"duration\": \"28 horas\",\r\n    \"locationId\": 3,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-03-10T00:00:00\",\r\n    \"updated\": \"2021-03-10T00:00:00\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours/4",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							],
-							"path": [
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "borrar tour por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}tours/7",
-							"host": [
-								"{{LOCAL_SERVER}}tours"
-							],
-							"path": [
-								"7"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "ATTRACTIONS",
-			"item": [
-				{
-					"name": "listado de atracciones",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "obtener atraccion por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions/3",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							],
-							"path": [
-								"3"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "obtener atracciones por Localidad Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions/location/1",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							],
-							"path": [
-								"location",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "crear una atraccion",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Atrac2\",\r\n    \"summary\": \"Resume atrac2\",\r\n    \"note\": \"bla bla\",\r\n    \"rating\": 3,\r\n    \"locationId\": 2,\r\n    \"tour_Attractions\": null,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-12T00:00:00\",\r\n    \"updated\": \"2021-04-12T00:00:00\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "modificar atraccion por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"attractionId\": 4,\r\n    \"name\": \"Atrac23\",\r\n    \"summary\": \"Resume atrac3\",\r\n    \"note\": \"bla bla blaa\",\r\n    \"rating\": 3,\r\n    \"locationId\": 2,\r\n    \"tour_Attractions\": null,\r\n    \"creatorId\": 1,\r\n    \"lastId\": 1,\r\n    \"created\": \"2021-04-14T02:35:03.5536493Z\",\r\n    \"updated\": \"2021-04-14T02:35:03.5536493Z\",\r\n    \"active\": true\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions/4",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							],
-							"path": [
-								"4"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "borrar atraccion por Id",
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": [
-								{
-									"key": "token",
-									"value": "{{TOKEN_AUTH}}",
-									"type": "string"
-								}
-							]
-						},
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{LOCAL_SERVER}}attractions/3",
-							"host": [
-								"{{LOCAL_SERVER}}attractions"
-							],
-							"path": [
-								"3"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
 			"name": "TOPICS",
 			"item": [
 				{
@@ -1191,6 +679,139 @@
 			"item": [
 				{
 					"name": "listado de Ciudades",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una Ciudad",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Potosi\",\r\n    \"code\": 3333  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por City Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cityId\": 6,\r\n    \"name\": \"Clorinda\",\r\n    \"code\": 3335  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por City Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por City Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "ATTRACTIONS",
+			"item": [
+				{
+					"name": "listado de Atracciones",
 					"request": {
 						"method": "GET",
 						"header": [],
