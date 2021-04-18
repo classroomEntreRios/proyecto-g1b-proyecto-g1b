@@ -349,3 +349,16 @@ footer {
     padding-left: calc(var(--nav-width) + 188px)
   }
 }
+
+//responsive sidebar
+.col {
+  margin-left: 15%;
+}
+
+.card {
+  overflow-wrap: normal;
+}
+
+.card-body {
+  padding: 0%;
+}
