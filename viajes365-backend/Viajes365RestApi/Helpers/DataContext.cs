@@ -33,16 +33,16 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
-<<<<<<< HEAD
+        public DbSet<Location> Locations { get; set; }
+        public DbSet<Tour> Tours { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
+        public DbSet<Tour_attraction> Tour_attractions { get; set; }
         public DbSet<Photo> Photos { get; set; }
-       
-=======
         public DbSet<City> Cities { get; set; }
         public DbSet<Weather> Weathers { get; set; }
         public DbSet<Information> Informations { get; set; }
         public DbSet<Locality> Localities { get; set; }
->>>>>>> remotes/origin/develop
+
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -67,24 +67,27 @@ namespace Viajes365RestApi.Helpers
             // Property Configurations SQL Server Express 2019                    
             new UserBuilder().Configure(mb.Entity<User>());
             new RoleBuilder().Configure(mb.Entity<Role>());
-<<<<<<< HEAD
-new AttractionBuilder().Configure(mb.Entity<Attraction>());
-//new PhotoBuilder().Configure(mb.Entity<Photo>());
-=======
+            new LocationBuilder().Configure(mb.Entity<Location>());
+            new TourBuilder().Configure(mb.Entity<Tour>());
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
+
+
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            //new PhotoBuilder().Configure(mb.Entity<Photo>());
             new CityBuilder().Configure(mb.Entity<City>());
             new DayBuilder().Configure(mb.Entity<Day>());
             new HourBuilder().Configure(mb.Entity<Hour>());
             new InformationBuilder().Configure(mb.Entity<Information>());
             new LocalityBuilder().Configure(mb.Entity<Locality>());
 
->>>>>>> remotes/origin/develop
         }
 
         private void OnBeforeSaving()
         {
             var entries = ChangeTracker.Entries();
             var utcNow = DateTime.UtcNow;
-            
+
             // Get app user
             if (_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier) == null)
                 _currentUser = "1";
@@ -121,8 +124,5 @@ new AttractionBuilder().Configure(mb.Entity<Attraction>());
                 }
             }
         }
-
-
-
     }
 }

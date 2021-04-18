@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+﻿using Microsoft.EntityFrameworkCore;
+=======
 using Microsoft.EntityFrameworkCore;
+>>>>>>> remotes/origin/develop
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Viajes365RestApi.Entities;
 
@@ -8,6 +12,10 @@ namespace Viajes365RestApi.Builders
     {
         public void Configure(EntityTypeBuilder<Attraction> builder)
         {
+<<<<<<< HEAD
+            builder.HasIndex(u => u.Name).IsUnique();
+        }
+=======
             builder.HasIndex(a => a.Name).IsUnique();
             builder.HasData(
                 new Attraction { AttractionId = 1L, Name = "Plaza de Mayo", Active = true },
@@ -17,5 +25,6 @@ namespace Viajes365RestApi.Builders
                 );
         }
                 
+>>>>>>> remotes/origin/develop
     }
 }
