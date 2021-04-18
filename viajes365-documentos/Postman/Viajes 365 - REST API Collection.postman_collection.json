@@ -616,6 +616,34 @@
 					"response": []
 				},
 				{
+					"name": "obtener tours por Localidad Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}tours/location/3",
+							"host": [
+								"{{LOCAL_SERVER}}tours"
+							],
+							"path": [
+								"location",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "crear un tour",
 					"request": {
 						"auth": {
@@ -762,6 +790,34 @@
 							],
 							"path": [
 								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener atracciones por Localidad Id",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN_AUTH}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions/location/1",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
+							],
+							"path": [
+								"location",
+								"1"
 							]
 						}
 					},
