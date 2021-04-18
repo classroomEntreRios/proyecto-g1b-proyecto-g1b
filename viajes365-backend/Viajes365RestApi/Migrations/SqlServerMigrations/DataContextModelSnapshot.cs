@@ -363,20 +363,24 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Attraction", b =>
                 {
-                    b.HasOne("Viajes365RestApi.Entities.Location", null)
+                    b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Attractions")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
                 {
-                    b.HasOne("Viajes365RestApi.Entities.Location", null)
+                    b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Tours")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour_attraction", b =>

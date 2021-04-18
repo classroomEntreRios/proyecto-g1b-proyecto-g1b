@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Helpers;
@@ -16,33 +18,54 @@ namespace Viajes365RestApi.Controllers
     [Route("api/[controller]")]
     public class ToursController : ControllerBase
     {
+        private IMapper _mapper;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public ToursController(DataContext context)
+        public ToursController(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: api/Tours
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Tour>>> GetTours()
+        public async Task<ActionResult<IEnumerable<TourDto>>> GetTours()
         {
-            return await _context.Tours.ToListAsync();
+            List<TourDto> tours = new List<TourDto>();
+            var result = await _context.Tours.Include(u => u.Location).ToListAsync();
+            result.ForEach(u => tours.Add(_mapper.Map<TourDto>(u)));
+            return tours;
         }
 
         // GET: api/Tours/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Tour>> GetTour (long id)
+        public async Task<ActionResult<TourDto>> GetTour (long id)
         {
-            var tour = await _context.Tours.FindAsync(id);
+            var toloc = await _context.Tours.Include(at => at.Location).ToListAsync();
+            var tour = toloc.Find(to => to.TourId == id);
 
             if (tour == null)
             {
                 return NotFound();
             }
 
-            return tour;
+            var result = _mapper.Map<TourDto>(tour);
+
+            return result;
+
+        }
+
+        // GET: api/Attractions
+        [HttpGet("location/{id}")]
+        public async Task<ActionResult<IEnumerable<TourDto>>> GetToursByLocationId(long id)
+        {
+            List<TourDto> tours = new List<TourDto>();
+
+            var result = await _context.Tours.Where(a => a.LocationId == id).ToListAsync();
+            result.ForEach(u => tours.Add(_mapper.Map<TourDto>(u)));
+
+            return tours;
         }
 
         // PUT: api/tours/5

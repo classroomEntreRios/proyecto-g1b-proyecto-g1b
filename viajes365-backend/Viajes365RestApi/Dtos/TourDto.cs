@@ -9,6 +9,9 @@ namespace Viajes365RestApi.Dtos
         public string Duration { get; set; }
 
         public long LocationId { get; set; }
-        //public Location Location { get; set; }
+        public virtual LocationDto Location { get; set; }
+        public bool Active { get; set; }
+
+
     }
 }

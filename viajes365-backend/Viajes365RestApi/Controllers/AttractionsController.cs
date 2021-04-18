@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Helpers;
@@ -16,33 +18,53 @@ namespace Viajes365RestApi.Controllers
     [Route("api/[controller]")]
     public class AttractionsController : ControllerBase
     {
+        private IMapper _mapper;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public AttractionsController(DataContext context)
+        public AttractionsController(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
         // GET: api/Attractions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Attraction>>> GetAttractions()
+        public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractions()
         {
-            return await _context.Attractions.ToListAsync();
+            List<AttractionDto> attractions = new List<AttractionDto>();
+            var result = await _context.Attractions.Include(u => u.Location).ToListAsync();
+            result.ForEach(u => attractions.Add(_mapper.Map<AttractionDto>(u)));
+            return attractions;
         }
 
         // GET: api/Attractions/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Attraction>> GetAttraction(long id)
+        public async Task<ActionResult<AttractionDto>> GetAttraction(long id)
         {
-            var attraction = await _context.Attractions.FindAsync(id);
+            var atloc = await _context.Attractions.Include(at => at.Location).ToListAsync();
+            var atrac = atloc.Find(re => re.AttractionId == id);
 
-            if (attraction == null)
+            if (atrac == null)
             {
                 return NotFound();
             }
 
-            return attraction;
+            var result = _mapper.Map<AttractionDto>(atrac);
+
+            return result;
+        }
+
+        // GET: api/Attractions
+        [HttpGet("location/{id}")]
+        public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractionsByLocationId(long id)
+        {
+            List<AttractionDto> attractions = new List<AttractionDto>();
+
+            var result = await _context.Attractions.Where(a => a.LocationId == id).ToListAsync();
+            result.ForEach(u => attractions.Add(_mapper.Map<AttractionDto>(u)));
+
+            return attractions;
         }
 
         // PUT: api/Attractions/5
@@ -107,5 +129,7 @@ namespace Viajes365RestApi.Controllers
         {
             return _context.Attractions.Any(e => e.AttractionId == id);
         }
+
+
     }
 }

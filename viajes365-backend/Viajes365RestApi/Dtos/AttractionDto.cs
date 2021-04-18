@@ -11,6 +11,8 @@ namespace Viajes365RestApi.Dtos
         public int Rating { get; set; }
 
         public long LocationId { get; set; }
-        //public Location Location { get; set; }
+        public virtual LocationDto Location { get; set; }
+        public bool Active { get; set; }
+
     }
 }

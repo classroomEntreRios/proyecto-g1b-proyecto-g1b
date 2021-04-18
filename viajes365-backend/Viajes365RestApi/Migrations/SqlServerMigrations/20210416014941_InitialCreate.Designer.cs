@@ -10,7 +10,7 @@ using Viajes365RestApi.Helpers;
 namespace Viajes365RestApi.Migrations.SqlServerMigrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20210414012325_InitialCreate")]
+    [Migration("20210416014941_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -365,20 +365,24 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Attraction", b =>
                 {
-                    b.HasOne("Viajes365RestApi.Entities.Location", null)
+                    b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Attractions")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
                 {
-                    b.HasOne("Viajes365RestApi.Entities.Location", null)
+                    b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Tours")
                         .HasForeignKey("LocationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Location");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour_attraction", b =>

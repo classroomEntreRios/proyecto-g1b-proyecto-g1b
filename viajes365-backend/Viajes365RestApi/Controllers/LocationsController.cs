@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
 using Viajes365RestApi.Helpers;
+using Viajes365RestApi.Services;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -17,11 +20,13 @@ namespace Viajes365RestApi.Controllers
     [Route("api/[controller]")]
     public class LocationsController : ControllerBase
     {
+        private IMapper _mapper;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public LocationsController(DataContext context)
+        public LocationsController(DataContext context, IMapper mapper)
         {
+            _mapper = mapper;
             _context = context;
         }
 
