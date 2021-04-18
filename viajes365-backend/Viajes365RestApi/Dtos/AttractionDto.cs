@@ -1,4 +1,9 @@
 <<<<<<< HEAD
+﻿namespace Viajes365RestApi.Dtos
+{
+    public class AttractionDto
+=======
+<<<<<<< HEAD
 ﻿
 
 namespace Viajes365RestApi.Dtos
@@ -10,6 +15,7 @@ namespace Viajes365RestApi.Dtos
 {
     public class AttractionDto 
 >>>>>>> remotes/origin/develop
+>>>>>>> develop
     {
         public long AttractionId { get; set; }
         public string Name { get; set; }
@@ -17,6 +23,9 @@ namespace Viajes365RestApi.Dtos
         public string Note { get; set; }
         public int Rating { get; set; }
 <<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> develop
 
         public long LocationId { get; set; }
         public virtual LocationDto Location { get; set; }
@@ -24,6 +33,8 @@ namespace Viajes365RestApi.Dtos
 
     }
 }
+<<<<<<< HEAD
+=======
 =======
         // public long LocationId { get; set; }
         //public virtual Location Location { get; set; }
@@ -31,3 +42,4 @@ namespace Viajes365RestApi.Dtos
     }
 }
 >>>>>>> remotes/origin/develop
+>>>>>>> develop

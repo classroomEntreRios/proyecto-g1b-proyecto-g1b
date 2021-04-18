@@ -24,14 +24,20 @@ namespace Viajes365RestApi.Controllers
     {
         private IMapper _mapper;
         private readonly IUriService _uriService;
+        private IWeatherService _weatherService;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public WeathersController(DataContext context, IMapper mapper, IUriService uriService)
+        public WeathersController(
+            DataContext context,
+            IMapper mapper,
+            IUriService uriService,
+            IWeatherService weatherService)
         {
             _context = context;
             _mapper = mapper;
             _uriService = uriService;
+            _weatherService = weatherService;
         }
 
         // GET: api/Weathers
@@ -125,12 +131,18 @@ namespace Viajes365RestApi.Controllers
 
         // POST: api/Weathers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Weather>> PostWeather([FromBody] WeatherDto model)
+        [HttpPost("{CityId}")]
+        public async Task<ActionResult<Weather>> PostWeather([FromBody] WeatherDto model, [FromRoute] long CityId)
         {
+            
+            if (CityId.ToString().Length > 0)
+            {
+               model = await _weatherService.GetByCityId(CityId);
+            }
+           
             // map model to entity
             var weather = _mapper.Map<Weather>(model);
-
+         
             _context.Weathers.Add(weather);
             await _context.SaveChangesAsync();
 

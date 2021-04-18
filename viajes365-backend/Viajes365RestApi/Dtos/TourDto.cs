@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+﻿namespace Viajes365RestApi.Dtos
+=======
 ﻿
 namespace Viajes365RestApi.Dtos
+>>>>>>> develop
 {
     public class TourDto
     {
@@ -11,7 +15,10 @@ namespace Viajes365RestApi.Dtos
         public long LocationId { get; set; }
         public virtual LocationDto Location { get; set; }
         public bool Active { get; set; }
+<<<<<<< HEAD
+=======
 
 
+>>>>>>> develop
     }
 }

@@ -60,6 +60,28 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Location",
+                columns: table => new
+                {
+                    LocationId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocationName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    FullAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Note = table.Column<byte>(type: "tinyint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Location", x => x.LocationId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -103,12 +125,94 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         column: x => x.InformationId,
                         principalTable: "Informations",
                         principalColumn: "InformationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Weathers_Localities_LocalityId",
                         column: x => x.LocalityId,
                         principalTable: "Localities",
                         principalColumn: "LocalityId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Attractions",
+                columns: table => new
+                {
+                    AttractionId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    LocationId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Attractions", x => x.AttractionId);
+                    table.ForeignKey(
+                        name: "FK_Attractions_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Topics",
+                columns: table => new
+                {
+                    TourId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    LocationId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Topics", x => x.TourId);
+                    table.ForeignKey(
+                        name: "FK_Topics_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Tour",
+                columns: table => new
+                {
+                    TourId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Duration = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+                    LocationId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tour", x => x.TourId);
+                    table.ForeignKey(
+                        name: "FK_Tour_Location_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Location",
+                        principalColumn: "LocationId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -208,16 +312,83 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Tour_attraction",
+                columns: table => new
+                {
+                    Tour_atractionId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Tour_Id = table.Column<long>(type: "bigint", nullable: false),
+                    Attraction_Id = table.Column<long>(type: "bigint", nullable: false),
+                    AttractionId = table.Column<long>(type: "bigint", nullable: true),
+                    TopicTourId = table.Column<long>(type: "bigint", nullable: true),
+                    TourId = table.Column<long>(type: "bigint", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Tour_attraction", x => x.Tour_atractionId);
+                    table.ForeignKey(
+                        name: "FK_Tour_attraction_Attractions_AttractionId",
+                        column: x => x.AttractionId,
+                        principalTable: "Attractions",
+                        principalColumn: "AttractionId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tour_attraction_Topics_TopicTourId",
+                        column: x => x.TopicTourId,
+                        principalTable: "Topics",
+                        principalColumn: "TourId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Tour_attraction_Tour_TourId",
+                        column: x => x.TourId,
+                        principalTable: "Tour",
+                        principalColumn: "TourId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Comments",
+                columns: table => new
+                {
+                    CommentId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Body = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    TopicId = table.Column<long>(type: "bigint", nullable: false),
+                    UserId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Comments", x => x.CommentId);
+                    table.ForeignKey(
+                        name: "FK_Comments_Topics_TopicId",
+                        column: x => x.TopicId,
+                        principalTable: "Topics",
+                        principalColumn: "TourId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Comments_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "Cities",
                 columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, 43437, new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344), 1L, 1L, "Colón", new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344) },
-                    { 2L, true, 42923, new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344), 1L, 1L, "Concordia", new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344) },
-                    { 3L, true, 42987, new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344), 1L, 1L, "Federación", new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344) },
-                    { 4L, true, 43034, new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344) },
-                    { 5L, true, 43214, new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344), 1L, 1L, "Paraná", new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344) }
+                    { 1L, true, 43437, new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970), 1L, 1L, "Colón", new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970) },
+                    { 2L, true, 42923, new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970), 1L, 1L, "Concordia", new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970) },
+                    { 3L, true, 42987, new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970), 1L, 1L, "Federación", new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970) },
+                    { 4L, true, 43034, new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970) },
+                    { 5L, true, 43214, new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970), 1L, 1L, "Paraná", new DateTime(2021, 4, 18, 14, 36, 21, 208, DateTimeKind.Utc).AddTicks(970) }
                 });
 
             migrationBuilder.InsertData(
@@ -225,17 +396,32 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956), 1L, 1L, "Usuario", new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956) },
-                    { 2L, true, new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956), 1L, 1L, "Administrador", new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956) },
-                    { 3L, false, new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956), 1L, 1L, "Moderador", new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956) },
-                    { 4L, false, new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956), 1L, 1L, "Anónimo", new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956) }
+                    { 1L, true, new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060), 1L, 1L, "Usuario", new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060) },
+                    { 2L, true, new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060), 1L, 1L, "Administrador", new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060) },
+                    { 3L, false, new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060), 1L, 1L, "Moderador", new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060) },
+                    { 4L, false, new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060), 1L, 1L, "Anónimo", new DateTime(2021, 4, 18, 14, 36, 21, 206, DateTimeKind.Utc).AddTicks(1060) }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Attractions_LocationId",
+                table: "Attractions",
+                column: "LocationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Cities_Name",
                 table: "Cities",
                 column: "Name",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_TopicId",
+                table: "Comments",
+                column: "TopicId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_UserId",
+                table: "Comments",
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Day_WeatherId",
@@ -253,6 +439,31 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 column: "RoleName",
                 unique: true,
                 filter: "[RoleName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Topics_LocationId",
+                table: "Topics",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tour_LocationId",
+                table: "Tour",
+                column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tour_attraction_AttractionId",
+                table: "Tour_attraction",
+                column: "AttractionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tour_attraction_TopicTourId",
+                table: "Tour_attraction",
+                column: "TopicTourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tour_attraction_TourId",
+                table: "Tour_attraction",
+                column: "TourId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_Email",
@@ -276,12 +487,14 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
             migrationBuilder.CreateIndex(
                 name: "IX_Weathers_InformationId",
                 table: "Weathers",
-                column: "InformationId");
+                column: "InformationId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Weathers_LocalityId",
                 table: "Weathers",
-                column: "LocalityId");
+                column: "LocalityId",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -290,16 +503,31 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 name: "Cities");
 
             migrationBuilder.DropTable(
+                name: "Comments");
+
+            migrationBuilder.DropTable(
                 name: "Day");
 
             migrationBuilder.DropTable(
                 name: "Hour");
 
             migrationBuilder.DropTable(
+                name: "Tour_attraction");
+
+            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Weathers");
+
+            migrationBuilder.DropTable(
+                name: "Attractions");
+
+            migrationBuilder.DropTable(
+                name: "Topics");
+
+            migrationBuilder.DropTable(
+                name: "Tour");
 
             migrationBuilder.DropTable(
                 name: "Roles");
@@ -309,6 +537,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             migrationBuilder.DropTable(
                 name: "Localities");
+
+            migrationBuilder.DropTable(
+                name: "Location");
         }
     }
 }
