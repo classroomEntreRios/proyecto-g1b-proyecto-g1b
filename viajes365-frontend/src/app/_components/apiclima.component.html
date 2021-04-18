@@ -1,18 +1,15 @@
 
 <select [(ngModel)]="ciudadElegida" (ngModelChange)="consultaCiudad($event)" 
-
 >
     <option  *ngFor="let c of ciudades"
-    [value]="c.id"
-    
-    
+    [value]="c.id"  
     >
       {{ c.ciudad}}
      
     </option>
 </select>
 <span class="ms-1">
-  {{ tempActual }} °C
+  {{ tempActual }}°C
 
   <img class="" 
   [src]="iconoClimaUrl"  >
