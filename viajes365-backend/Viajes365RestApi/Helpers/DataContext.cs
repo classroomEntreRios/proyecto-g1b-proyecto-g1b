@@ -37,7 +37,12 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Tour> Tours { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
         public DbSet<Tour_attraction> Tour_attractions { get; set; }
-       
+        public DbSet<Photo> Photos { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Weather> Weathers { get; set; }
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<Locality> Localities { get; set; }
+
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -67,12 +72,23 @@ namespace Viajes365RestApi.Helpers
             new AttractionBuilder().Configure(mb.Entity<Attraction>());
             new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
 
+
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());
+            //new PhotoBuilder().Configure(mb.Entity<Photo>());
+            new CityBuilder().Configure(mb.Entity<City>());
+            new DayBuilder().Configure(mb.Entity<Day>());
+            new HourBuilder().Configure(mb.Entity<Hour>());
+            new InformationBuilder().Configure(mb.Entity<Information>());
+            new LocalityBuilder().Configure(mb.Entity<Locality>());
+
         }
 
         private void OnBeforeSaving()
         {
             var entries = ChangeTracker.Entries();
             var utcNow = DateTime.UtcNow;
+
+            // Get app user
             if (_httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier) == null)
                 _currentUser = "1";
             else
@@ -108,8 +124,5 @@ namespace Viajes365RestApi.Helpers
                 }
             }
         }
-
-
-
     }
 }
