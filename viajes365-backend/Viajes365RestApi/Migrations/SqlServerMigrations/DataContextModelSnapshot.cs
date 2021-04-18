@@ -67,55 +67,95 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             CityId = 1L,
                             Active = true,
                             Code = 43437,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Colón",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Colón",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             CityId = 2L,
                             Active = true,
                             Code = 42923,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Concordia",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Concordia",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             CityId = 3L,
                             Active = true,
                             Code = 42987,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Federación",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Federación",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             CityId = 4L,
                             Active = true,
                             Code = 43034,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Gualeguaychú",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Gualeguaychú",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             CityId = 5L,
                             Active = true,
                             Code = 43214,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Paraná",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 419, DateTimeKind.Utc).AddTicks(6344)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Paraná",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 369, DateTimeKind.Utc).AddTicks(1447)
+>>>>>>> remotes/origin/develop
                         });
                 });
 
@@ -326,41 +366,73 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             RoleId = 1L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Usuario",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Usuario",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             RoleId = 2L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Administrador",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Administrador",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             RoleId = 3L,
                             Active = false,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Moderador",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Moderador",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793)
+>>>>>>> remotes/origin/develop
                         },
                         new
                         {
                             RoleId = 4L,
                             Active = false,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Anónimo",
                             Updated = new DateTime(2021, 4, 3, 0, 10, 45, 417, DateTimeKind.Utc).AddTicks(5956)
+=======
+                            Created = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Anónimo",
+                            Updated = new DateTime(2021, 4, 17, 19, 56, 32, 364, DateTimeKind.Utc).AddTicks(9793)
+>>>>>>> remotes/origin/develop
                         });
                 });
 
@@ -486,9 +558,17 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
                     b.HasKey("WeatherId");
 
+<<<<<<< HEAD
                     b.HasIndex("InformationId");
 
                     b.HasIndex("LocalityId");
+=======
+                    b.HasIndex("InformationId")
+                        .IsUnique();
+
+                    b.HasIndex("LocalityId")
+                        .IsUnique();
+>>>>>>> remotes/origin/develop
 
                     b.ToTable("Weathers");
                 });
@@ -525,6 +605,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
             modelBuilder.Entity("Viajes365RestApi.Entities.Weather", b =>
                 {
                     b.HasOne("Viajes365RestApi.Entities.Information", "Information")
+<<<<<<< HEAD
                         .WithMany()
                         .HasForeignKey("InformationId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -534,6 +615,17 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .WithMany()
                         .HasForeignKey("LocalityId")
                         .OnDelete(DeleteBehavior.Cascade)
+=======
+                        .WithOne()
+                        .HasForeignKey("Viajes365RestApi.Entities.Weather", "InformationId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+                        .IsRequired();
+
+                    b.HasOne("Viajes365RestApi.Entities.Locality", "Locality")
+                        .WithOne()
+                        .HasForeignKey("Viajes365RestApi.Entities.Weather", "LocalityId")
+                        .OnDelete(DeleteBehavior.ClientCascade)
+>>>>>>> remotes/origin/develop
                         .IsRequired();
 
                     b.Navigation("Information");
