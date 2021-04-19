@@ -25,17 +25,23 @@ export class ApiclimaComponent implements OnInit {
   consultaCiudad(val: any) {
     this.ciudadElegida = parseInt(val);
     let obj = this.ciudades.find(obj => obj.id == this.ciudadElegida);
-    console.log(obj?.ciudadId);
+    console.log('Ciudad: ', obj?.ciudad );
+    console.log('Codigo de Ciudad: ' ,obj?.ciudadId);
 
 
     this.http.post(this.url + obj?.ciudadId, {})
       .subscribe(response => {
         this.respuestaApi = response;
-        this.tempActual = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").temperature;
-        this.iconoClima = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").icon;
+        // this.tempActual = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").temperature;
+        // this.iconoClima = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").icon;
 
-        console.log(this.respuestaApi);
-        console.log(this.tempActual, this.iconoClima);
+        this.tempActual = this.respuestaApi.hours[0].temperature;
+        this.iconoClima = this.respuestaApi.hours[0].icon;
+        this.iconoClimaUrl = 'https://v5i.tutiempo.net/wi/02/30/' + this.iconoClima + '.png';
+
+        // console.log(this.respuestaApi);
+        console.log('temperatura: ', this.tempActual, );
+        console.log('icono Clima: ', this.iconoClima);
         console.log(this.iconoClimaUrl);
 
         this.iconoClimaUrl = 'https://v5i.tutiempo.net/wi/02/30/' + this.iconoClima + '.png';
