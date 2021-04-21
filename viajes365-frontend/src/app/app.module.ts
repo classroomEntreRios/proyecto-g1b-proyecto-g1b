@@ -41,4 +41,4 @@ import { ApiclimaComponent } from './_components/apiclima.component';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { };
+export class AppModule { }
