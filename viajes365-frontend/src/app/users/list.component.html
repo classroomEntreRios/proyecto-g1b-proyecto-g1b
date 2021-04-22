@@ -42,6 +42,8 @@
         </tbody>
       </table>
     </div>
+    <strong class="small">Total de Registros: {{ page?.totalElements }} | Página {{ page?.pageNumber }} de {{
+      page?.totalPages
+      }}</strong>
   </div>
-  {{ users | json }}
 </div>

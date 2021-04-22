@@ -137,9 +137,19 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}users",
+							"raw": "{{LOCAL_SERVER}}users?pageNumber=2&pageSize=1",
 							"host": [
 								"{{LOCAL_SERVER}}users"
+							],
+							"query": [
+								{
+									"key": "pageNumber",
+									"value": "2"
+								},
+								{
+									"key": "pageSize",
+									"value": "1"
+								}
 							]
 						}
 					},

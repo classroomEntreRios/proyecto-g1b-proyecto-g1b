@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
+import { async, Observable } from 'rxjs';
 
 const baseUrl = `${environment.apiUrl}/users`;
 
@@ -11,23 +12,12 @@ const baseUrl = `${environment.apiUrl}/users`;
 export class UserService {
   constructor(private http: HttpClient) { }
 
-  getAll(): Promise<PaginatedResponse<User[]>> {
-    let response: any;
-    try {
-      this.http.get<PaginatedResponse<User[]>>(
-        baseUrl).subscribe(r => response = r);
-      if (response.totalElements > 0) {
-        const pagedResponse = toPaginatedResponseModel<UserDTO, UserModel>(response);
-        pagedResponse.listElements = toUserModelCollection(response.listElements);
-        return Promise.resolve(pagedResponse);
-      }
-      // return Promise.resolve(null);
-    } catch (error) {
-      return Promise.reject(this.getError(error));
-    }
+  getAll(): Observable<PaginatedResponse<User>> {
+    return this.http.get<PaginatedResponse<User>>(`${baseUrl}`);
+
   }
 
-  getById(id: number) {
+  getById(id: number): Observable<User> {
     return this.http.get<User>(`${baseUrl}/${id}`);
   }
 
