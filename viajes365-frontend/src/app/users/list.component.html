@@ -4,6 +4,20 @@
     <h4><i class="bi-people-fill" style="color: black; margin-right: 8px;"></i>Usuarios</h4>
     <hr>
     <!-- <a routerLink="../add" class="btn btn-sm btn-success mb-2">Agregar Usuario</a> -->
+
+    <!-- CABECERA PAGINADO -->
+    <div class="row">
+      <div class="col-2">
+        <label>Items por página: </label>
+      </div>
+      <div class="col-2">
+        <select [(ngModel)]="pagesize" (change)="getPage(1)" class="form-control">
+          <option *ngFor="let item of arrayvalueitemsperpage" [value]="item">{{ item }}</option>
+        </select>
+      </div>
+    </div>
+    <!-- FIN CABECERA PAGINADO -->
+
     <div style="overflow-x:auto;">
       <table class="table table-striped">
         <thead>
@@ -17,7 +31,8 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr
+            *ngFor="let user of users | paginate: { itemsPerPage: pagesize, currentPage: actualpage, totalItems: totalRegister }">
             <td>{{user.firstName}}, {{user.lastName}}</td>
             <td>{{user.email}}</td>
             <td>{{user.userName}}</td>
@@ -37,6 +52,19 @@
           <tr *ngIf="!users">
             <td colspan="4" class="text-center">
               <span class="spinner-border spinner-border-lg align-center"></span>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label left="true">
+                <b>Total: {{ totalRegister }}</b>
+              </label>
+            </td>
+            <td>
+              <!-- <pagination-controls (pageChange)="getPage($event)" autoHide="false" responsive="true" previousLabel=""
+                nextLabel=""> -->
+              <pagination-controls (pageChange)="getPage($event)" previousLabel="" nextLabel="">
+              </pagination-controls>
             </td>
           </tr>
         </tbody>

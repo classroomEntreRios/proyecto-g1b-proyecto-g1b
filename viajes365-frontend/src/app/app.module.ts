@@ -16,6 +16,8 @@ import { NavbarComponent } from './_components/navbar.component';
 import { TermsAndConditionsComponent } from './home/terms-and-conditions/terms-and-conditions.component';
 import { ApiclimaComponent } from './_components/apiclima.component';
 
+
+
 @NgModule({
   imports: [
     BrowserModule,

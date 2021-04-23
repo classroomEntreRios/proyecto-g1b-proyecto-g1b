@@ -1,21 +1,22 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { first } from 'rxjs/operators';
-
 import { UserService } from '@app/_services';
 import { User } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
+import { PaginationControls } from '@app/_rest/pagination.controls';
 
 @Component({ templateUrl: 'list.component.html' })
-export class ListComponent implements OnInit {
+export class ListComponent extends PaginationControls implements OnInit {
   page!: PaginatedResponse<User>;
   users!: User[];
 
   constructor(private userService: UserService) {
-
+    super();
   }
 
   async ngOnInit(): Promise<void> {
     await this.userService.getAll().subscribe(paged => { this.users = paged.listElements; this.page = paged });
+    this.initPaginated();
   }
 
   deleteUser(id: number): void {
@@ -26,4 +27,19 @@ export class ListComponent implements OnInit {
       .pipe(first())
       .subscribe(() => this.users = this.users.filter(x => x.userId !== id));
   }
+
+  async getPage(pageNumber: number) {
+    try {
+      this.actualpage = pageNumber;
+      this.calculatePage();
+      await this.userService.getAll().subscribe(paged => { this.users = paged.listElements; this.page = paged });
+      if (this.page) {
+        this.totalRegister = this.page.totalElements;
+      }
+
+    } catch (error) {
+      // this.notificationService.showDialog(DialogTypesEnum.Error, error.message);
+    }
+  }
+
 }
