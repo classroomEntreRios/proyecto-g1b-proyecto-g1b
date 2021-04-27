@@ -951,6 +951,272 @@
 			]
 		},
 		{
+			"name": "PHOTOS",
+			"item": [
+				{
+					"name": "listado de Fotos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}photos",
+							"host": [
+								"{{LOCAL_SERVER}}photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una Foto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Monumento A Urquiza\",\r\n    \"summary\": \"Monumento a JJ Urquiza\",\r\n    \"description\": \"Monumento a Urquiza\",\r\n    \"path\": \"\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}photos",
+							"host": [
+								"{{LOCAL_SERVER}}photos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por Foto Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Monumento A Urquiza\",\r\n    \"summary\": \"Monumento a JJ Urquiza\",\r\n    \"description\": \"Monumento a Urquiza\",\r\n    \"path\": \"\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}photos/2",
+							"host": [
+								"{{LOCAL_SERVER}}photos"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por Foto Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Foto Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}photos/2",
+							"host": [
+								"{{LOCAL_SERVER}}photos"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "LOCATIONS",
+			"item": [
+				{
+					"name": "listado de Atracciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una Ciudad",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Potosi\",\r\n    \"code\": 3333  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por City Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cityId\": 6,\r\n    \"name\": \"Clorinda\",\r\n    \"code\": 3335  \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por City Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por City Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}cities/6",
+							"host": [
+								"{{LOCAL_SERVER}}cities"
+							],
+							"path": [
+								"6"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
 			"name": "WEATHERS",
 			"item": [
 				{
