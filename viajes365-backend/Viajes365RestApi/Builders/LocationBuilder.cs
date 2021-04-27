@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Viajes365RestApi.Entities;
 
 namespace Viajes365RestApi.Builders
@@ -12,9 +9,11 @@ namespace Viajes365RestApi.Builders
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {
+            var utcNow = DateTime.UtcNow;
+            var adminId = 1;
             builder.HasIndex(u => u.LocationName).IsUnique();
             builder.HasData(
-                new Location {LocationId = 1, LocationName = "Plaza de Mayo" }
+                new Location {LocationId = 1, LocationName = "Sin Locación", Latitude = 0.0, Longitude = 0.0, FullAddress = "Sin datos", Note = "Por defecto", Created = utcNow, Updated = utcNow, CreatorId = adminId, LastId = adminId, Active = true }
                 );
         }
     }

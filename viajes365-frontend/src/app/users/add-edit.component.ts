@@ -41,8 +41,8 @@ export class AddEditComponent implements OnInit {
         // populate active roles
         this.roleService.getAll()
             .pipe(first())
-            .subscribe(roles => {
-                roles.forEach(rol => { if (rol.active) this.roles.push(rol) });
+            .subscribe(pagedroles => {
+                pagedroles.listElements.forEach(rol => { if (rol.active) this.roles.push(rol) });
             });
         const formOptions: AbstractControlOptions = { validators: MustMatch('password', 'confirmPassword') };
         this.form = this.formBuilder.group({
@@ -61,9 +61,11 @@ export class AddEditComponent implements OnInit {
             this.userService.getById(this.id)
                 .pipe(first())
                 .subscribe(x => {
-                    this.form.patchValue(x);
-                    this.form.controls['role'].patchValue(x.roleId);
-                    this.form.controls['active'].patchValue(x.active);
+                    this.form.patchValue(x.element);
+                    this.form.controls['role'].patchValue(x.element.roleId);
+                    this.form.controls['roleId'].patchValue(x.element.roleId);
+                    console.log(x.element.roleId);
+                    this.form.controls['active'].patchValue(x.element.active);
                     this.activeToggle();
                 });
         }
@@ -106,7 +108,7 @@ export class AddEditComponent implements OnInit {
             .pipe(first())
             .subscribe(() => {
                 this.alertService.success('Usuario actualizado', { keepAfterRouteChange: true });
-                this.router.navigate(['/userslist'], { relativeTo: this.route });
+                this.router.navigate(['/users/list'], { relativeTo: this.route });
             })
             .add(() => this.loading = false);
     }

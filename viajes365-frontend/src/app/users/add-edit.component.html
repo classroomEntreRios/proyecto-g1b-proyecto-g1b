@@ -55,7 +55,7 @@
                             [ngClass]="{ 'is-invalid': submitted && f.email.errors }" id="email" />
                         <label for="email">Email</label>
                         <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
-                            <div *ngIf="f.email.errors.required">Email es obligaatorio</div>
+                            <div *ngIf="f.email.errors.required">Email es obligatorio</div>
                             <div *ngIf="f.email.errors.email">Email debe ser una dirección válida</div>
                         </div>
                     </div>
@@ -64,7 +64,7 @@
                     <div class="form-floating">
                         <select formControlName="role" class="form-select" id="role" aria-label="Rol"
                             (change)="onChange($event)" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
-                            <option *ngFor="let rol of roles" value="{{rol.roleId}}">{{rol.roleName}}</option>
+                            <option *ngFor="let rol of roles" value="{{ rol.roleId }}">{{ rol.roleName }}</option>
                         </select>
                         <label for="role">Rol</label>
                         <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
@@ -131,7 +131,7 @@
                             <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
                             Guardar
                         </button>
-                        <button class="btn btn-secondary" routerLink="/userslist">
+                        <button class="btn btn-secondary" routerLink="/users/list">
                             Cancelar
                         </button>
                     </div>

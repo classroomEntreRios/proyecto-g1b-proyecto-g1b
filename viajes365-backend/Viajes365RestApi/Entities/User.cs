@@ -28,7 +28,9 @@ namespace Viajes365RestApi.Entities
         [ForeignKey("FK_Users_Roles_RoleId")]
         public long RoleId { get; set; }
         public virtual Role Role { get; set; }
-
+        [ForeignKey("FK_Users_Photos_PhotoId")]
+        public long PhotoId { get; set; }
+        public virtual Photo Photo { get; set; }
         public bool TermsAndConditionsChecked { get; set; }
         public bool EmailConfirm { get; set; }
 

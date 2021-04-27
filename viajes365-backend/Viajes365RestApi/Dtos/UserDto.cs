@@ -11,5 +11,7 @@ namespace Viajes365RestApi.Dtos
         public string Email { get; set; }
         public long RoleId { get; set; }
         public virtual RoleDto Role { get; set; }
+        public long PhotoId { get; set; }
+        public virtual PhotoDto Photo { get; set; }
     }
 }

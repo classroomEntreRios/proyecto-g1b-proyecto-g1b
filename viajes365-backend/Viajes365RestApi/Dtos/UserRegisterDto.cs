@@ -23,5 +23,7 @@ namespace Viajes365RestApi.Dtos
         public bool TermsAndConditionsChecked { get; set; }
 
         public long RoleId { get; set; }
+
+        public long PhotoId { get; set; }
     }
 }

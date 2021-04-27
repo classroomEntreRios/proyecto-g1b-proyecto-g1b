@@ -5,6 +5,7 @@ import { environment } from '@environments/environment';
 import { User } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
 import { async, Observable } from 'rxjs';
+import { SingleObjectResponse } from '@app/_rest/singleobject.response';
 
 const baseUrl = `${environment.apiUrl}/users`;
 
@@ -17,8 +18,8 @@ export class UserService {
 
   }
 
-  getById(id: number): Observable<User> {
-    return this.http.get<User>(`${baseUrl}/${id}`);
+  getById(id: number): Observable<SingleObjectResponse<User>> {
+    return this.http.get<SingleObjectResponse<User>>(`${baseUrl}/${id}`);
   }
 
   create(params: any) {
