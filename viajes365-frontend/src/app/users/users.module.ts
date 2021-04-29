@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout.component';
 import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     UsersRoutingModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
+    ImageCropperModule
   ],
   declarations: [
     LayoutComponent,

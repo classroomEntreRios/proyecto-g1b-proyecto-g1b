@@ -21,7 +21,6 @@ namespace Viajes365RestApi
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                    // webBuilder.UseIIS();
                 });
     }
 }

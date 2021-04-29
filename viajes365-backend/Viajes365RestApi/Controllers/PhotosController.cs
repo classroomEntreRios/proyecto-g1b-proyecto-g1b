@@ -18,9 +18,9 @@ using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Authorize]
-    [ApiController]
-    [Authorization(adminrole)]
+    // [Authorize]
+    // [ApiController]
+    // [Authorization(adminrole)]
     [Route("api/[controller]")]
     public class PhotosController : ControllerBase
     {
@@ -114,9 +114,9 @@ namespace Viajes365RestApi.Controllers
         // POST: api/Photos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Photo>> PostPhoto(Photo photo, [FromForm] IFormFile file)            
+        public async Task<ActionResult<Photo>> PostPhoto(Photo photo, [FromForm] IFormFile file, [FromForm] string category)            
         {
-            photo.Path = await this.UploadImage(file);
+            photo.Path = await this.UploadImage(file, category);
             _context.Photos.Add(photo);
             await _context.SaveChangesAsync();
 
@@ -145,26 +145,26 @@ namespace Viajes365RestApi.Controllers
         }
 
         [HttpPost("UploadImage")]
-        public async Task<string> UploadImage([FromForm] IFormFile file)
+        public async Task<string> UploadImage([FromForm] IFormFile file, [FromForm] string category)
         {
             string fName = file.FileName;
-            string path = Path.Combine(_env.ContentRootPath, "Images/" + fName);
+            string path = Path.Combine(_env.ContentRootPath, "MyStaticFiles", "Images", category, fName);
             using (var stream = new FileStream(path, FileMode.Create))
             {
                 await file.CopyToAsync(stream);
             }
-            return fName;
+            return path;
         }
 
         [HttpPost("UploadImages")]
-        public Task<List<string>> UploadImages([FromForm] List<IFormFile> files)
+        public Task<List<string>> UploadImages([FromForm] List<IFormFile> files, [FromForm] string category)
         {
             List<string> PathStrings = new List<string>();
             string fName;
             files.ForEach(async file =>
             {
                 fName = file.FileName;
-                string path = Path.Combine(_env.ContentRootPath, "Images/" + fName);
+                string path = Path.Combine(_env.ContentRootPath, "MyStaticFiles", "Images", category, fName);
                 using (var stream = new FileStream(path, FileMode.Create))
                 {
                     await file.CopyToAsync(stream);

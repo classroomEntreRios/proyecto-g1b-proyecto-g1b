@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { first } from 'rxjs/operators';
@@ -7,118 +7,162 @@ import { UserService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
 import { Role } from '@app/_models';
 import { RoleService } from '@app/_services/role.service';
+import { base64ToFile, ImageCroppedEvent } from 'ngx-image-cropper';
+
 
 @Component({ templateUrl: 'add-edit.component.html' })
 export class AddEditComponent implements OnInit {
-    form!: FormGroup;
-    id!: number;
-    isAddMode!: boolean;
-    loading = false;
-    submitted = false;
-    roles = new Array<Role>();
-    activeLabel = 'No';
 
-    constructor(
-        private formBuilder: FormBuilder,
-        private route: ActivatedRoute,
-        private router: Router,
-        private userService: UserService,
-        private roleService: RoleService,
-        private alertService: AlertService
-    ) {
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
 
+  form!: FormGroup;
+  id!: number;
+  isAddMode!: boolean;
+  loading = false;
+  submitted = false;
+  roles = new Array<Role>();
+  activeLabel = 'No';
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
+    private userService: UserService,
+    private roleService: RoleService,
+    private alertService: AlertService
+  ) {
+
+  }
+
+  ngOnInit() {
+    this.id = this.route.snapshot.params['id'];
+    this.isAddMode = !this.id;
+
+    // password not required in edit mode
+    const passwordValidators = [Validators.minLength(6)];
+    if (this.isAddMode) {
+      passwordValidators.push(Validators.required);
+    }
+    // populate active roles
+    this.roleService.getAll()
+      .pipe(first())
+      .subscribe(pagedroles => {
+        pagedroles.listElements.forEach(rol => { if (rol.active) this.roles.push(rol) });
+      });
+    const formOptions: AbstractControlOptions = { validators: MustMatch('password', 'confirmPassword') };
+    this.form = this.formBuilder.group({
+      fileName: [''],
+      userId: ['', Validators.required],
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      roleId: ['', Validators.required],
+      role: ['', Validators.required],
+      password: ['', [Validators.minLength(5), this.isAddMode ? Validators.required : Validators.nullValidator]],
+      confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator],
+      active: ['', Validators.required]
+    }, formOptions);
+
+    if (!this.isAddMode) {
+      this.userService.getById(this.id)
+        .pipe(first())
+        .subscribe(x => {
+          this.form.patchValue(x.element);
+          this.form.controls['role'].patchValue(x.element.roleId);
+          this.form.controls['roleId'].patchValue(x.element.roleId);
+          console.log(x.element.roleId);
+          this.form.controls['active'].patchValue(x.element.active);
+          this.activeToggle();
+        });
+    }
+  }
+
+  // convenience getter for easy access to form fields
+  get f() { return this.form.controls; }
+
+  onSubmit() {
+    this.submitted = true;
+
+    // reset alerts on submit
+    this.alertService.clear();
+
+    // stop here if form is invalid
+    if (this.form.invalid) {
+      return;
     }
 
-    ngOnInit() {
-        this.id = this.route.snapshot.params['id'];
-        this.isAddMode = !this.id;
-
-        // password not required in edit mode
-        const passwordValidators = [Validators.minLength(6)];
-        if (this.isAddMode) {
-            passwordValidators.push(Validators.required);
-        }
-        // populate active roles
-        this.roleService.getAll()
-            .pipe(first())
-            .subscribe(pagedroles => {
-                pagedroles.listElements.forEach(rol => { if (rol.active) this.roles.push(rol) });
-            });
-        const formOptions: AbstractControlOptions = { validators: MustMatch('password', 'confirmPassword') };
-        this.form = this.formBuilder.group({
-            userId: ['', Validators.required],
-            firstName: ['', Validators.required],
-            lastName: ['', Validators.required],
-            email: ['', [Validators.required, Validators.email]],
-            roleId: ['', Validators.required],
-            role: ['', Validators.required],
-            password: ['', [Validators.minLength(5), this.isAddMode ? Validators.required : Validators.nullValidator]],
-            confirmPassword: ['', this.isAddMode ? Validators.required : Validators.nullValidator],
-            active: ['', Validators.required]
-        }, formOptions);
-
-        if (!this.isAddMode) {
-            this.userService.getById(this.id)
-                .pipe(first())
-                .subscribe(x => {
-                    this.form.patchValue(x.element);
-                    this.form.controls['role'].patchValue(x.element.roleId);
-                    this.form.controls['roleId'].patchValue(x.element.roleId);
-                    console.log(x.element.roleId);
-                    this.form.controls['active'].patchValue(x.element.active);
-                    this.activeToggle();
-                });
-        }
+    this.loading = true;
+    if (this.isAddMode) {
+      this.createUser();
+    } else {
+      this.updateUser();
     }
+  }
 
-    // convenience getter for easy access to form fields
-    get f() { return this.form.controls; }
+  private createUser() {
+    this.userService.create(this.form.value)
+      .pipe(first())
+      .subscribe(() => {
+        this.alertService.success('Usuario agregado', { keepAfterRouteChange: true });
+        this.router.navigate(['../'], { relativeTo: this.route });
+      })
+      .add(() => this.loading = false);
+  }
 
-    onSubmit() {
-        this.submitted = true;
+  private updateUser() {
+    this.userService.update(this.id, this.form.value)
+      .pipe(first())
+      .subscribe(() => {
+        this.alertService.success('Usuario actualizado', { keepAfterRouteChange: true });
+        this.router.navigate(['/users/list'], { relativeTo: this.route });
+      })
+      .add(() => this.loading = false);
+  }
 
-        // reset alerts on submit
-        this.alertService.clear();
+  public onChange(e: any) {
+    // sincroniza el select con el Role Id
+    this.form.controls['roleId'].patchValue(e.target.value);
+  }
 
-        // stop here if form is invalid
-        if (this.form.invalid) {
-            return;
-        }
+  activeToggle(): void {
+    this.activeLabel = this.form.get('active')!.value ? 'Sí' : 'No';
+  }
 
-        this.loading = true;
-        if (this.isAddMode) {
-            this.createUser();
-        } else {
-            this.updateUser();
-        }
-    }
+  fileChangeEvent(event: any): void {
 
-    private createUser() {
-        this.userService.create(this.form.value)
-            .pipe(first())
-            .subscribe(() => {
-                this.alertService.success('Usuario agregado', { keepAfterRouteChange: true });
-                this.router.navigate(['../'], { relativeTo: this.route });
-            })
-            .add(() => this.loading = false);
-    }
+    this.imageChangedEvent = event;
 
-    private updateUser() {
-        this.userService.update(this.id, this.form.value)
-            .pipe(first())
-            .subscribe(() => {
-                this.alertService.success('Usuario actualizado', { keepAfterRouteChange: true });
-                this.router.navigate(['/users/list'], { relativeTo: this.route });
-            })
-            .add(() => this.loading = false);
-    }
+  }
 
-    public onChange(e: any) {
-        // sincroniza el select con el Role Id
-        this.form.controls['roleId'].patchValue(e.target.value);
-    }
+  imageCropped(event: ImageCroppedEvent) {
 
-    activeToggle(): void {
-        this.activeLabel = this.form.get('active')!.value ? 'Sí' : 'No';
-    }
+    this.croppedImage = event.base64;
+
+  }
+
+  imageLoaded() {
+
+    /* show cropper */
+
+  }
+
+  cropperReady() {
+
+    /* cropper ready */
+
+  }
+
+  loadImageFailed() {
+
+    /* show message */
+
+  }
+
+  croppedToFile(): File {
+    // Assuming you have stored the event.base64 in an instance variable 'croppedImage'
+    const file: File = new File([base64ToFile(this.croppedImage)], 'fileName.png');
+    return file;
+  }
 }
+
