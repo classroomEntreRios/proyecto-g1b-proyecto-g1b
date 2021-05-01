@@ -7,6 +7,7 @@
     <Product>Viajes 365 RestApi</Product>
     <Copyright>2021</Copyright>
     <Platforms>AnyCPU;x86</Platforms>
+    <UserSecretsId>2d3b314c-ab95-442a-b046-1853b24d16ae</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

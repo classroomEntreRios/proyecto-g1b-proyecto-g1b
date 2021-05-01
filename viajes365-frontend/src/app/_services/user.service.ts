@@ -2,16 +2,20 @@
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
-import { User } from '@app/_models';
+import { Photo, User } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
 import { async, Observable } from 'rxjs';
 import { SingleObjectResponse } from '@app/_rest/singleobject.response';
+import { PhotoService } from './photo.service';
 
 const baseUrl = `${environment.apiUrl}/users`;
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private photoService: PhotoService
+  ) { }
 
   getAll(): Observable<PaginatedResponse<User>> {
     return this.http.get<PaginatedResponse<User>>(`${baseUrl}`);
@@ -22,7 +26,15 @@ export class UserService {
     return this.http.get<SingleObjectResponse<User>>(`${baseUrl}/${id}`);
   }
 
-  create(params: any) {
+  create(params: any): Observable<any> {
+    if (params.fileName != null) {
+      let photo = new Photo();
+      photo.path = params.fileName;
+      photo.name = params.fileName;
+      let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+      params.fileName = this.photoService.create(par);
+    }
+
     return this.http.post(baseUrl, params);
   }
 

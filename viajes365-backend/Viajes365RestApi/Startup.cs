@@ -131,6 +131,7 @@ namespace Viajes365RestApi
             // Creates defaults Admin and User
             seeder.SeedUsers();
             // tutiempo.getInfo();
+            app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
                 FileProvider = new PhysicalFileProvider(
