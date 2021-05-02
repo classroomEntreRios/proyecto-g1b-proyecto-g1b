@@ -8,14 +8,14 @@
         </option>
       </select></div>
     <div class="col" *ngIf="weatherIconUrl">
-      <img [src]="weatherIconUrl" width="24px" height="24px" alt="Foto">
+      <ng-template #tipContent>
+        <p>{{ currentStatus }}</p>
+        <p> Humedad: {{ currentHumidity }} {{ currentHumidityUnit }}</p>
+        <p> Presión: {{currentPressure }} {{ currentPressureUnit }}</p>
+      </ng-template>
+      <img [src]="weatherIconUrl" width="24px" height="24px" alt="Foto" [ngbTooltip]="tipContent" placement="bottom">
       <small>{{ currentTemperature }}{{ currentTempUnit }}</small>
     </div>
-  </div>
-  <div class="row" *ngIf="currentStatus">
-    <label style="font-size: smaller;">{{ currentStatus }} H {{ currentHumidity }} {{ currentHumidityUnit }} P
-      {{currentPressure }} {{
-      currentPressureUnit }}</label>
   </div>
 
 </form>
