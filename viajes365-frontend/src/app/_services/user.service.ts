@@ -38,7 +38,14 @@ export class UserService {
     return this.http.post(baseUrl, params);
   }
 
-  update(id: number, params: any) {
+  update(id: number, params: any): Observable<any> {
+    if (params.fileName != null) {
+      let photo = new Photo();
+      photo.path = params.fileName;
+      photo.name = params.fileName;
+      let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+      params.fileName = this.photoService.create(par);
+    }
     return this.http.put(`${baseUrl}/${id}`, params);
   }
 
