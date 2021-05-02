@@ -1,24 +1,21 @@
+<form [formGroup]="cityForm">
 
-<select [(ngModel)]="ciudadElegida" (ngModelChange)="consultaCiudad($event)" 
->
-    <option  *ngFor="let c of ciudades"
-    [value]="c"  
-    >
-      {{ c.name}}
-     
-    </option>
-</select>
-<span class="ms-1">
-  {{ tempActual }}°C
+  <div class="row">
+    <div class="col-8"> <select formControlName="city" (change)="cityQuery($event)">
+        <option value="0">Elegí la Ciudad</option>
+        <option *ngFor="let city of citiesCollection" [ngValue]="city.cityId">
+          {{ city.name}}
+        </option>
+      </select></div>
+    <div class="col" *ngIf="weatherIconUrl">
+      <img [src]="weatherIconUrl" width="24px" height="24px" alt="Foto">
+      <small>{{ currentTemperature }}{{ currentTempUnit }}</small>
+    </div>
+  </div>
+  <div class="row" *ngIf="currentStatus">
+    <label style="font-size: smaller;">{{ currentStatus }} H {{ currentHumidity }} {{ currentHumidityUnit }} P
+      {{currentPressure }} {{
+      currentPressureUnit }}</label>
+  </div>
 
-  <img class="" 
-  [src]="iconoClimaUrl"  >
-
-</span>
-
-<div>
-  {{ ciudades | json }}
-</div>
-<!-- <p>
-  selected value is {{ ciudadElegida }}
-</p> -->
+</form>

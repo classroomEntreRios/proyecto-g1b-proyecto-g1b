@@ -1,68 +1,66 @@
-import { Role } from './role';
 export class Information {
-     InformationId!: number;
-        Temperature!:string;
-        Wind!: string;
-        Humidity!: string;
-        Pressure!: string;
+    informationId!: number;
+    temperature!: string;
+    wind!: string;
+    humidity!: string;
+    pressure!: string;
 };
 
 export class Locality {
-     Name!:number;
-         Url_weather_forecast_15_days!: string;
-         Url_hourly_forecast!: string;
-         Country!: string;
-         Url_country!: string;
+    name!: number;
+    url_weather_forecast_15_days!: string;
+    url_hourly_forecast!: string;
+    country!: string;
+    url_country!: string;
 
 };
 
 export class Day {
-        DayId!: string;
-        Name!: string;
-        Date!: string;
-        Temperature_max!: number;
-        Temperature_min!: number;
-        Icon!:string;
-        Text!: string;
-        Humidity!: number;
-        Wind!: number;
-        Wind_direction!: string;
-        Icon_wind!: string;
-        Sunrise!: string;
-        Sunset!: string;
-        Moonrise!: string;
-        Moonset!: string;
-        Moon_phases_icon!: string;
-        WeatherId!: number;
+    dayId!: string;
+    name!: string;
+    date!: string;
+    temperature_max!: number;
+    temperature_min!: number;
+    icon!: string;
+    text!: string;
+    humidity!: number;
+    wind!: number;
+    wind_direction!: string;
+    icon_wind!: string;
+    sunrise!: string;
+    sunset!: string;
+    moonrise!: string;
+    moonset!: string;
+    moon_phases_icon!: string;
+    weatherId!: number;
 };
 
 export class Hour {
-    HourId!: number;
-    Name!: string;
-    Date!:string;
-    Hour_data!: string;
-    Temperature!: number;
-    Text!: string;
-    Humidity!: number;
-    Pressure!: number;
-    Icon!: string;
-    Wind!: number;
-    Wind_direction!: string;
-    Icon_wind!: string;
-    WeatherId!: number;
+    hourId!: number;
+    name!: string;
+    date!: string;
+    hour_data!: string;
+    temperature!: number;
+    text!: string;
+    humidity!: number;
+    pressure!: number;
+    icon!: string;
+    wind!: number;
+    wind_direction!: string;
+    icon_wind!: string;
+    weatherId!: number;
 };
-
 
 export class Weather {
     weatherId!: number;
     copyright!: string;
     use!: string;
-    InformationId!: number;
-    Information!: Information;
-    Web!: string;
-    Language!: string;
-    LocalityId!: Locality;
-    Days!: Day[];
-    Hours!: Hour[]; 
-    active!: boolean;   
+    informationId!: number;
+    information!: Information;
+    web!: string;
+    language!: string;
+    localityId!: Locality;
+    days!: Day[];
+    hours!: Hour[];
+    active!: boolean;
 }

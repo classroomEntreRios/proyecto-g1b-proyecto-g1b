@@ -25,8 +25,9 @@ export class WeatherService {
         return this.http.post(baseUrl, params);
     }
 
-    getByCode(code: number, params: any): Observable<Weather> {
-        return this.http.post<Weather>(`${baseUrl}/${code}`, params);
+    getByCode(code: number): Observable<Weather> {
+
+        return this.http.post<Weather>(`${baseUrl}/${code}`, {});
     }
 
     update(id: number, params: any) {
