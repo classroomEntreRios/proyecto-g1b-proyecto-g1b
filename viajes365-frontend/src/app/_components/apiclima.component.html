@@ -1,8 +1,8 @@
 <form [formGroup]="cityForm">
 
   <div class="row">
-    <div class="col-8"> <select formControlName="city" (change)="cityQuery($event)">
-        <option value="0">Elegí la Ciudad</option>
+    <div class="col-8"> <select formControlName="city" (change)="cityChange($event)">
+        <!-- <option value="0">Elegí la Ciudad</option> -->
         <option *ngFor="let city of citiesCollection" [ngValue]="city.cityId">
           {{ city.name}}
         </option>

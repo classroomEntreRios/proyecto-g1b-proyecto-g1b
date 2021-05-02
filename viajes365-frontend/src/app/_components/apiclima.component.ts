@@ -1,7 +1,7 @@
 import { WeatherService } from './../_services/weather.service';
 import { CityService } from './../_services/city.service';
 import { Component, OnInit } from '@angular/core';
-import { City, Hour, Weather } from '@app/_models';
+import { City, Weather } from '@app/_models';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
@@ -38,7 +38,7 @@ export class ApiclimaComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     await this.cityService.getAll().subscribe(pagedCities => {
       try {
-        this.citiesCollection = pagedCities.listElements;
+        this.citiesCollection = pagedCities.listElements.filter(c => c.active == true).sort((a, b) => a.name.localeCompare(b.name));
         this.setDefaults();
       } catch (error) {
         console.log(pagedCities.message);
@@ -46,9 +46,14 @@ export class ApiclimaComponent implements OnInit {
     });
   }
 
-  cityQuery(e: any) {
+
+  cityChange(e: any) {
     let id: string = e.target.value;
     let cityId = Number(id.split(':')[1]);
+    this.cityQuery(cityId);
+  };
+
+  cityQuery(cityId: number) {
     if (cityId > 0) {
       this.currentCity = this.getCityByCityId(cityId)
       this.weatherService.getByCode(this.currentCity.code).
@@ -65,8 +70,7 @@ export class ApiclimaComponent implements OnInit {
           this.weatherIconUrl = 'assets/images/icons/tutiempo/wi/' + this.weatherIconUrl + '.png';
         })
     }
-  };
-
+  }
   getCityByCityId(id: number): City {
     let city = this.citiesCollection.find(c => c.cityId == id);
     if (city) {
@@ -76,8 +80,11 @@ export class ApiclimaComponent implements OnInit {
   }
 
   setDefaults() {
-    // Selected option Choose City
-    this.cityForm.get('city')!.patchValue(0);
+    // Select initial City
+    let defaultCityName = 'Paraná';
+    let initialCityId = this.citiesCollection.findIndex(c => c.name == defaultCityName) + 1;
+    this.cityForm.get('city')!.patchValue(initialCityId);
+    this.cityQuery(initialCityId);
   }
 }
 
