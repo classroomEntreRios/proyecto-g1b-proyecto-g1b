@@ -40,7 +40,9 @@ namespace Viajes365RestApi.Builders
                     LastName = "Modo Dios",
                     UserName = "admin",
                     Email = "admin@viajar365.com",
-                    Password = "admin"
+                    Password = "admin",
+                    TermsAndConditionsChecked = true
+                    
                 };
                 // RoleId 2L is Administrador
                 User adm = await _userService.Create(_mapper.Map<User>(admin), admin.Password, 2L);
@@ -57,7 +59,8 @@ namespace Viajes365RestApi.Builders
                     LastName = "DeTal",
                     UserName = "user",
                     Email = "user@viajar365.com",
-                    Password = "user"
+                    Password = "user",
+                    TermsAndConditionsChecked = true
                 };
                 // RoleId 1L is Usuario
                 await _userService.Create(_mapper.Map<User>(user), user.Password, 1L);
