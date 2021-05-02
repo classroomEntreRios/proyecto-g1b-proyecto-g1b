@@ -1,71 +1,81 @@
+import { Observable } from 'rxjs';
+import { WeatherService } from './../_services/weather.service';
+import { CityService } from './../_services/city.service';
 import { HttpClient } from '@angular/common/http';
-import { Ciudad } from './../_components/ciudad';
 import { Component, OnInit } from '@angular/core';
+import { City, Hour, Weather } from '@app/_models';
 
 @Component({
   selector: 'apiclima',
   templateUrl: './apiclima.component.html',
-  
+
 })
 export class ApiclimaComponent implements OnInit  {
 
   horaActual: any = Date.parse(new Date().toLocaleTimeString([], { hour: '2-digit', hour12: false })) ;
-  respuestaApi:any;
-  ciudades!: Ciudad[];
-  ciudadElegida:number=0;
+  respuestaApi!:Weather;
+  ciudades!: City[];
+  ciudadElegida!:City;
   tempActual:number=0;
   iconoClima:string='';
   iconoClimaUrl = '';
   temperaturaActual = 0;
-  variableConsulta: any = [];
-  
-  private url = 'https://api.tutiempo.net/json/?lan=es&apid=XsGaqqXXXzXeobw&lid=43214';
+  variableConsulta!: Hour[] ;
 
-  // private url2 = 'http://api.openweathermap.org/data/2.5/weather?q=Gualeguaychu&appid=4de652402d17c22f3c749ef7e711f6d1'
-  constructor (private http: HttpClient){}
+private url = 'http://viajes365.azurewebsites.net/api/cities';
 
-consultaCiudad(val:any) {
- 
-  // this.horaActual = Date.parse(new Date().toLocaleTimeString([], { hour: '2-digit', hour12: false }));
-  // console.log(this.horaActual);
-  this.ciudadElegida= parseInt(val);
-let obj = this.ciudades.find(obj => obj.id == this.ciudadElegida);
-console.log(obj?.ciudadId);
+  // private url = 'https://api.tutiempo.net/json/?lan=es&apid=XsGaqqXXXzXeobw&lid=';
 
+  // private url = 'http://localhost:5000/api/cities'
 
-  this.http.get(this.url).toPromise().then(data =>{
-    this.respuestaApi = data;
+  constructor (
+    private http: HttpClient, 
+    private cityService: CityService, 
+    private weatherService: WeatherService ){}
 
-    // console.log ('consulta', this.respuestaApi.hour_hour);
-
-    for (let key in this.respuestaApi.hour_hour ) {
-      if (this.respuestaApi.hour_hour.hasOwnProperty(key)) {
-        this.variableConsulta.push(this.respuestaApi.hour_hour[key]);     
+  async ngOnInit(): Promise<void> {
+    await this.cityService.getAll().subscribe(pagedCities => {
+      try {
+        this.ciudades = pagedCities.listElements;
+      } catch (error) {
+        console.log(pagedCities.message);
       }
+    });
+  }
 
-    }
-    console.log('consulta', this.variableConsulta);
-    console.log('temp', this.variableConsulta[0].temperature );
+   consultaCiudad(val:any) {
+console.log(val);
+  this.ciudadElegida= val;
+  
+// let obj = this.ciudades.find(obj => obj.id == this.ciudadElegida);
+// console.log(obj?.ciudadId);
 
-    this.tempActual = this.variableConsulta[0].temperature
+ this.weatherService.getByCode(this.ciudadElegida.code, null).
+  subscribe(weather => {
+    this.respuestaApi = weather;
+    this.variableConsulta.push(this.respuestaApi.Hours[0]);
+    console.log(this.variableConsulta);
+  })
 
+    //  console.log ('consulta', this.respuestaApi.hour_hour);
 
+    
 
-     this.iconoClima = this.variableConsulta[0].icon;
+    // console.log('consulta', this.variableConsulta);
+
+    this.tempActual = this.variableConsulta[0].Temperature;
+    this.iconoClima = this.variableConsulta[0].Icon;
 
     this.iconoClimaUrl = 'https://v5i.tutiempo.net/wi/02/30/' + this.iconoClima +'.png';
 
+    console.log('Ciudad: ', this.ciudadElegida.name);
+    console.log('Codigo: ', this.ciudadElegida.code );
+    console.log('temp', this.variableConsulta[0].Temperature );
      console.log(this.iconoClimaUrl);
+  };
 
-
-
-
-  });
-     
     //  clima = hour_hour.find(h => h.hour_data = ''09:00).clima
     // this.variableConsulta = Array.of(this.respuestaApi.hour_hour);
-
-
 
     //  this.tempActual = this.variableConsulta.find((h: any) => h.hour_data == '9:00').temperature;
 
@@ -84,33 +94,16 @@ console.log(obj?.ciudadId);
     //  console.log(this.respuestaApi);
     //  console.log(this.tempActual + this.iconoClima );
 
-     
-
-
-
-
 
     //  console.log(this.respuestaApi.main.temp, this.respuestaApi.weather[0].icon );
-
-  
 
   }
 
   // CONSULTA CLIMA A LA API
 
+  
 
-  ngOnInit(){
-    this.ciudades = [
-      { id:1, ciudadId: 43214, ciudad:"Paraná"},
-      { id:2, ciudadId: 42987, ciudad:"Federación"},
-      { id:3, ciudadId: 42923, ciudad:"Concordia"},
-      { id:4, ciudadId: 43034, ciudad:"Gualeguaychú"},
-      { id:5, ciudadId: 43033, ciudad:"Gualeguay"},
-    ]
-
-    // CIUDAD POR DEFECTO PARANA
-    this.ciudadElegida = 4;
-  }
+  
 
 
-}
+

@@ -6,6 +6,7 @@
     <Description>BackEnd para promoción turistica de Entre Ríos</Description>
     <Product>Viajes 365 RestApi</Product>
     <Copyright>2021</Copyright>
+    <UserSecretsId>293a05fa-745c-4bf5-a236-abbd9fd75df3</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="Properties\PublishProfiles\" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

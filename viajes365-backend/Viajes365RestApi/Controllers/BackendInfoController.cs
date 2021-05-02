@@ -25,7 +25,7 @@ namespace Viajes365RestApi.Controllers
             Content += "<li> Plataforma: "+ Info.OsPlatform;
             Content += "</li><li> Framework: " + Info.framework;
             Content += "</li><li> Título de Ensamblado: " + Info.Title;
-            Content += "</li><li> Nombre del Producto: " + Info.Product;
+            Content += "</li><li> Nombre del Producto : " + Info.Product;
             Content += "</li><li> Copyright: " + Info.Copyright;
             Content += "</li><li> Descripción: " + Info.Description;
             Content += "</li><li> Compania: " + Info.Company;

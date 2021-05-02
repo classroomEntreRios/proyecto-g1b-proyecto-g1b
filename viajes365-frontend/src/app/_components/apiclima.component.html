@@ -2,9 +2,9 @@
 <select [(ngModel)]="ciudadElegida" (ngModelChange)="consultaCiudad($event)" 
 >
     <option  *ngFor="let c of ciudades"
-    [value]="c.id"  
+    [value]="c"  
     >
-      {{ c.ciudad}}
+      {{ c.name}}
      
     </option>
 </select>
@@ -15,6 +15,10 @@
   [src]="iconoClimaUrl"  >
 
 </span>
+
+<div>
+  {{ ciudades | json }}
+</div>
 <!-- <p>
   selected value is {{ ciudadElegida }}
 </p> -->

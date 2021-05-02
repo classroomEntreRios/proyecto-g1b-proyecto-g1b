@@ -2,27 +2,31 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
-import { Role } from '@app/_models';
+import { Weather } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
 import { Observable } from 'rxjs';
 import { SingleObjectResponse } from '@app/_rest/singleobject.response';
 
-const baseUrl = `${environment.apiUrl}/roles`;
+const baseUrl = `${environment.apiUrl}/weathers`;
 
 @Injectable({ providedIn: 'root' })
-export class RoleService {
+export class WeatherService {
     constructor(private http: HttpClient) { }
 
-    getAll(): Observable<PaginatedResponse<Role>> {
-        return this.http.get<PaginatedResponse<Role>>(baseUrl);
+    getAll(): Observable<PaginatedResponse<Weather>> {
+        return this.http.get<PaginatedResponse<Weather>>(baseUrl);
     }
 
-    getById(id: string): Observable<SingleObjectResponse<Role>> {
-        return this.http.get<SingleObjectResponse<Role>>(`${baseUrl}/${id}`);
+    getById(id: string): Observable<SingleObjectResponse<Weather>> {
+        return this.http.get<SingleObjectResponse<Weather>>(`${baseUrl}/${id}`);
     }
 
     create(params: any) {
         return this.http.post(baseUrl, params);
+    }
+
+    getByCode(code: number, params: any): Observable<Weather> {
+        return this.http.post<Weather>(`${baseUrl}/${code}`, params);
     }
 
     update(id: number, params: any) {
