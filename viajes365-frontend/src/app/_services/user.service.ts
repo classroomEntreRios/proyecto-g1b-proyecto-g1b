@@ -2,11 +2,10 @@
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
-import { Photo, User } from '@app/_models';
-import { PaginatedResponse } from '@app/_rest/paginated.response';
-import { async, Observable } from 'rxjs';
-import { SingleObjectResponse } from '@app/_rest/singleobject.response';
-import { PhotoService } from './photo.service';
+import { User } from '@app/_models';
+import { PaginatedResponse, SingleObjectResponse } from '@app/_rest';
+import { Observable } from 'rxjs';
+// import { PhotoService } from './photo.service';
 
 const baseUrl = `${environment.apiUrl}/users`;
 
@@ -14,7 +13,7 @@ const baseUrl = `${environment.apiUrl}/users`;
 export class UserService {
   constructor(
     private http: HttpClient,
-    private photoService: PhotoService
+    // private photoService: PhotoService
   ) { }
 
   getAll(): Observable<PaginatedResponse<User>> {
@@ -27,25 +26,25 @@ export class UserService {
   }
 
   create(params: any): Observable<any> {
-    if (params.fileName != null) {
-      let photo = new Photo();
-      photo.path = params.fileName;
-      photo.name = params.fileName;
-      let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
-      params.fileName = this.photoService.create(par);
-    }
+    // if (params.fileName != null) {
+    //   let photo = new Photo();
+    //   photo.path = params.fileName;
+    //   photo.name = params.fileName;
+    //   let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+    //   params.fileName = this.photoService.create(par);
+    // }
 
     return this.http.post(baseUrl, params);
   }
 
   update(id: number, params: any): Observable<any> {
-    if (params.fileName != null) {
-      let photo = new Photo();
-      photo.path = params.fileName;
-      photo.name = params.fileName;
-      let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
-      params.fileName = this.photoService.create(par);
-    }
+    // if (params.fileName != null) {
+    //   let photo = new Photo();
+    //   photo.path = params.fileName;
+    //   photo.name = params.fileName;
+    //   let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+    //   params.fileName = this.photoService.create(par);
+    // }
     return this.http.put(`${baseUrl}/${id}`, params);
   }
 
