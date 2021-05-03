@@ -17,8 +17,4 @@ export class SingleObjectResponse<T> {
     getNew(): T {
         return new this.Type();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> US#05TK#028_Consulta_de_clima
