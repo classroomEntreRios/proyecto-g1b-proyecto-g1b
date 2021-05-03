@@ -15,6 +15,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using Viajes365RestApi.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
+using System.IO;
 
 namespace Viajes365RestApi
 {
@@ -129,6 +131,13 @@ namespace Viajes365RestApi
             // Creates defaults Admin and User
             seeder.SeedUsers();
             // tutiempo.getInfo();
+            app.UseDefaultFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+            Path.Combine(env.ContentRootPath, "MyStaticFiles")),
+                RequestPath = "/StaticFiles"
+            });
             app.UseRouting();
 
             // global cors policy

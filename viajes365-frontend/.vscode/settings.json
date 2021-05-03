@@ -1,0 +1,8 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b17bd9ac-8299-40ee-a931-d21d1bbe579b/resourceGroups/ViajesFrontend/providers/Microsoft.Web/sites/viajes365turism",
+    "appService.deploySubpath": ".",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ]
+}

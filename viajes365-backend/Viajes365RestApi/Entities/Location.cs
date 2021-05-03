@@ -14,7 +14,7 @@ namespace Viajes365RestApi.Entities
         public double Longitude { get; set; }
         [StringLength(150)]
         public string FullAddress { get; set; }
-        public byte Note { get; set; }
+        public string Note { get; set; }
 
 
         public ICollection<Tour> Tours { get; set; }

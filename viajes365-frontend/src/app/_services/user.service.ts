@@ -3,30 +3,52 @@ import { HttpClient } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
+import { PaginatedResponse, SingleObjectResponse } from '@app/_rest';
+import { async, Observable } from 'rxjs';
+// import { PhotoService } from './photo.service';
 
 const baseUrl = `${environment.apiUrl}/users`;
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
-    constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    // private photoService: PhotoService
+  ) { }
 
-    getAll() {
-        return this.http.get<User[]>(baseUrl);
-    }
+  getAll(): Observable<PaginatedResponse<User>> {
+    return this.http.get<PaginatedResponse<User>>(`${baseUrl}`);
 
-    getById(id: number) {
-        return this.http.get<User>(`${baseUrl}/${id}`);
-    }
+  }
 
-    create(params: any) {
-        return this.http.post(baseUrl, params);
-    }
+  getById(id: number): Observable<SingleObjectResponse<User>> {
+    return this.http.get<SingleObjectResponse<User>>(`${baseUrl}/${id}`);
+  }
 
-    update(id: number, params: any) {
-        return this.http.put(`${baseUrl}/${id}`, params);
-    }
+  create(params: any): Observable<any> {
+    // if (params.fileName != null) {
+    //   let photo = new Photo();
+    //   photo.path = params.fileName;
+    //   photo.name = params.fileName;
+    //   let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+    //   params.fileName = this.photoService.create(par);
+    // }
 
-    delete(id: number) {
-        return this.http.delete(`${baseUrl}/${id}`);
-    }
+    return this.http.post(baseUrl, params);
+  }
+
+  update(id: number, params: any): Observable<any> {
+    // if (params.fileName != null) {
+    //   let photo = new Photo();
+    //   photo.path = params.fileName;
+    //   photo.name = params.fileName;
+    //   let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+    //   params.fileName = this.photoService.create(par);
+    // }
+    return this.http.put(`${baseUrl}/${id}`, params);
+  }
+
+  delete(id: number) {
+    return this.http.delete(`${baseUrl}/${id}`);
+  }
 }

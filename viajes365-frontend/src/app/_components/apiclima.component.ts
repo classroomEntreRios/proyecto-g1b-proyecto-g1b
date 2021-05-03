@@ -1,69 +1,88 @@
-import { HttpClient } from '@angular/common/http';
-import { Ciudad } from './../_components/ciudad';
+import { WeatherService } from './../_services/weather.service';
+import { CityService } from './../_services/city.service';
 import { Component, OnInit } from '@angular/core';
+import { City, Weather } from '@app/_models';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'apiclima',
   templateUrl: './apiclima.component.html',
-
 })
 export class ApiclimaComponent implements OnInit {
 
-  respuestaApi: any;
-  ciudades!: Ciudad[];
-  ciudadElegida: number = 0;
-  tempActual: number = 0;
-  iconoClima: string = '';
-  iconoClimaUrl = '';
-
-  // private url = 'https://api.tutiempo.net/json/?lan=es&apid=XsGaqqXXXzXeobw&lid=43214';
-  private url = 'http://localhost:5000/api/weathers/';
-
-  private url2 = 'http://api.openweathermap.org/data/2.5/weather?q=Gualeguaychu&appid=4de652402d17c22f3c749ef7e711f6d1'
-  constructor(private http: HttpClient) { }
-
-  consultaCiudad(val: any) {
-    this.ciudadElegida = parseInt(val);
-    let obj = this.ciudades.find(obj => obj.id == this.ciudadElegida);
-    console.log(obj?.ciudadId);
+  // currentHour: any = Date.parse(new Date().toLocaleTimeString([], { hour: '2-digit', hour12: false }));
+  citiesCollection!: City[];
+  currentCity!: City;
+  currentTemperature!: number;
+  // weatherIconUrl = 'assets/images/icons/tutiempo/wi/6.png';
+  weatherIconUrl!: string;
+  currentTempUnit!: string;
+  currentHumidityUnit!: string;
+  currentPressureUnit!: string;
+  currentStatus!: string;
+  cityForm: FormGroup;
+  currentHumidity!: number;
+  currentPressure!: number;
 
 
-    this.http.post(this.url + obj?.ciudadId, {})
-      .subscribe(response => {
-        this.respuestaApi = response;
-        this.tempActual = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").temperature;
-        this.iconoClima = this.respuestaApi.hours.find((h: any) => h.hour_data = "9:00").icon;
-
-        console.log(this.respuestaApi);
-        console.log(this.tempActual, this.iconoClima);
-        console.log(this.iconoClimaUrl);
-
-        this.iconoClimaUrl = 'https://v5i.tutiempo.net/wi/02/30/' + this.iconoClima + '.png';
-
-
-
-
-        //  console.log(this.respuestaApi.main.temp, this.respuestaApi.weather[0].icon );
-
-      });
-
+  constructor(
+    private fb: FormBuilder,
+    private cityService: CityService,
+    private weatherService: WeatherService) {
+    this.cityForm = this.fb.group({
+      city: [null]
+    });
   }
 
-  // CONSULTA CLIMA A LA API
-
-
-  ngOnInit() {
-    this.ciudades = [
-      { id: 1, ciudadId: 43214, ciudad: "Paraná" },
-      { id: 2, ciudadId: 42987, ciudad: "Federación" },
-      { id: 3, ciudadId: 42923, ciudad: "Concordia" },
-      { id: 4, ciudadId: 43034, ciudad: "Gualeguaychú" },
-      { id: 5, ciudadId: 43033, ciudad: "Gualeguay" },
-    ]
-
-    // CIUDAD POR DEFECTO PARANA
-    this.ciudadElegida = 1;
+  async ngOnInit(): Promise<void> {
+    await this.cityService.getAll().subscribe(pagedCities => {
+      try {
+        this.citiesCollection = pagedCities.listElements.filter(c => c.active == true).sort((a, b) => a.name.localeCompare(b.name));
+        this.setDefaults();
+      } catch (error) {
+        console.log(pagedCities.message);
+      }
+    });
   }
 
 
+  cityChange(e: any) {
+    let id: string = e.target.value;
+    let cityId = Number(id.split(':')[1]);
+    this.cityQuery(cityId);
+  };
+
+  cityQuery(cityId: number) {
+    if (cityId > 0) {
+      this.currentCity = this.getCityByCityId(cityId)
+      this.weatherService.getByCode(this.currentCity.code).
+        subscribe((weather: Weather) => {
+          this.currentTemperature = weather.hours[0].temperature;
+          this.weatherIconUrl = weather.hours[0].icon;
+          this.currentTempUnit = weather.information.temperature;
+          this.currentHumidityUnit = weather.information.humidity;
+          this.currentPressureUnit = weather.information.pressure;
+          this.currentStatus = weather.hours[0].text;
+          this.currentHumidity = weather.hours[0].humidity;
+          this.currentPressure = weather.hours[0].pressure;
+          // weather icons are already in our assets folder        
+          this.weatherIconUrl = 'assets/images/icons/tutiempo/wi/' + this.weatherIconUrl + '.png';
+        })
+    }
+  }
+  getCityByCityId(id: number): City {
+    let city = this.citiesCollection.find(c => c.cityId == id);
+    if (city) {
+      return city;
+    }
+    return new City();
+  }
+
+  setDefaults() {
+    // Select initial City
+    let defaultCityName = 'Paraná';
+    let initialCityId = this.citiesCollection.findIndex(c => c.name == defaultCityName) + 1;
+    this.cityForm.get('city')!.patchValue(initialCityId);
+    this.cityQuery(initialCityId);
+  }
 }

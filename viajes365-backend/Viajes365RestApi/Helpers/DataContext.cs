@@ -44,7 +44,7 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Locality> Localities { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
-    
+
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
             OnBeforeSaving();
@@ -66,22 +66,18 @@ namespace Viajes365RestApi.Helpers
         {
             // Call Fluent API configurations from here
             // Property Configurations SQL Server Express 2019                    
-            new UserBuilder().Configure(mb.Entity<User>());
-            new RoleBuilder().Configure(mb.Entity<Role>());
             new LocationBuilder().Configure(mb.Entity<Location>());
+            new PhotoBuilder().Configure(mb.Entity<Photo>());
             new TourBuilder().Configure(mb.Entity<Tour>());
             new AttractionBuilder().Configure(mb.Entity<Attraction>());
             new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
-
-
-            new AttractionBuilder().Configure(mb.Entity<Attraction>());
-            //new PhotoBuilder().Configure(mb.Entity<Photo>());
             new CityBuilder().Configure(mb.Entity<City>());
             new DayBuilder().Configure(mb.Entity<Day>());
             new HourBuilder().Configure(mb.Entity<Hour>());
             new InformationBuilder().Configure(mb.Entity<Information>());
             new LocalityBuilder().Configure(mb.Entity<Locality>());
-
+            new RoleBuilder().Configure(mb.Entity<Role>());
+            new UserBuilder().Configure(mb.Entity<User>());
         }
 
         private void OnBeforeSaving()

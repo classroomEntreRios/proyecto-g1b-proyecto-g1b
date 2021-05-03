@@ -13,9 +13,9 @@ using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Authorize]
+    // [Authorize]
+    // [Authorization(adminrole)]
     [ApiController]
-    [Authorization(adminrole)]
     [Route("api/[controller]")]
     public class CitiesController : ControllerBase
     {

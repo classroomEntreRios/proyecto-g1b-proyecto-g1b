@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:5000/api'
+  // apiUrl: 'http://localhost:5000/api',
+  apiUrl: 'https://viajes365.azurewebsites.net/api'
+
 };
 
 /*

@@ -74,6 +74,12 @@ namespace Viajes365RestApi.Services
                 RoleId = 1L;
             }
 
+            // Photo by default 1 (no photo for user)
+            if (string.IsNullOrWhiteSpace(user.PhotoId.ToString()) || user.PhotoId <= 0)
+            {
+                user.PhotoId = 1L;
+            }
+
             // Is UserName unique?
             if (_context.Users.Any(x => x.UserName == user.UserName))
                 throw new AppException("Username '" + user.UserName + "' is already taken");
@@ -87,8 +93,10 @@ namespace Viajes365RestApi.Services
 
             // registered role
             Role role = _context.Roles.Find(RoleId);
-            user.Role = new Role();
+            Photo photo = _context.Photos.Find(user.PhotoId);
+            // user.Role = new Role();
             user.Role = role;
+            user.Photo = photo;
             user.Active = true;
             user.PasswordHash = passwordHash;
             user.PasswordSalt = passwordSalt;
