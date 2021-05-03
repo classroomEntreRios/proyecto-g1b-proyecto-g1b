@@ -13,7 +13,7 @@ namespace Viajes365RestApi.Builders
             var adminId = 1;
             builder.HasIndex(u => u.LocationName).IsUnique();
             builder.HasData(
-                new Location {LocationId = 1, LocationName = "Sin Locación", Latitude = 0.0, Longitude = 0.0, FullAddress = "Sin datos", Note = "Por defecto", Created = utcNow, Updated = utcNow, CreatorId = adminId, LastId = adminId, Active = true }
+                new Location { LocationId = 1, LocationName = "Sin Locación", Latitude = 0.0, Longitude = 0.0, FullAddress = "Sin datos", Note = "Por defecto", Created = utcNow, Updated = utcNow, CreatorId = adminId, LastId = adminId, Active = true }
                 );
         }
     }

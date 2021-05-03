@@ -7,7 +7,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 @Component({
   selector: 'apiclima',
   templateUrl: './apiclima.component.html',
-
 })
 export class ApiclimaComponent implements OnInit {
 
@@ -87,10 +86,3 @@ export class ApiclimaComponent implements OnInit {
     this.cityQuery(initialCityId);
   }
 }
-
-
-
-
-
-
-

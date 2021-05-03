@@ -15,3 +15,4 @@ __exportStar(require("./user"), exports);
 __exportStar(require("./role"), exports);
 __exportStar(require("./city"), exports);
 __exportStar(require("./weather"), exports);
+__exportStar(require("./topic"), exports);
