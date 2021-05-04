@@ -114,13 +114,13 @@ namespace Viajes365RestApi.Controllers
         // POST: api/Photos
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Photo>> PostPhoto(Photo photo, [FromForm] IFormFile file, [FromForm] string category)            
+        public async Task<ActionResult<Photo>> PostPhoto([FromForm] PhotoUpdateDto photoDto)            
         {
-            photo.Path = await this.UploadImage(file, category);
-            _context.Photos.Add(photo);
+            photoDto.photo.Path = await this.UploadImage(photoDto.file, photoDto.category);
+            _context.Photos.Add(_mapper.Map<Photo>(photoDto));
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPhoto", new { id = photo.PhotoId }, photo);
+            return CreatedAtAction("GetPhoto", new { id = photoDto.photo.PhotoId }, photoDto);
         }
 
         // DELETE: api/Photos/5

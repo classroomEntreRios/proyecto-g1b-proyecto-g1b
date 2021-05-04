@@ -27,11 +27,19 @@
           <div class="col g-4">
 
             <div class="text-center col m-2">
-              <h6>Vista Previa</h6>
-              <img [src]="croppedImage" />
+              <div class="row">
+                <div class="col">
+                  <h6>Vista Previa</h6>
+                  <img [src]="croppedImage" />
+                </div>
+                <div class="col">
+                  <h6>Imagen Actual</h6>
+                  <img *ngIf="currentUser" [src]="currentUser.photo.path" />
+                </div>
+              </div>
             </div>
             <input type="file" (change)="fileChangeEvent($event)" formControlName="fileName" class="form-control"
-              accept=".png, .jpg" [ngClass]=" { 'is-invalid' : submitted && f.fileName.errors }" id="fileName" />
+              accept=".png, .jpg" [ngClass]=" { 'is-invalid' : submitted && f.fileName.errors }" id="file" />
           </div>
         </div>
       </div>
@@ -91,8 +99,8 @@
         </div>
         <div class="form-group col">
           <div class="form-floating">
-            <select formControlName="role" class="form-select" id="role" aria-label="Rol" (change)="onChange($event)"
-              [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+            <select formControlName="role" class="form-select" id="role" aria-label="Rol"
+              (change)="onChangeRole($event)" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
               <option *ngFor="let rol of roles" value="{{ rol.roleId }}">{{ rol.roleName }}</option>
             </select>
             <label for="role">Rol</label>
@@ -167,4 +175,5 @@
       </div>
     </form>
   </div>
+  {{ form.value | json }}
 </div>

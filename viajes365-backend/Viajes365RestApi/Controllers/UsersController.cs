@@ -126,12 +126,11 @@ namespace Viajes365RestApi.Controllers
             }
             else
             {
-                var result = await _context.Users
-            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-            .Take(validFilter.PageSize)
-            .Include(u => u.Role)
-            .ToListAsync();
-                result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
+                var result = await _userService.GetAll(validFilter);
+                foreach (User u in result)
+                {
+                    users.Add(_mapper.Map<UserDto>(u));
+                }   
                 PagedResponse<List<UserDto>> pagedResponse = Pagination.CreatePagedReponse<UserDto>(users, validFilter, totalElements, _uriService, route);
                 return Ok(pagedResponse);
             }
@@ -139,7 +138,7 @@ namespace Viajes365RestApi.Controllers
 
         // Allow only self id for role user and any id for role admin
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(long id)
+        public ActionResult<UserDto> GetUser(long id)
         {
             setAppUser();
             if (_mainrole == userrole && _userid != id)
@@ -147,7 +146,7 @@ namespace Viajes365RestApi.Controllers
                 return Unauthorized();
             }
 
-            var user = await _context.Users.FindAsync(id);
+            User user = _userService.GetById(id);
 
             if (user == null)
             {
@@ -157,7 +156,7 @@ namespace Viajes365RestApi.Controllers
             UserDto model = _mapper.Map<UserDto>(user);
             return Ok(new Response<UserDto>(model));
         }
-      
+
         // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] UserUpdateDto model)

@@ -5,7 +5,7 @@ import { first } from 'rxjs/operators';
 
 import { UserService, AlertService } from '@app/_services';
 import { MustMatch } from '@app/_helpers';
-import { Role } from '@app/_models';
+import { Role, User } from '@app/_models';
 import { RoleService } from '@app/_services/role.service';
 import { base64ToFile, ImageCroppedEvent } from 'ngx-image-cropper';
 
@@ -15,7 +15,7 @@ export class AddEditComponent implements OnInit {
 
   imageChangedEvent: any = '';
   croppedImage: any = '';
-
+  currentUser!: User;
   form!: FormGroup;
   id!: number;
   isAddMode!: boolean;
@@ -52,6 +52,7 @@ export class AddEditComponent implements OnInit {
       });
     const formOptions: AbstractControlOptions = { validators: MustMatch('password', 'confirmPassword') };
     this.form = this.formBuilder.group({
+      file: [null],
       fileName: [''],
       userId: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -68,10 +69,10 @@ export class AddEditComponent implements OnInit {
       this.userService.getById(this.id)
         .pipe(first())
         .subscribe(x => {
+          this.currentUser = x.element;
           this.form.patchValue(x.element);
           this.form.controls['role'].patchValue(x.element.roleId);
           this.form.controls['roleId'].patchValue(x.element.roleId);
-          console.log(x.element.roleId);
           this.form.controls['active'].patchValue(x.element.active);
           this.activeToggle();
         });
@@ -111,7 +112,12 @@ export class AddEditComponent implements OnInit {
   }
 
   private updateUser() {
-    this.userService.update(this.id, this.form.value)
+    this.form.patchValue({
+      file: this.croppedToFile()
+    });
+    // this.form.get('file')!.updateValueAndValidity();
+    // const data = JSON.stringify(this.form.value);
+    this.userService.update(this.id, this.form.value, this.currentUser.photoId)
       .pipe(first())
       .subscribe(() => {
         this.alertService.success('Usuario actualizado', { keepAfterRouteChange: true });
@@ -120,7 +126,7 @@ export class AddEditComponent implements OnInit {
       .add(() => this.loading = false);
   }
 
-  public onChange(e: any) {
+  public onChangeRole(e: any) {
     // sincroniza el select con el Role Id
     this.form.controls['roleId'].patchValue(e.target.value);
   }
@@ -130,7 +136,7 @@ export class AddEditComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-
+    this.currentUser.photoId = 0;
     this.imageChangedEvent = event;
 
   }

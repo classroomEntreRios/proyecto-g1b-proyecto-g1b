@@ -11,6 +11,7 @@ var core_1 = require("@angular/core");
 var forms_1 = require("@angular/forms");
 var operators_1 = require("rxjs/operators");
 var _helpers_1 = require("@app/_helpers");
+var ngx_image_cropper_1 = require("ngx-image-cropper");
 var AddEditComponent = /** @class */ (function () {
     function AddEditComponent(formBuilder, route, router, userService, roleService, alertService) {
         this.formBuilder = formBuilder;
@@ -19,6 +20,8 @@ var AddEditComponent = /** @class */ (function () {
         this.userService = userService;
         this.roleService = roleService;
         this.alertService = alertService;
+        this.imageChangedEvent = '';
+        this.croppedImage = '';
         this.loading = false;
         this.submitted = false;
         this.roles = new Array();
@@ -42,6 +45,8 @@ var AddEditComponent = /** @class */ (function () {
         });
         var formOptions = { validators: _helpers_1.MustMatch('password', 'confirmPassword') };
         this.form = this.formBuilder.group({
+            file: [null],
+            fileName: [''],
             userId: ['', forms_1.Validators.required],
             firstName: ['', forms_1.Validators.required],
             lastName: ['', forms_1.Validators.required],
@@ -56,10 +61,10 @@ var AddEditComponent = /** @class */ (function () {
             this.userService.getById(this.id)
                 .pipe(operators_1.first())
                 .subscribe(function (x) {
+                _this.currentUser = x.element;
                 _this.form.patchValue(x.element);
                 _this.form.controls['role'].patchValue(x.element.roleId);
                 _this.form.controls['roleId'].patchValue(x.element.roleId);
-                console.log(x.element.roleId);
                 _this.form.controls['active'].patchValue(x.element.active);
                 _this.activeToggle();
             });
@@ -99,7 +104,12 @@ var AddEditComponent = /** @class */ (function () {
     };
     AddEditComponent.prototype.updateUser = function () {
         var _this = this;
-        this.userService.update(this.id, this.form.value)
+        this.form.patchValue({
+            file: this.croppedToFile()
+        });
+        // this.form.get('file')!.updateValueAndValidity();
+        // const data = JSON.stringify(this.form.value);
+        this.userService.update(this.id, this.form.value, this.currentUser.photoId)
             .pipe(operators_1.first())
             .subscribe(function () {
             _this.alertService.success('Usuario actualizado', { keepAfterRouteChange: true });
@@ -107,12 +117,33 @@ var AddEditComponent = /** @class */ (function () {
         })
             .add(function () { return _this.loading = false; });
     };
-    AddEditComponent.prototype.onChange = function (e) {
+    AddEditComponent.prototype.onChangeRole = function (e) {
         // sincroniza el select con el Role Id
         this.form.controls['roleId'].patchValue(e.target.value);
     };
     AddEditComponent.prototype.activeToggle = function () {
         this.activeLabel = this.form.get('active').value ? 'Sí' : 'No';
+    };
+    AddEditComponent.prototype.fileChangeEvent = function (event) {
+        this.currentUser.photoId = 0;
+        this.imageChangedEvent = event;
+    };
+    AddEditComponent.prototype.imageCropped = function (event) {
+        this.croppedImage = event.base64;
+    };
+    AddEditComponent.prototype.imageLoaded = function () {
+        /* show cropper */
+    };
+    AddEditComponent.prototype.cropperReady = function () {
+        /* cropper ready */
+    };
+    AddEditComponent.prototype.loadImageFailed = function () {
+        /* show message */
+    };
+    AddEditComponent.prototype.croppedToFile = function () {
+        // Assuming you have stored the event.base64 in an instance variable 'croppedImage'
+        var file = new File([ngx_image_cropper_1.base64ToFile(this.croppedImage)], 'fileName.png');
+        return file;
     };
     AddEditComponent = __decorate([
         core_1.Component({ templateUrl: 'add-edit.component.html' })

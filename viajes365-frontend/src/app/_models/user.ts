@@ -1,4 +1,5 @@
-﻿import { Role } from './role';
+﻿import { Photo } from './photo';
+import { Role } from './role';
 export class User {
   userId!: number;
   title!: string;
@@ -9,6 +10,8 @@ export class User {
   email!: string;
   roleId!: number;
   role!: Role;
+  photoId!: number;
+  photo!: Photo;
   isDeleting = false;
   token!: string;
   active!: boolean;

@@ -1,9 +1,8 @@
-using Microsoft.CodeAnalysis;
 namespace Viajes365RestApi.Dtos
 {
     public class PhotoDto
     {
-        public long PhotosId { get; set; }
+        public long PhotoId { get; set; }
         public string Name { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
