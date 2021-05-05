@@ -64,6 +64,7 @@ namespace Viajes365RestApi.Services
 
         public User GetById(long id)
         {
+            
             return _context.Users
                  .Include(u => u.Role)
                  .Include(u => u.Photo)

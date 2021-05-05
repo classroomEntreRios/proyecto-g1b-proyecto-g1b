@@ -62,7 +62,7 @@ namespace Viajes365RestApi.Builders
                     Email = "user@viajar365.com",
                     Password = "user",
                     TermsAndConditionsChecked = true,
-                    PhotoId = 1L
+                    PhotoId = 2L
                 };
                 // RoleId 1L is Usuario
                 await _userService.Create(_mapper.Map<User>(user), user.Password, 1L);

@@ -17,8 +17,6 @@ export class ErrorInterceptor implements HttpInterceptor {
       }
       if (error == " <Username or password is incorrect") {
         error = ("Usuario y/o claves incorrecto")
-
-
       }
       this.alertService.error(error);
       console.error(err);

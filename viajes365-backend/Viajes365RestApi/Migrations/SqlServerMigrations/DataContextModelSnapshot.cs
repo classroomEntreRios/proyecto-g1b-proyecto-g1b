@@ -136,55 +136,55 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             CityId = 1L,
                             Active = true,
                             Code = 43437,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Colón",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
                         },
                         new
                         {
                             CityId = 2L,
                             Active = true,
                             Code = 42923,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Concordia",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
                         },
                         new
                         {
                             CityId = 3L,
                             Active = true,
                             Code = 42987,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Federación",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
                         },
                         new
                         {
                             CityId = 4L,
                             Active = true,
                             Code = 43034,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Gualeguaychú",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
                         },
                         new
                         {
                             CityId = 5L,
                             Active = true,
                             Code = 43214,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Paraná",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 881, DateTimeKind.Utc).AddTicks(37)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
                         });
                 });
 
@@ -455,7 +455,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             LocationId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 867, DateTimeKind.Utc).AddTicks(3638),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610),
                             CreatorId = 1L,
                             FullAddress = "Sin datos",
                             LastId = 1L,
@@ -463,7 +463,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             LocationName = "Sin Locación",
                             Longitude = 0.0,
                             Note = "Por defecto",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 867, DateTimeKind.Utc).AddTicks(3638)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610)
                         });
                 });
 
@@ -520,14 +520,27 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             PhotoId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 876, DateTimeKind.Utc).AddTicks(1315),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700),
                             CreatorId = 1L,
-                            Description = "Falto foto de tal",
+                            Description = "Imagén de Perfil",
                             LastId = 1L,
-                            Name = "Anonimo",
-                            Path = "",
+                            Name = "UserAvatar1",
+                            Path = "StaticFiles\\Images\\Avatars\\user-avatar1.png",
                             Summary = "Avatar Sin Foto",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 876, DateTimeKind.Utc).AddTicks(1315)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700)
+                        },
+                        new
+                        {
+                            PhotoId = 2L,
+                            Active = true,
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700),
+                            CreatorId = 1L,
+                            Description = "Imagén de Perfil",
+                            LastId = 1L,
+                            Name = "UserAvatar2",
+                            Path = "StaticFiles\\Images\\Avatars\\user-avatar2.png",
+                            Summary = "Avatar Sin Foto",
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700)
                         });
                 });
 
@@ -575,41 +588,41 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             RoleId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Usuario",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
                         },
                         new
                         {
                             RoleId = 2L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Administrador",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
                         },
                         new
                         {
                             RoleId = 3L,
                             Active = false,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Moderador",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
                         },
                         new
                         {
                             RoleId = 4L,
                             Active = false,
-                            Created = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977),
+                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Anónimo",
-                            Updated = new DateTime(2021, 5, 3, 18, 20, 4, 893, DateTimeKind.Utc).AddTicks(6977)
+                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
                         });
                 });
 

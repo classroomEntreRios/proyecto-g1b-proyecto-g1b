@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-
 import { environment } from '@environments/environment';
 import { Photo } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest/paginated.response';
@@ -12,7 +11,7 @@ const baseUrl = `${environment.apiUrl}/photos`;
 
 @Injectable({ providedIn: 'root' })
 export class PhotoService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getAll(): Observable<PaginatedResponse<Photo>> {
     return this.http.get<PaginatedResponse<Photo>>(baseUrl);
@@ -23,15 +22,13 @@ export class PhotoService {
   }
 
   create(params: any): Observable<any> {
-    return this.http.post(baseUrl, params)
-      .pipe(
-        catchError(err => this.handleError(err))
-      );
+    return this.http
+      .post(baseUrl, params)
+      .pipe(catchError((err) => this.handleError(err)));
   }
   private handleError(error: any) {
     return throwError(error);
   }
-
 
   update(id: number, params: any) {
     return this.http.put(`${baseUrl}/${id}`, params);

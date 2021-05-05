@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -116,7 +118,7 @@ namespace Viajes365RestApi.Controllers
         [HttpPost]
         public async Task<ActionResult<Photo>> PostPhoto([FromForm] PhotoUpdateDto photoDto)            
         {
-            photoDto.photo.Path = await this.UploadImage(photoDto.file, photoDto.category);
+            // photoDto.photo.Path = await UploadImage(photoDto.file, photoDto.category).Result;
             _context.Photos.Add(_mapper.Map<Photo>(photoDto));
             await _context.SaveChangesAsync();
 
@@ -153,7 +155,8 @@ namespace Viajes365RestApi.Controllers
             {
                 await file.CopyToAsync(stream);
             }
-            return path;
+
+            return JsonSerializer.Serialize(new { path = Path.Combine("StaticFiles", "Images", category, fName) }); 
         }
 
         [HttpPost("UploadImages")]
