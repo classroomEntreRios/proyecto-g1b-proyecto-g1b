@@ -13,6 +13,7 @@ exports.__esModule = true;
 __exportStar(require("./alert"), exports);
 __exportStar(require("./user"), exports);
 __exportStar(require("./role"), exports);
+__exportStar(require("./topic"), exports);
+__exportStar(require("./photo"), exports);
 __exportStar(require("./city"), exports);
 __exportStar(require("./weather"), exports);
-__exportStar(require("./topic"), exports);

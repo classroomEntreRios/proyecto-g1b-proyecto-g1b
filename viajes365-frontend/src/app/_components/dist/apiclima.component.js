@@ -95,7 +95,7 @@ var ApiclimaComponent = /** @class */ (function () {
                 _this.currentStatus = weather.hours[0].text;
                 _this.currentHumidity = weather.hours[0].humidity;
                 _this.currentPressure = weather.hours[0].pressure;
-                // weather icons are already in our assets folder        
+                // weather icons are already in our assets folder
                 _this.weatherIconUrl = 'assets/images/icons/tutiempo/wi/' + _this.weatherIconUrl + '.png';
             });
         }

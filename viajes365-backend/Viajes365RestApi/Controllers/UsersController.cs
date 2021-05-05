@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -7,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -19,6 +21,7 @@ using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 using Viajes365RestApi.Services;
 using Viajes365RestApi.Wrappers;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -29,6 +32,7 @@ namespace Viajes365RestApi.Controllers
     {
         private IUserService _userService;
         private IMapper _mapper;
+        private readonly IWebHostEnvironment _env;
         private readonly IUriService _uriService;
         private readonly AppSettings _appSettings;
         private readonly DataContext _context;
@@ -37,14 +41,18 @@ namespace Viajes365RestApi.Controllers
         private string _mainrole;
         private long _userid;
 
+        public object filename { get; private set; }
+
         public UsersController(DataContext context,
             IUserService userService,
             IMapper mapper,
+            IWebHostEnvironment env,
             IUriService uriService,
             IOptions<AppSettings> appSettings)
         {
             _userService = userService;
             _mapper = mapper;
+            _env = env;
             _uriService = uriService;
             _appSettings = appSettings.Value;
             _context = context;
@@ -98,7 +106,28 @@ namespace Viajes365RestApi.Controllers
             try
             {
                 // create user
-                return await _userService.Create(user, model.Password, model.RoleId);
+                User createdUser = await _userService.Create(user, model.Password, model.RoleId);
+                // we need anonimous profile image
+                string defaultProfileImage = Path.Combine(_env.ContentRootPath, "MyStaticFiles", "Images", "Avatars", "default-avatar.png");
+                string path = Path.Combine(_env.ContentRootPath, "MyStaticFiles", "Images", "Avatars", "user-avatar" + createdUser.UserId + ".png");
+                using (FileStream SourceStream = new FileStream(defaultProfileImage, FileMode.Open))
+                {
+                    using (FileStream DestinationStream = new FileStream(path, FileMode.OpenOrCreate))
+                    {
+                        await SourceStream.CopyToAsync(DestinationStream);
+                    }
+                }
+                // we need to create Photo from new file
+                Photo photo = new Photo();
+                photo.Name = "UserAvatar" + createdUser.UserId;
+                photo.Summary = "Avatar Sin Foto";
+                photo.Description = "Imagén de Perfil";
+                photo.Active = true;
+                photo.Path = Path.Combine("StaticFiles", "Images", "Avatars", "user-avatar" + createdUser.UserId + ".png"); ;
+                _context.Photos.Add(photo);
+                createdUser.Photo = photo;
+                await _context.SaveChangesAsync();
+                return createdUser;
 
             }
             catch (AppException ex)
@@ -126,12 +155,11 @@ namespace Viajes365RestApi.Controllers
             }
             else
             {
-                var result = await _context.Users
-            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-            .Take(validFilter.PageSize)
-            .Include(u => u.Role)
-            .ToListAsync();
-                result.ForEach(u => users.Add(_mapper.Map<UserDto>(u)));
+                var result = await _userService.GetAll(validFilter);
+                foreach (User u in result)
+                {
+                    users.Add(_mapper.Map<UserDto>(u));
+                }   
                 PagedResponse<List<UserDto>> pagedResponse = Pagination.CreatePagedReponse<UserDto>(users, validFilter, totalElements, _uriService, route);
                 return Ok(pagedResponse);
             }
@@ -139,7 +167,7 @@ namespace Viajes365RestApi.Controllers
 
         // Allow only self id for role user and any id for role admin
         [HttpGet("{id}")]
-        public async Task<ActionResult<UserDto>> GetUser(long id)
+        public async Task<ActionResult<UserDto>> GetUserAsync(long id)
         {
             setAppUser();
             if (_mainrole == userrole && _userid != id)
@@ -153,11 +181,14 @@ namespace Viajes365RestApi.Controllers
             {
                 return NotFound(new Response<UserDto>() { Message = "USUARIO NO ENCONTRADO", ErrorCode = 416 });
             }
+            else {
+                user = _userService.GetById(id);
+            }
 
             UserDto model = _mapper.Map<UserDto>(user);
             return Ok(new Response<UserDto>(model));
         }
-      
+
         // Allow only self id for role user and any id for role admin
         [HttpPut("{id}")]
         public IActionResult Update(long id, [FromBody] UserUpdateDto model)

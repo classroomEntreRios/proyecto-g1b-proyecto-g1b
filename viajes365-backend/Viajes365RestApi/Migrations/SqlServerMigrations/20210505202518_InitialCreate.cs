@@ -69,7 +69,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     Latitude = table.Column<double>(type: "float", nullable: false),
                     Longitude = table.Column<double>(type: "float", nullable: false),
                     FullAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Note = table.Column<byte>(type: "tinyint", nullable: false),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
                     LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
@@ -90,7 +90,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Summary = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Path = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Path = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
                     LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
@@ -250,6 +250,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     PasswordHash = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     PasswordSalt = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
                     RoleId = table.Column<long>(type: "bigint", nullable: false),
+                    PhotoId = table.Column<long>(type: "bigint", nullable: false),
                     TermsAndConditionsChecked = table.Column<bool>(type: "bit", nullable: false),
                     EmailConfirm = table.Column<bool>(type: "bit", nullable: false),
                     CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
@@ -261,6 +262,12 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_Users_Photos_PhotoId",
+                        column: x => x.PhotoId,
+                        principalTable: "Photos",
+                        principalColumn: "PhotoId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_Roles_RoleId",
                         column: x => x.RoleId,
@@ -428,11 +435,25 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, 43437, new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704), 1L, 1L, "Colón", new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704) },
-                    { 2L, true, 42923, new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704), 1L, 1L, "Concordia", new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704) },
-                    { 3L, true, 42987, new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704), 1L, 1L, "Federación", new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704) },
-                    { 4L, true, 43034, new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704), 1L, 1L, "Gualeguaychú", new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704) },
-                    { 5L, true, 43214, new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704), 1L, 1L, "Paraná", new DateTime(2021, 4, 18, 18, 57, 28, 895, DateTimeKind.Utc).AddTicks(704) }
+                    { 1L, true, 43437, new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793), 1L, 1L, "Colón", new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793) },
+                    { 2L, true, 42923, new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793), 1L, 1L, "Concordia", new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793) },
+                    { 3L, true, 42987, new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793), 1L, 1L, "Federación", new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793) },
+                    { 4L, true, 43034, new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793), 1L, 1L, "Gualeguaychú", new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793) },
+                    { 5L, true, 43214, new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793), 1L, 1L, "Paraná", new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793) }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "LocationId", "Active", "Created", "CreatorId", "FullAddress", "LastId", "Latitude", "LocationName", "Longitude", "Note", "Updated" },
+                values: new object[] { 1L, true, new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610), 1L, "Sin datos", 1L, 0.0, "Sin Locación", 0.0, "Por defecto", new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610) });
+
+            migrationBuilder.InsertData(
+                table: "Photos",
+                columns: new[] { "PhotoId", "Active", "Created", "CreatorId", "Description", "LastId", "Name", "Path", "Summary", "Updated" },
+                values: new object[,]
+                {
+                    { 1L, true, new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700), 1L, "Imagén de Perfil", 1L, "UserAvatar1", "StaticFiles\\Images\\Avatars\\user-avatar1.png", "Avatar Sin Foto", new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700) },
+                    { 2L, true, new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700), 1L, "Imagén de Perfil", 1L, "UserAvatar2", "StaticFiles\\Images\\Avatars\\user-avatar2.png", "Avatar Sin Foto", new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700) }
                 });
 
             migrationBuilder.InsertData(
@@ -440,10 +461,10 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671), 1L, 1L, "Usuario", new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671) },
-                    { 2L, true, new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671), 1L, 1L, "Administrador", new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671) },
-                    { 3L, false, new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671), 1L, 1L, "Moderador", new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671) },
-                    { 4L, false, new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671), 1L, 1L, "Anónimo", new DateTime(2021, 4, 18, 18, 57, 28, 888, DateTimeKind.Utc).AddTicks(3671) }
+                    { 1L, true, new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928), 1L, 1L, "Usuario", new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928) },
+                    { 2L, true, new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928), 1L, 1L, "Administrador", new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928) },
+                    { 3L, false, new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928), 1L, 1L, "Moderador", new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928) },
+                    { 4L, false, new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928), 1L, 1L, "Anónimo", new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928) }
                 });
 
             migrationBuilder.CreateIndex(
@@ -495,6 +516,13 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Photos_Path",
+                table: "Photos",
+                column: "Path",
+                unique: true,
+                filter: "[Path] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Roles_RoleName",
                 table: "Roles",
                 column: "RoleName",
@@ -538,6 +566,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 column: "Email",
                 unique: true,
                 filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_PhotoId",
+                table: "Users",
+                column: "PhotoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_RoleId",
@@ -585,9 +618,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 name: "Tour_attractions");
 
             migrationBuilder.DropTable(
-                name: "Photos");
-
-            migrationBuilder.DropTable(
                 name: "Users");
 
             migrationBuilder.DropTable(
@@ -601,6 +631,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             migrationBuilder.DropTable(
                 name: "Tours");
+
+            migrationBuilder.DropTable(
+                name: "Photos");
 
             migrationBuilder.DropTable(
                 name: "Roles");

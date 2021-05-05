@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Viajes365RestApi.Entities;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Handlers;
 using Viajes365RestApi.Helpers;
 
@@ -12,7 +13,7 @@ namespace Viajes365RestApi.Services
     public interface IUserService
     {
         User Authenticate(string username, string password);
-        IEnumerable<User> GetAll();
+        Task<IEnumerable<User>> GetAll(PaginationFilter validFilter);
         User GetById(long id);
         Task<User> Create(User user, string password, long roleId);
         Task<User> Update(User user, string password = null);
@@ -51,15 +52,23 @@ namespace Viajes365RestApi.Services
             return user;
         }
 
-        public IEnumerable<User> GetAll()
+        public async Task<IEnumerable<User>> GetAll(PaginationFilter validFilter)
         {
-            return _context.Users.Include(u => u.Role);
+            return await _context.Users
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(u => u.Role)
+            .Include(u => u.Photo)
+            .ToListAsync();
         }
 
         public User GetById(long id)
         {
-            return _context.Users.Include(u => u.Role)
-                .Single(u => u.UserId == id);
+            
+            return _context.Users
+                 .Include(u => u.Role)
+                 .Include(u => u.Photo)
+                 .Single(u => u.UserId == id);
         }
 
         public async Task<User> Create(User user, string password, long RoleId)

@@ -10,6 +10,7 @@ exports.UserService = void 0;
 var core_1 = require("@angular/core");
 var environment_1 = require("@environments/environment");
 var _models_1 = require("@app/_models");
+// import { PhotoService } from './photo.service';
 var baseUrl = environment_1.environment.apiUrl + "/users";
 var UserService = /** @class */ (function () {
     function UserService(http, photoService) {
@@ -23,22 +24,23 @@ var UserService = /** @class */ (function () {
         return this.http.get(baseUrl + "/" + id);
     };
     UserService.prototype.create = function (params) {
-        if (params.fileName != null) {
-            var photo = new _models_1.Photo();
-            photo.path = params.fileName;
-            photo.name = params.fileName;
-            var par = { "photo": photo, "file": params.fileName, "category": "avatars" };
-            params.fileName = this.photoService.create(par);
-        }
+        // if (params.fileName != null) {
+        //   let photo = new Photo();
+        //   photo.path = params.fileName;
+        //   photo.name = params.fileName;
+        //   let par = { "photo": photo, "file": params.fileName, "category": "avatars" };
+        //   params.fileName = this.photoService.create(par);
+        // }
         return this.http.post(baseUrl, params);
     };
-    UserService.prototype.update = function (id, params) {
-        if (params.fileName != null) {
+    UserService.prototype.update = function (id, params, photoId) {
+        console.log(params.fileName, photoId);
+        if (params.fileName != null && photoId == 0) {
             var photo = new _models_1.Photo();
             photo.path = params.fileName;
             photo.name = params.fileName;
-            var par = { "photo": photo, "file": params.fileName, "category": "avatars" };
-            params.fileName = this.photoService.create(par);
+            var par = { "photo": photo, "file": params.file, "category": "avatars" };
+            this.photoService.create(par).subscribe(function (res) { params.fileName = res; });
         }
         return this.http.put(baseUrl + "/" + id, params);
     };
