@@ -1,3 +1,5 @@
+using Viajes365RestApi.Entities;
+
 namespace Viajes365RestApi.Dtos
 
 {
@@ -9,5 +11,8 @@ namespace Viajes365RestApi.Dtos
         public double Longitude { get; set; }
         public string FullAddress { get; set; }
         public string Note { get; set; }
+        public long CityId { get; set; }
+        public virtual City City { get; set; }
+        public bool Active { get; set; }
     }
 }

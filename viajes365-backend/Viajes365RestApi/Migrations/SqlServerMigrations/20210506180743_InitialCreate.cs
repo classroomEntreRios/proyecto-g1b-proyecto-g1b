@@ -60,28 +60,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Locations",
-                columns: table => new
-                {
-                    LocationId = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LocationName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    Latitude = table.Column<double>(type: "float", nullable: false),
-                    Longitude = table.Column<double>(type: "float", nullable: false),
-                    FullAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
-                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
-                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
-                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
-                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
-                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Locations", x => x.LocationId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Roles",
                 columns: table => new
                 {
@@ -97,6 +75,35 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Roles", x => x.RoleId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Locations",
+                columns: table => new
+                {
+                    LocationId = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LocationName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Latitude = table.Column<double>(type: "float", nullable: false),
+                    Longitude = table.Column<double>(type: "float", nullable: false),
+                    FullAddress = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: true),
+                    Note = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CityId = table.Column<long>(type: "bigint", nullable: false),
+                    CreatorId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del creador"),
+                    LastId = table.Column<long>(type: "bigint", nullable: false, comment: "UserId del último Editor"),
+                    Created = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de creación"),
+                    Updated = table.Column<DateTime>(type: "datetime2", nullable: false, comment: "Fecha y hora de última actualización"),
+                    Active = table.Column<bool>(type: "bit", nullable: false, comment: "Esto se implementa para soft delete")
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Locations", x => x.LocationId);
+                    table.ForeignKey(
+                        name: "FK_Locations_Cities_CityId",
+                        column: x => x.CityId,
+                        principalTable: "Cities",
+                        principalColumn: "CityId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -433,25 +440,20 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, 43437, new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076), 1L, 1L, "Colón", new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076) },
-                    { 2L, true, 42923, new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076), 1L, 1L, "Concordia", new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076) },
-                    { 3L, true, 42987, new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076), 1L, 1L, "Federación", new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076) },
-                    { 4L, true, 43034, new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076), 1L, 1L, "Gualeguaychú", new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076) },
-                    { 5L, true, 43214, new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076), 1L, 1L, "Paraná", new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076) }
+                    { 1L, true, 43437, new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892), 1L, 1L, "Colón", new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892) },
+                    { 2L, true, 42923, new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892), 1L, 1L, "Concordia", new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892) },
+                    { 3L, true, 42987, new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892), 1L, 1L, "Federación", new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892) },
+                    { 4L, true, 43034, new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892), 1L, 1L, "Gualeguaychú", new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892) },
+                    { 5L, true, 43214, new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892), 1L, 1L, "Paraná", new DateTime(2021, 5, 6, 18, 7, 43, 441, DateTimeKind.Utc).AddTicks(6892) }
                 });
-
-            migrationBuilder.InsertData(
-                table: "Locations",
-                columns: new[] { "LocationId", "Active", "Created", "CreatorId", "FullAddress", "LastId", "Latitude", "LocationName", "Longitude", "Note", "Updated" },
-                values: new object[] { 1L, true, new DateTime(2021, 5, 6, 14, 24, 45, 863, DateTimeKind.Utc).AddTicks(1085), 1L, "Sin datos", 1L, 0.0, "Sin Locación", 0.0, "Por defecto", new DateTime(2021, 5, 6, 14, 24, 45, 863, DateTimeKind.Utc).AddTicks(1085) });
 
             migrationBuilder.InsertData(
                 table: "Photos",
                 columns: new[] { "PhotoId", "Active", "Created", "CreatorId", "Description", "LastId", "Name", "Path", "Summary", "TourId", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576), 1L, "Imagén de Perfil", 1L, "UserAvatar1", "StaticFiles\\Images\\Avatars\\user-avatar1.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576) },
-                    { 2L, true, new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576), 1L, "Imagén de Perfil", 1L, "UserAvatar2", "StaticFiles\\Images\\Avatars\\user-avatar2.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576) }
+                    { 1L, true, new DateTime(2021, 5, 6, 18, 7, 43, 435, DateTimeKind.Utc).AddTicks(2446), 1L, "Imagén de Perfil", 1L, "UserAvatar1", "StaticFiles\\Images\\Avatars\\user-avatar1.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 6, 18, 7, 43, 435, DateTimeKind.Utc).AddTicks(2446) },
+                    { 2L, true, new DateTime(2021, 5, 6, 18, 7, 43, 435, DateTimeKind.Utc).AddTicks(2446), 1L, "Imagén de Perfil", 1L, "UserAvatar2", "StaticFiles\\Images\\Avatars\\user-avatar2.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 6, 18, 7, 43, 435, DateTimeKind.Utc).AddTicks(2446) }
                 });
 
             migrationBuilder.InsertData(
@@ -459,11 +461,16 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421), 1L, 1L, "Usuario", new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421) },
-                    { 2L, true, new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421), 1L, 1L, "Administrador", new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421) },
-                    { 3L, false, new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421), 1L, 1L, "Moderador", new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421) },
-                    { 4L, false, new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421), 1L, 1L, "Anónimo", new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421) }
+                    { 1L, true, new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972), 1L, 1L, "Usuario", new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972) },
+                    { 2L, true, new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972), 1L, 1L, "Administrador", new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972) },
+                    { 3L, false, new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972), 1L, 1L, "Moderador", new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972) },
+                    { 4L, false, new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972), 1L, 1L, "Anónimo", new DateTime(2021, 5, 6, 18, 7, 43, 454, DateTimeKind.Utc).AddTicks(1972) }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Locations",
+                columns: new[] { "LocationId", "Active", "CityId", "Created", "CreatorId", "FullAddress", "LastId", "Latitude", "LocationName", "Longitude", "Note", "Updated" },
+                values: new object[] { 1L, true, 5L, new DateTime(2021, 5, 6, 18, 7, 43, 427, DateTimeKind.Utc).AddTicks(1473), 1L, "Sin datos", 1L, 0.0, "Sin Locación", 0.0, "Por defecto", new DateTime(2021, 5, 6, 18, 7, 43, 427, DateTimeKind.Utc).AddTicks(1473) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AttractionPhoto_PhotosPhotoId",
@@ -511,6 +518,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 name: "IX_Hour_WeatherId",
                 table: "Hour",
                 column: "WeatherId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Locations_CityId",
+                table: "Locations",
+                column: "CityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Locations_LocationName",
@@ -605,9 +617,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 name: "AttractionTour");
 
             migrationBuilder.DropTable(
-                name: "Cities");
-
-            migrationBuilder.DropTable(
                 name: "Comments");
 
             migrationBuilder.DropTable(
@@ -645,6 +654,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             migrationBuilder.DropTable(
                 name: "Locations");
+
+            migrationBuilder.DropTable(
+                name: "Cities");
         }
     }
 }
