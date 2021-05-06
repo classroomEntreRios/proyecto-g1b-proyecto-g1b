@@ -34,6 +34,21 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.ToTable("AttractionPhoto");
                 });
 
+            modelBuilder.Entity("AttractionTour", b =>
+                {
+                    b.Property<long>("AttractionsAttractionId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("ToursTourId")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("AttractionsAttractionId", "ToursTourId");
+
+                    b.HasIndex("ToursTourId");
+
+                    b.ToTable("AttractionTour");
+                });
+
             modelBuilder.Entity("Viajes365RestApi.Entities.Attraction", b =>
                 {
                     b.Property<long>("AttractionId")
@@ -136,55 +151,55 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             CityId = 1L,
                             Active = true,
                             Code = 43437,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Colón",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076)
                         },
                         new
                         {
                             CityId = 2L,
                             Active = true,
                             Code = 42923,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Concordia",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076)
                         },
                         new
                         {
                             CityId = 3L,
                             Active = true,
                             Code = 42987,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Federación",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076)
                         },
                         new
                         {
                             CityId = 4L,
                             Active = true,
                             Code = 43034,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Gualeguaychú",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076)
                         },
                         new
                         {
                             CityId = 5L,
                             Active = true,
                             Code = 43214,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Paraná",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 716, DateTimeKind.Utc).AddTicks(3793)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 877, DateTimeKind.Utc).AddTicks(4076)
                         });
                 });
 
@@ -455,7 +470,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             LocationId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 863, DateTimeKind.Utc).AddTicks(1085),
                             CreatorId = 1L,
                             FullAddress = "Sin datos",
                             LastId = 1L,
@@ -463,7 +478,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             LocationName = "Sin Locación",
                             Longitude = 0.0,
                             Note = "Por defecto",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 703, DateTimeKind.Utc).AddTicks(6610)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 863, DateTimeKind.Utc).AddTicks(1085)
                         });
                 });
 
@@ -503,6 +518,9 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.Property<string>("Summary")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("TourId")
+                        .HasColumnType("bigint");
+
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
@@ -513,6 +531,8 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .IsUnique()
                         .HasFilter("[Path] IS NOT NULL");
 
+                    b.HasIndex("TourId");
+
                     b.ToTable("Photos");
 
                     b.HasData(
@@ -520,27 +540,27 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             PhotoId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576),
                             CreatorId = 1L,
                             Description = "Imagén de Perfil",
                             LastId = 1L,
                             Name = "UserAvatar1",
                             Path = "StaticFiles\\Images\\Avatars\\user-avatar1.png",
                             Summary = "Avatar Sin Foto",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576)
                         },
                         new
                         {
                             PhotoId = 2L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576),
                             CreatorId = 1L,
                             Description = "Imagén de Perfil",
                             LastId = 1L,
                             Name = "UserAvatar2",
                             Path = "StaticFiles\\Images\\Avatars\\user-avatar2.png",
                             Summary = "Avatar Sin Foto",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 711, DateTimeKind.Utc).AddTicks(8700)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 871, DateTimeKind.Utc).AddTicks(576)
                         });
                 });
 
@@ -588,47 +608,47 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             RoleId = 1L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Usuario",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421)
                         },
                         new
                         {
                             RoleId = 2L,
                             Active = true,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Administrador",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421)
                         },
                         new
                         {
                             RoleId = 3L,
                             Active = false,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Moderador",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421)
                         },
                         new
                         {
                             RoleId = 4L,
                             Active = false,
-                            Created = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928),
+                            Created = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Anónimo",
-                            Updated = new DateTime(2021, 5, 5, 20, 25, 17, 728, DateTimeKind.Utc).AddTicks(928)
+                            Updated = new DateTime(2021, 5, 6, 14, 24, 45, 889, DateTimeKind.Utc).AddTicks(7421)
                         });
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Topic", b =>
                 {
-                    b.Property<long>("TourId")
+                    b.Property<long>("TopicId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -645,32 +665,39 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .HasColumnType("bigint")
                         .HasComment("UserId del creador");
 
-                    b.Property<string>("Duration")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
-
                     b.Property<long>("LastId")
                         .HasColumnType("bigint")
                         .HasComment("UserId del último Editor");
 
-                    b.Property<long>("LocationId")
-                        .HasColumnType("bigint");
-
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<bool>("Pinned")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Status")
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Summary")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2")
                         .HasComment("Fecha y hora de última actualización");
 
-                    b.HasKey("TourId");
+                    b.Property<long>("UserId")
+                        .HasColumnType("bigint");
 
-                    b.HasIndex("LocationId");
+                    b.HasKey("TopicId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Topics");
                 });
@@ -725,37 +752,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .IsUnique();
 
                     b.ToTable("Tours");
-                });
-
-            modelBuilder.Entity("Viajes365RestApi.Entities.Tour_attraction", b =>
-                {
-                    b.Property<long>("Tour_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Attraction_Id")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("AttractionId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("TopicTourId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long?>("TourId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("Tour_atractionId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Tour_Id", "Attraction_Id");
-
-                    b.HasIndex("AttractionId");
-
-                    b.HasIndex("TopicTourId");
-
-                    b.HasIndex("TourId");
-
-                    b.ToTable("Tour_attractions");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.User", b =>
@@ -899,13 +895,28 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.HasOne("Viajes365RestApi.Entities.Attraction", null)
                         .WithMany()
                         .HasForeignKey("AttractionsAttractionId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Viajes365RestApi.Entities.Photo", null)
                         .WithMany()
                         .HasForeignKey("PhotosPhotoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AttractionTour", b =>
+                {
+                    b.HasOne("Viajes365RestApi.Entities.Attraction", null)
+                        .WithMany()
+                        .HasForeignKey("AttractionsAttractionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Viajes365RestApi.Entities.Tour", null)
+                        .WithMany()
+                        .HasForeignKey("ToursTourId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });
 
@@ -914,7 +925,7 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Attractions")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Location");
@@ -923,15 +934,15 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
             modelBuilder.Entity("Viajes365RestApi.Entities.Comment", b =>
                 {
                     b.HasOne("Viajes365RestApi.Entities.Topic", "Topic")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Viajes365RestApi.Entities.User", "User")
-                        .WithMany()
+                        .WithMany("Comments")
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Topic");
@@ -957,15 +968,23 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Viajes365RestApi.Entities.Photo", b =>
+                {
+                    b.HasOne("Viajes365RestApi.Entities.Tour", null)
+                        .WithMany("Photos")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
             modelBuilder.Entity("Viajes365RestApi.Entities.Topic", b =>
                 {
-                    b.HasOne("Viajes365RestApi.Entities.Location", "Location")
-                        .WithMany()
-                        .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("Viajes365RestApi.Entities.User", "User")
+                        .WithMany("Topics")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Location");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
@@ -973,25 +992,10 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.HasOne("Viajes365RestApi.Entities.Location", "Location")
                         .WithMany("Tours")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Location");
-                });
-
-            modelBuilder.Entity("Viajes365RestApi.Entities.Tour_attraction", b =>
-                {
-                    b.HasOne("Viajes365RestApi.Entities.Attraction", null)
-                        .WithMany("Tour_Attractions")
-                        .HasForeignKey("AttractionId");
-
-                    b.HasOne("Viajes365RestApi.Entities.Topic", null)
-                        .WithMany("Tour_Attractions")
-                        .HasForeignKey("TopicTourId");
-
-                    b.HasOne("Viajes365RestApi.Entities.Tour", null)
-                        .WithMany("Tour_Attractions")
-                        .HasForeignKey("TourId");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.User", b =>
@@ -999,13 +1003,13 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.HasOne("Viajes365RestApi.Entities.Photo", "Photo")
                         .WithMany()
                         .HasForeignKey("PhotoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("Viajes365RestApi.Entities.Role", "Role")
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Photo");
@@ -1032,11 +1036,6 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                     b.Navigation("Locality");
                 });
 
-            modelBuilder.Entity("Viajes365RestApi.Entities.Attraction", b =>
-                {
-                    b.Navigation("Tour_Attractions");
-                });
-
             modelBuilder.Entity("Viajes365RestApi.Entities.Location", b =>
                 {
                     b.Navigation("Attractions");
@@ -1046,12 +1045,19 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Topic", b =>
                 {
-                    b.Navigation("Tour_Attractions");
+                    b.Navigation("Comments");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Tour", b =>
                 {
-                    b.Navigation("Tour_Attractions");
+                    b.Navigation("Photos");
+                });
+
+            modelBuilder.Entity("Viajes365RestApi.Entities.User", b =>
+                {
+                    b.Navigation("Comments");
+
+                    b.Navigation("Topics");
                 });
 
             modelBuilder.Entity("Viajes365RestApi.Entities.Weather", b =>

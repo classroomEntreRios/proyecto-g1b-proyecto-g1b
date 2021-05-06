@@ -1,9 +1,8 @@
-using System.Collections.Generic;
-using Viajes365RestApi.Entities;
+﻿using Viajes365RestApi.Entities;
 
 namespace Viajes365RestApi.Dtos
 {
-    public class UserDto : Base
+    public class UserForumDto : Base
     {
         public long UserId { get; set; }
         public string FirstName { get; set; }
@@ -14,7 +13,5 @@ namespace Viajes365RestApi.Dtos
         public virtual RoleDto Role { get; set; }
         public long PhotoId { get; set; }
         public virtual PhotoDto Photo { get; set; }
-        public virtual ICollection<TopicDto> Topics { get; set; }
-        public virtual ICollection<CommentDto> Comments { get; set; }
     }
 }

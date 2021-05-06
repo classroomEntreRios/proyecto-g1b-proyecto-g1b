@@ -9,7 +9,6 @@ namespace Viajes365RestApi.Entities
 {
     public class Attraction : Base
     {
-
         [Key]
         public long AttractionId { get; set; }
         [StringLength(100)]
@@ -19,16 +18,13 @@ namespace Viajes365RestApi.Entities
         public string Note { get; set; }
         public int Rating { get; set; }
 
-        [ForeignKey("Location")]
+        [ForeignKey("FK_Attraction_Location_LocationId")]
         public long LocationId { get; set; }
         public virtual Location Location { get; set; }
 
-        public ICollection<Tour_attraction> Tour_Attractions { get; set; }
-
-        // [ForeignKey("FK_Attraction_Location_LocationId")]
-        // public long LocationId { get; set; }
-        // public virtual Location Location { get; set; }
-        public ICollection<Photo> Photos { get; set; }
+        public virtual ICollection<Tour> Tours { get; set; }
+            
+        public virtual ICollection<Photo> Photos { get; set; }
 
     }
 }

@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +37,6 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Location> Locations { get; set; }
         public DbSet<Tour> Tours { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
-        public DbSet<Tour_attraction> Tour_attractions { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<City> Cities { get; set; }
         public DbSet<Weather> Weathers { get; set; }
@@ -64,13 +64,17 @@ namespace Viajes365RestApi.Helpers
         // Specify DbSet properties etc
         protected override void OnModelCreating(ModelBuilder mb)
         {
+            // removing cascade on delete convention by default 
+             foreach (var relationship in mb.Model.GetEntityTypes().Where(e => !e.IsOwned()).SelectMany(e => e.GetForeignKeys()))
+             {
+               relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            }
             // Call Fluent API configurations from here
             // Property Configurations SQL Server Express 2019                    
-            new LocationBuilder().Configure(mb.Entity<Location>());
+            new LocationBuilder().Configure(mb.Entity<Location>());         
             new PhotoBuilder().Configure(mb.Entity<Photo>());
             new TourBuilder().Configure(mb.Entity<Tour>());
-            new AttractionBuilder().Configure(mb.Entity<Attraction>());
-            new Tour_attractionBuilder().Configure(mb.Entity<Tour_attraction>());
+            new AttractionBuilder().Configure(mb.Entity<Attraction>());        
             new CityBuilder().Configure(mb.Entity<City>());
             new DayBuilder().Configure(mb.Entity<Day>());
             new HourBuilder().Configure(mb.Entity<Hour>());
@@ -78,6 +82,8 @@ namespace Viajes365RestApi.Helpers
             new LocalityBuilder().Configure(mb.Entity<Locality>());
             new RoleBuilder().Configure(mb.Entity<Role>());
             new UserBuilder().Configure(mb.Entity<User>());
+            new TopicBuilder().Configure(mb.Entity<Topic>());
+            new CommentBuilder().Configure(mb.Entity<Comment>());
         }
 
         private void OnBeforeSaving()

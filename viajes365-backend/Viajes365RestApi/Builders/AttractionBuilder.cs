@@ -9,7 +9,7 @@ namespace Viajes365RestApi.Builders
         public void Configure(EntityTypeBuilder<Attraction> builder)
         {
             builder.HasIndex(a => a.Name).IsUnique();
-
+            builder.HasMany(a => a.Tours).WithMany(t => t.Attractions);
         }
     }
 }

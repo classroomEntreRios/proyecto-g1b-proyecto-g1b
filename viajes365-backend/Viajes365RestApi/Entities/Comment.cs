@@ -10,9 +10,10 @@ namespace Viajes365RestApi.Entities
         [Required]
         [StringLength(255)]
         public string Body { get; set; }
-        [ForeignKey("FK_Comments_Topics_TopicId")]
+        
         public long TopicId { get; set; }
         public virtual Topic Topic { get; set; }
+        
         public long UserId { get; set; }
         public virtual User User { get; set; }
     }

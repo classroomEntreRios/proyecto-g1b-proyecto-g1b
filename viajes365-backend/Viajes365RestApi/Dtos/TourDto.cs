@@ -1,4 +1,6 @@
 ﻿
+using System.Collections.Generic;
+
 namespace Viajes365RestApi.Dtos
 
 {
@@ -11,6 +13,8 @@ namespace Viajes365RestApi.Dtos
 
         public long LocationId { get; set; }
         public virtual LocationDto Location { get; set; }
+        public virtual ICollection<PhotoDto> Photos { get; set; }
+        public virtual ICollection<AttractionDto> Attractions { get; set; }
         public bool Active { get; set; }
 
     }

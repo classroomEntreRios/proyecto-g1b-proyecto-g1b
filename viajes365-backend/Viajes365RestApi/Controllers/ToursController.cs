@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Helpers;
+using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -19,43 +22,66 @@ namespace Viajes365RestApi.Controllers
     public class ToursController : ControllerBase
     {
         private IMapper _mapper;
+        private IUriService _uriService;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public ToursController(DataContext context, IMapper mapper)
+        public ToursController(DataContext context, IMapper mapper, IUriService uriService)
         {
             _mapper = mapper;
             _context = context;
+            _uriService = uriService;
         }
 
         // GET: api/Tours
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<TourDto>>> GetTours()
+        public async Task<ActionResult<IEnumerable<TourDto>>> GetTours([FromQuery] PaginationFilter filter)
         {
             List<TourDto> tours = new List<TourDto>();
-            var result = await _context.Tours.Include(u => u.Location).ToListAsync();
-            result.ForEach(u => tours.Add(_mapper.Map<TourDto>(u)));
-            return tours;
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Tours.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<TourDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Tours
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(t => t.Location)
+            .Include(t => t.Attractions)
+            .Include(t => t.Photos)
+            .ToListAsync();
+                result.ForEach(t => tours.Add(_mapper.Map<TourDto>(t)));
+                PagedResponse<List<TourDto>> pagedResponse = Pagination.CreatePagedReponse<TourDto>(tours, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
+            }
         }
 
         // GET: api/Tours/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<TourDto>> GetTour (long id)
+        public async Task<ActionResult<TourDto>> GetTour(long id)
         {
-            var toloc = await _context.Tours.Include(at => at.Location).ToListAsync();
-            var tour = toloc.Find(to => to.TourId == id);
+            var tour = await _context.Tours
+                .Include(t => t.Location)
+                .Include(t => t.Attractions)
+                .Include(t => t.Photos)
+                .SingleAsync(t => t.TourId == id);
 
             if (tour == null)
             {
-                return NotFound();
+                return NotFound(new Response<TourDto>() { Message = "TOUR NO ENCONTRADO", ErrorCode = 416 });
             }
 
-            var result = _mapper.Map<TourDto>(tour);
-
-            return result;
-
+            TourDto model = _mapper.Map<TourDto>(tour);
+            return Ok(new Response<TourDto>(model));
         }
-
+        
         // GET: api/Attractions
         [HttpGet("location/{id}")]
         public async Task<ActionResult<IEnumerable<TourDto>>> GetToursByLocationId(long id)

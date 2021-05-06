@@ -8,6 +8,6 @@ namespace Viajes365RestApi.Dtos
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public string FullAddress { get; set; }
-        public byte Note { get; set; }
+        public string Note { get; set; }
     }
 }

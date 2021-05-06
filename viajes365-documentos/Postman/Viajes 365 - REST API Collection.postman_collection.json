@@ -115,6 +115,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "backend Info from Azure",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://viajes365.azurewebsites.net/backendinfo",
+							"protocol": "http",
+							"host": [
+								"viajes365",
+								"azurewebsites",
+								"net"
+							],
+							"path": [
+								"backendinfo"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -137,18 +157,18 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}users?pageNumber=2&pageSize=1",
+							"raw": "{{LOCAL_SERVER}}users?pageNumber=1&pageSize=10",
 							"host": [
 								"{{LOCAL_SERVER}}users"
 							],
 							"query": [
 								{
 									"key": "pageNumber",
-									"value": "2"
+									"value": "1"
 								},
 								{
 									"key": "pageSize",
-									"value": "1"
+									"value": "10"
 								}
 							]
 						}
@@ -197,12 +217,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}users/3",
+							"raw": "{{LOCAL_SERVER}}users/2",
 							"host": [
 								"{{LOCAL_SERVER}}users"
 							],
 							"path": [
-								"3"
+								"2"
 							]
 						}
 					},
@@ -423,7 +443,7 @@
 			"name": "TOPICS",
 			"item": [
 				{
-					"name": "Listado de Topicos",
+					"name": "Listado de Topics",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -437,13 +457,13 @@
 					"response": []
 				},
 				{
-					"name": "crear Topico",
+					"name": "crear Topic",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"title\": \"Topico de Prueba 1\",\r\n    \"summary\": \"Aca pones el texto enriquecido\",\r\n    \"pinned\": false,\r\n    \"userid\": 1\r\n}",
+							"raw": "{\r\n    \"name\": \"Topico de Prueba 1\",\r\n    \"summary\": \"Aca pones el texto enriquecido\",\r\n    \"status\": \"Normal\",\r\n    \"pinned\": false,\r\n    \"userid\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -460,7 +480,7 @@
 					"response": []
 				},
 				{
-					"name": "modificar por topic Id",
+					"name": "modificar por Topic Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -486,7 +506,7 @@
 					"response": []
 				},
 				{
-					"name": "borrar por topic Id",
+					"name": "borrar por Topic Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -503,7 +523,7 @@
 					"response": []
 				},
 				{
-					"name": "obtener por topic Id",
+					"name": "obtener por Topic Id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -555,7 +575,7 @@
 			"name": "COMMENTS",
 			"item": [
 				{
-					"name": "listado de Comentarios",
+					"name": "listado de Comments",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -569,13 +589,13 @@
 					"response": []
 				},
 				{
-					"name": "Crear un Comentario",
+					"name": "Crear un Comment",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"message\": \"hola como estan todos?\",\r\n    \"userid\": 1,\r\n    \"topicid\": 2,\r\n    \"pinned\": false,\r\n    \"active\": true\r\n}",
+							"raw": "{\r\n    \"body\": \"hola como estan todos?\",\r\n    \"userid\": 1,\r\n    \"topicid\": 2,\r\n    \"active\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -592,13 +612,13 @@
 					"response": []
 				},
 				{
-					"name": "modificar por comment Id",
+					"name": "modificar por Comment Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"commentId\": 6,\r\n    \"message\": \"hola este comentario esta pinneado!!\",\r\n    \"pinned\": true,\r\n    \"topicId\": 2,\r\n    \"userId\": 1\r\n}",
+							"raw": "{\r\n    \"commentid\": 1,\r\n    \"body\": \"hola como estan todos ustedes?\",\r\n    \"userid\": 1,\r\n    \"topicid\": 1,\r\n    \"active\": false\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -606,36 +626,36 @@
 							}
 						},
 						"url": {
-							"raw": "{{LOCAL_SERVER}}comments/6",
+							"raw": "{{LOCAL_SERVER}}comments/1",
 							"host": [
 								"{{LOCAL_SERVER}}comments"
 							],
 							"path": [
-								"6"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "obtener por comment Id",
+					"name": "obtener por Comment Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}comments/6",
+							"raw": "{{LOCAL_SERVER}}comments/1",
 							"host": [
 								"{{LOCAL_SERVER}}comments"
 							],
 							"path": [
-								"6"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "borrar por comment Id",
+					"name": "borrar por Comment Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -756,12 +776,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}cities/4",
 							"host": [
 								"{{LOCAL_SERVER}}cities"
 							],
 							"path": [
-								"6"
+								"4"
 							]
 						}
 					},
@@ -821,27 +841,27 @@
 			"name": "ATTRACTIONS",
 			"item": [
 				{
-					"name": "listado de Atracciones",
+					"name": "listado de Attractions",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities",
+							"raw": "{{LOCAL_SERVER}}attractions",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}attractions"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Crear una Ciudad",
+					"name": "Crear una Attraction",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Potosi\",\r\n    \"code\": 3333  \r\n}",
+							"raw": "{\r\n    \"name\": \"Monumento a Urquiza\",\r\n    \"summary\": \"Ubicado en el parque\",\r\n    \"note\": \"Se puede recorrer la rotonda\",\r\n    \"rating\": 5,\r\n    \"locationId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -849,22 +869,22 @@
 							}
 						},
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities",
+							"raw": "{{LOCAL_SERVER}}attractions",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}attractions"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "modificar por City Id",
+					"name": "modificar por Attraction Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"cityId\": 6,\r\n    \"name\": \"Clorinda\",\r\n    \"code\": 3335  \r\n}",
+							"raw": "{\r\n    \"attractionId\": 1,\r\n    \"name\": \"Monumento a J. J Urquiza\",\r\n    \"summary\": \"Ubicado en Alameda al Final Zona Parque\",\r\n    \"note\": \"Se puede recorrer la rotonda con barbijo\",\r\n    \"rating\": 3,\r\n    \"locationId\": 1\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -872,26 +892,43 @@
 							}
 						},
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}attractions/1",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}attractions"
 							],
 							"path": [
-								"6"
+								"1"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "obtener por City Id",
+					"name": "obtener por Attraction Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}attractions/1",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}attractions"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Attraction Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}attractions/6",
+							"host": [
+								"{{LOCAL_SERVER}}attractions"
 							],
 							"path": [
 								"6"
@@ -899,16 +936,132 @@
 						}
 					},
 					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "borrar por City Id",
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "TOURS",
+			"item": [
+				{
+					"name": "listado de Tours",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}tours",
+							"host": [
+								"{{LOCAL_SERVER}}tours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear una Tour",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vuelta al parque Urquiza\",\r\n    \"summary\": \"Partimos de la puerta del Mayorazgo\",\r\n    \"duration\": \"2 horas\",\r\n    \"locationId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}tours",
+							"host": [
+								"{{LOCAL_SERVER}}tours"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por Tour Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"attractionId\": 1,\r\n    \"name\": \"Monumento a J. J Urquiza\",\r\n    \"summary\": \"Ubicado en Alameda al Final Zona Parque\",\r\n    \"note\": \"Se puede recorrer la rotonda con barbijo\",\r\n    \"rating\": 3,\r\n    \"locationId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}tours/1",
+							"host": [
+								"{{LOCAL_SERVER}}tours"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por Tour Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}tours/1",
+							"host": [
+								"{{LOCAL_SERVER}}tours"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Tour Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}tours/6",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}tours"
 							],
 							"path": [
 								"6"
@@ -1087,21 +1240,21 @@
 			"name": "LOCATIONS",
 			"item": [
 				{
-					"name": "listado de Atracciones",
+					"name": "listado de Locations",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities",
+							"raw": "{{LOCAL_SERVER}}locations",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}locations"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "Crear una Ciudad",
+					"name": "Crear una Location",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1115,16 +1268,16 @@
 							}
 						},
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities",
+							"raw": "{{LOCAL_SERVER}}locations",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}locations"
 							]
 						}
 					},
 					"response": []
 				},
 				{
-					"name": "modificar por City Id",
+					"name": "modificar por Location Id",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -1138,9 +1291,9 @@
 							}
 						},
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}locations/6",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}locations"
 							],
 							"path": [
 								"6"
@@ -1150,14 +1303,14 @@
 					"response": []
 				},
 				{
-					"name": "obtener por City Id",
+					"name": "obtener por Location Id",
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}locations/6",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}locations"
 							],
 							"path": [
 								"6"
@@ -1167,14 +1320,14 @@
 					"response": []
 				},
 				{
-					"name": "borrar por City Id",
+					"name": "borrar por Location Id",
 					"request": {
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{LOCAL_SERVER}}cities/6",
+							"raw": "{{LOCAL_SERVER}}locations/6",
 							"host": [
-								"{{LOCAL_SERVER}}cities"
+								"{{LOCAL_SERVER}}locations"
 							],
 							"path": [
 								"6"
@@ -1220,7 +1373,7 @@
 			"name": "WEATHERS",
 			"item": [
 				{
-					"name": "listado de Climas",
+					"name": "listado de Weathers",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1234,7 +1387,7 @@
 					"response": []
 				},
 				{
-					"name": "Crear un Clima",
+					"name": "Crear un Weather",
 					"request": {
 						"method": "POST",
 						"header": [],
@@ -1257,7 +1410,7 @@
 					"response": []
 				},
 				{
-					"name": "Crear un Clima x CityId",
+					"name": "Crear un Weather  x CityId",
 					"request": {
 						"method": "POST",
 						"header": [

@@ -20,7 +20,9 @@ namespace Viajes365RestApi.Entities
         public long LocationId { get; set; }
         public virtual Location Location { get; set; }
 
-        public ICollection<Tour_attraction> Tour_Attractions { get; set; }
+        public virtual ICollection<Attraction> Attractions { get; set; }
+
+        public virtual ICollection<Photo> Photos { get; set; }
 
     }
 }

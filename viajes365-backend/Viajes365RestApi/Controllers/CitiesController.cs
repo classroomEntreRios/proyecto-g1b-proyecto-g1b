@@ -116,13 +116,13 @@ namespace Viajes365RestApi.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCity(long id)
         {
-            var city = await _context.Weathers.FindAsync(id);
+            var city = await _context.Cities.FindAsync(id);
             if (city == null)
             {
                 return NotFound();
             }
 
-            _context.Weathers.Remove(city);
+            _context.Cities.Remove(city);
             await _context.SaveChangesAsync();
 
             return NoContent();

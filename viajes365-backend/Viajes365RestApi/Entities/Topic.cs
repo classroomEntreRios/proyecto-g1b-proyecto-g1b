@@ -7,18 +7,20 @@ namespace Viajes365RestApi.Entities
     public class Topic : Base
     {
         [Key]
-        public long TourId { get; set; }
-        [StringLength(100)]
+        public long TopicId { get; set; }
+
         [Required]
+        [StringLength(40)]
         public string Name { get; set; }
+        [StringLength(100)]
         public string Summary { get; set; }
-        [StringLength(20)]
-        public string Duration { get; set; }
+        [StringLength(50)]
+        public string Status { get; set; }
+        public bool Pinned { get; set; }
+               
+        public long UserId { get; set; }
+        public virtual User User { get; set; }
 
-        [ForeignKey("Location")]
-        public long LocationId { get; set; }
-        public virtual Location Location { get; set; }
-
-        public ICollection<Tour_attraction> Tour_Attractions { get; set; }
+        public ICollection<Comment> Comments { get; set; }
     }
 }

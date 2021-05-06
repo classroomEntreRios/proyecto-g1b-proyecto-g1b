@@ -20,10 +20,12 @@ namespace Viajes365RestApi.Extensions
             CreateMap<UserDto, User>();
             CreateMap<UserRegisterDto, User>();
             CreateMap<UserUpdateDto, User>();
+            CreateMap<User,UserForumDto>();
             CreateMap<RoleDto, Role>();
             CreateMap<Role, RoleDto>();
             CreateMap<TopicDto, Topic>();
             CreateMap<Topic, TopicDto>();
+            CreateMap<Topic, TopicCommentDto>();
             CreateMap<CommentDto, Comment>();
             CreateMap<Comment, CommentDto>();
             CreateMap<AttractionDto, Attraction>();

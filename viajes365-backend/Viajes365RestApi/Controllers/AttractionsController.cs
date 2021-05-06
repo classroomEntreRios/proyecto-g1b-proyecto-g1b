@@ -8,7 +8,10 @@ using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 using Viajes365RestApi.Extensions;
+using Viajes365RestApi.Filters;
 using Viajes365RestApi.Helpers;
+using Viajes365RestApi.Services;
+using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
@@ -19,42 +22,67 @@ namespace Viajes365RestApi.Controllers
     public class AttractionsController : ControllerBase
     {
         private IMapper _mapper;
+        private IUriService _uriService;
         private readonly DataContext _context;
         const string adminrole = "Administrador";
 
-        public AttractionsController(DataContext context, IMapper mapper)
+        public AttractionsController(DataContext context, IMapper mapper, IUriService uriService)
         {
             _mapper = mapper;
             _context = context;
+            _uriService = uriService;
         }
 
         // GET: api/Attractions
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractions()
+        public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractions([FromQuery] PaginationFilter filter)
         {
             List<AttractionDto> attractions = new List<AttractionDto>();
-            var result = await _context.Attractions.Include(u => u.Location).ToListAsync();
-            result.ForEach(u => attractions.Add(_mapper.Map<AttractionDto>(u)));
-            return attractions;
+            var route = Request.Path.Value;
+            var validFilter = new PaginationFilter(filter.PageNumber, filter.PageSize);
+            var totalElements = await _context.Attractions.CountAsync();
+
+            if (totalElements == 0)
+            {
+
+                return NotFound(new PagedResponse<List<AttractionDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+
+            }
+            else
+            {
+                var result = await _context.Attractions
+            .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+            .Take(validFilter.PageSize)
+            .Include(a => a.Location)
+            .Include(a => a.Photos)
+            .Include(a => a.Tours)
+            .ToListAsync();
+                result.ForEach(a => attractions.Add(_mapper.Map<AttractionDto>(a)));
+                PagedResponse<List<AttractionDto>> pagedResponse = Pagination.CreatePagedReponse<AttractionDto>(attractions, validFilter, totalElements, _uriService, route);
+                return Ok(pagedResponse);
+            }
         }
+            
 
         // GET: api/Attractions/5
         [HttpGet("{id}")]
         public async Task<ActionResult<AttractionDto>> GetAttraction(long id)
         {
-            var atloc = await _context.Attractions.Include(at => at.Location).ToListAsync();
-            var atrac = atloc.Find(re => re.AttractionId == id);
+            var attraction = await _context.Attractions
+                .Include(a => a.Location)
+                .Include(a => a.Photos)
+                .Include(a => a.Tours)
+                .SingleAsync(a => a.AttractionId == id);
 
-            if (atrac == null)
+            if (attraction == null)
             {
-                return NotFound();
+                return NotFound(new Response<AttractionDto>() { Message = "ATRACCION NO ENCONTRADA", ErrorCode = 416 });
             }
 
-            var result = _mapper.Map<AttractionDto>(atrac);
-
-            return result;
+            AttractionDto model = _mapper.Map<AttractionDto>(attraction);
+            return Ok(new Response<AttractionDto>(model));
         }
-
+        
         // GET: api/Attractions
         [HttpGet("location/{id}")]
         public async Task<ActionResult<IEnumerable<AttractionDto>>> GetAttractionsByLocationId(long id)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Viajes365RestApi.Dtos
 {
-    public class TopicDto
+    public class TopicCommentDto
     {
         public long TopicId { get; set; }
         public string Name { get; set; }
@@ -13,8 +13,6 @@ namespace Viajes365RestApi.Dtos
         public string Status { get; set; }
         public bool Pinned { get; set; }
         public long UserId { get; set; }
-        public virtual UserForumDto User { get; set; }
-
-        public ICollection<CommentDto> Comments { get; set; }
+        // public virtual UserForumDto User { get; set; }
     }
 }
