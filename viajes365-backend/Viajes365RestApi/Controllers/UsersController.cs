@@ -175,18 +175,15 @@ namespace Viajes365RestApi.Controllers
                 return Unauthorized();
             }
 
-            var user = await _context.Users.FindAsync(id);
-
-            if (user == null)
+            try
+            {
+                var user = await _userService.GetById(id);
+                return Ok(new Response<UserDto>(_mapper.Map<UserDto>(user)));
+            }
+            catch (Exception)
             {
                 return NotFound(new Response<UserDto>() { Message = "USUARIO NO ENCONTRADO", ErrorCode = 416 });
             }
-            else {
-                user = _userService.GetById(id);
-            }
-
-            UserDto model = _mapper.Map<UserDto>(user);
-            return Ok(new Response<UserDto>(model));
         }
 
         // Allow only self id for role user and any id for role admin

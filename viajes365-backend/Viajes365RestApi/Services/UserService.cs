@@ -14,7 +14,7 @@ namespace Viajes365RestApi.Services
     {
         User Authenticate(string username, string password);
         Task<IEnumerable<User>> GetAll(PaginationFilter validFilter);
-        User GetById(long id);
+        Task<User> GetById(long id);
         Task<User> Create(User user, string password, long roleId);
         Task<User> Update(User user, string password = null);
         void Delete(long id);
@@ -62,13 +62,12 @@ namespace Viajes365RestApi.Services
             .ToListAsync();
         }
 
-        public User GetById(long id)
-        {
-            
-            return _context.Users
+        public async Task<User> GetById(long id)
+        {   
+            return await _context.Users
                  .Include(u => u.Role)
                  .Include(u => u.Photo)
-                 .Single(u => u.UserId == id);
+                 .SingleAsync(u => u.UserId == id);
         }
 
         public async Task<User> Create(User user, string password, long RoleId)

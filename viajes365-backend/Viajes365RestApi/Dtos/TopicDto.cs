@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Viajes365RestApi.Entities;
 
 namespace Viajes365RestApi.Dtos
 {
-    public class TopicDto
+    public class TopicDto : Base
     {
         public long TopicId { get; set; }
         public string Name { get; set; }

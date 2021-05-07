@@ -10,6 +10,7 @@ namespace Viajes365RestApi.Dtos
     {
         public long CommentId { get; set; }
         public string Body { get; set; }
+        public string Status { get; set; }
         public long TopicId { get; set; }
         public virtual TopicCommentDto Topic { get; set; }
         public long UserId { get; set; }

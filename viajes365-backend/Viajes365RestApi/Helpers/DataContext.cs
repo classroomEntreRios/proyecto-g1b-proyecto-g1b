@@ -34,14 +34,14 @@ namespace Viajes365RestApi.Helpers
         // DBSets
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<City> Cities { get; set; }
         public DbSet<Location> Locations { get; set; }
+        public DbSet<Photo> Photos { get; set; }
         public DbSet<Tour> Tours { get; set; }
         public DbSet<Attraction> Attractions { get; set; }
-        public DbSet<Photo> Photos { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<Weather> Weathers { get; set; }
-        public DbSet<Information> Informations { get; set; }
         public DbSet<Locality> Localities { get; set; }
+        public DbSet<Information> Informations { get; set; }
+        public DbSet<Weather> Weathers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
 

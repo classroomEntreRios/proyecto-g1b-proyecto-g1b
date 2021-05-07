@@ -10,7 +10,9 @@ namespace Viajes365RestApi.Entities
         [Required]
         [StringLength(255)]
         public string Body { get; set; }
-        
+        [StringLength(50)]
+        public string Status { get; set; }
+
         public long TopicId { get; set; }
         public virtual Topic Topic { get; set; }
         

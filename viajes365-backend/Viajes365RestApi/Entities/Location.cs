@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Viajes365RestApi.Entities
 {
@@ -16,8 +17,11 @@ namespace Viajes365RestApi.Entities
         public string FullAddress { get; set; }
         public string Note { get; set; }
 
+        [ForeignKey("FK_Locations_Cities_CityId")]
+        public long CityId { get; set; }
+        public virtual City City { get; set; }
 
-        public ICollection<Tour> Tours { get; set; }
-        public ICollection<Attraction> Attractions { get; set; }
+        // public ICollection<Tour> Tours { get; set; }
+        // public ICollection<Attraction> Attractions { get; set; }
     }
 }

@@ -64,15 +64,16 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RoleDto>> GetRole(long id)
         {
-            var role = await _context.Roles.FindAsync(id);
-
-            if (role == null)
+            try
+            {
+                var role = await _context.Roles.FindAsync(id);
+                return Ok(new Response<RoleDto>(_mapper.Map<RoleDto>(role)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<RoleDto>() { Message = "ROL NO ENCONTRADO", ErrorCode = 416 });
             }
 
-            RoleDto model = _mapper.Map<RoleDto>(role);
-            return Ok(new Response<RoleDto>(model));
         }
 
         // PUT: api/Roles/5

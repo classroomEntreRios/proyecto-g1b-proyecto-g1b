@@ -67,21 +67,22 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TourDto>> GetTour(long id)
         {
-            var tour = await _context.Tours
-                .Include(t => t.Location)
-                .Include(t => t.Attractions)
-                .Include(t => t.Photos)
-                .SingleAsync(t => t.TourId == id);
-
-            if (tour == null)
+            try
+            {
+                var tour = await _context.Tours
+             .Include(t => t.Location)
+             .Include(t => t.Attractions)
+             .Include(t => t.Photos)
+             .SingleAsync(t => t.TourId == id);
+                return Ok(new Response<TourDto>(_mapper.Map<TourDto>(tour)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<TourDto>() { Message = "TOUR NO ENCONTRADO", ErrorCode = 416 });
             }
 
-            TourDto model = _mapper.Map<TourDto>(tour);
-            return Ok(new Response<TourDto>(model));
         }
-        
+
         // GET: api/Attractions
         [HttpGet("location/{id}")]
         public async Task<ActionResult<IEnumerable<TourDto>>> GetToursByLocationId(long id)
@@ -97,12 +98,19 @@ namespace Viajes365RestApi.Controllers
         // PUT: api/tours/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTour(long id, Tour tour)
+        public async Task<IActionResult> PutTour(long id, TourDto model)
         {
-            if (id != tour.TourId)
+            if (id != model.TourId)
             {
                 return BadRequest();
             }
+
+            // map model to entity and set id
+            var tour = _mapper.Map<Tour>(model);
+            tour.TourId = id;
+
+            // Keep FK integrity Location Id 1L is default no location
+            if (tour.LocationId == 0) { tour.LocationId = 1L; }
 
             _context.Entry(tour).State = EntityState.Modified;
 

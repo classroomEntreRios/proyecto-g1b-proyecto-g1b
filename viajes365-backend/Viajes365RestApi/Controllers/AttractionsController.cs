@@ -68,19 +68,20 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<AttractionDto>> GetAttraction(long id)
         {
-            var attraction = await _context.Attractions
-                .Include(a => a.Location)
-                .Include(a => a.Photos)
-                .Include(a => a.Tours)
-                .SingleAsync(a => a.AttractionId == id);
-
-            if (attraction == null)
+            try
+            {
+                var attraction = await _context.Attractions
+                     .Include(a => a.Location)
+                     .Include(a => a.Photos)
+                     .Include(a => a.Tours)
+                     .SingleAsync(a => a.AttractionId == id);
+                return Ok(new Response<AttractionDto>(_mapper.Map<AttractionDto>(attraction)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<AttractionDto>() { Message = "ATRACCION NO ENCONTRADA", ErrorCode = 416 });
             }
-
-            AttractionDto model = _mapper.Map<AttractionDto>(attraction);
-            return Ok(new Response<AttractionDto>(model));
+ 
         }
         
         // GET: api/Attractions
@@ -98,12 +99,19 @@ namespace Viajes365RestApi.Controllers
         // PUT: api/Attractions/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAttraction(long id, Attraction attraction)
+        public async Task<IActionResult> PutAttraction(long id, AttractionDto model)
         {
-            if (id != attraction.AttractionId)
+            if (id != model.AttractionId)
             {
                 return BadRequest();
             }
+
+            // map model to entity and set id
+            var attraction = _mapper.Map<Attraction>(model);
+            attraction.AttractionId = id;
+
+            // Keep FK integrity Location Id 1L is default no location
+            if (attraction.LocationId == 0) { attraction.LocationId = 1L; }
 
             _context.Entry(attraction).State = EntityState.Modified;
 

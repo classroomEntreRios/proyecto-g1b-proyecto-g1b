@@ -71,15 +71,16 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<PhotoDto>> GetPhoto(long id)
         {
-            var photo = await _context.Photos.FindAsync(id);
-
-            if (photo == null)
+            try
+            {
+                var photo = await _context.Photos.SingleAsync(p => p.PhotoId == id);
+                return Ok(new Response<PhotoDto>(_mapper.Map<PhotoDto>(photo)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<PhotoDto>() { Message = "FOTO NO ENCONTRADA", ErrorCode = 416 });
             }
 
-            PhotoDto model = _mapper.Map<PhotoDto>(photo);
-            return Ok(new Response<PhotoDto>(model));
         }
 
         // PUT: api/Photos/5
