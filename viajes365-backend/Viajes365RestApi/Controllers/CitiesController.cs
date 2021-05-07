@@ -60,14 +60,16 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<City>> GetCity(long id)
         {
-            var city = await _context.Cities.FindAsync(id);
-
-            if (city == null)
+            try
+            {
+                var city = await _context.Cities.FindAsync(id);
+                return Ok(new Response<City>(city));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<City>() { Message = "CIUDAD NO ENCONTRADA", ErrorCode = 416 });
             }
-
-            return Ok(new Response<City>(city));
+ 
         }
 
         // PUT: api/Cities/5

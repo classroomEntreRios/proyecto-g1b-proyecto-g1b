@@ -16,6 +16,6 @@ namespace Viajes365RestApi.Entities
         //[ForeignKey("FK_Photo_Location_LocationId")]
         //public long LocationId { get; set; }
         //public virtual Location Location { get; set; }
-        public ICollection<Attraction> Attractions { get; set; }
+        //public ICollection<Attraction> Attractions { get; set; }
     }
 }

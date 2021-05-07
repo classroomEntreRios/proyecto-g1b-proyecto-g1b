@@ -21,7 +21,7 @@ namespace Viajes365RestApi.Entities
         public long CityId { get; set; }
         public virtual City City { get; set; }
 
-        public ICollection<Tour> Tours { get; set; }
-        public ICollection<Attraction> Attractions { get; set; }
+        // public ICollection<Tour> Tours { get; set; }
+        // public ICollection<Attraction> Attractions { get; set; }
     }
 }

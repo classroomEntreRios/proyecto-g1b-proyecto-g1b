@@ -63,21 +63,18 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TopicDto>> GetTopic(long id)
         {
-            var topic = await _context.Topics.FindAsync(id);
-
-            if (topic == null)
+            try
+            {
+                var topic = await _context.Topics
+                            .Include(t => t.User)
+                            .Include(t => t.Comments)
+                            .SingleAsync(t => t.TopicId == id);
+                return Ok(new Response<TopicDto>(_mapper.Map<TopicDto>(topic)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<TopicDto>() { Message = "TOPICO NO ENCONTRADO", ErrorCode = 416 });
-            }
-            else
-            {
-                topic = await _context.Topics
-                    .Include(t => t.User)
-                    .Include(t => t.Comments)
-                    .SingleAsync(t => t.TopicId == id);
-            }
-                        
-            return Ok(new Response<TopicDto>(_mapper.Map<TopicDto>(topic)));
+            }            
         }
 
         // PUT: api/Topics/5

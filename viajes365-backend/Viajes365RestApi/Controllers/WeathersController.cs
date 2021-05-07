@@ -73,21 +73,22 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Weather>> GetWeather(long id)
         {
-            var weather = await _context.Weathers.FindAsync(id);
+            try
+            {
+                var weather = await _context.Weathers
+                     .Include(w => w.Information)
+                     .Include(w => w.Locality)
+                     .Include(w => w.Days.OrderBy(w => w.Name))
+                     .Include(w => w.Hours.OrderBy(w => w.Name))
+                     .SingleAsync(w => w.WeatherId == id);
 
-            if (weather == null)
+                return Ok(new Response<Weather>(weather));
+            }
+            catch (Exception)
             {
                 return NotFound(new Response<Weather>() { Message = "CLIMA NO ENCONTRADO", ErrorCode = 416 });
             }
 
-            weather = await _context.Weathers
-               .Include(w => w.Information)
-               .Include(w => w.Locality)
-               .Include(w => w.Days.OrderBy(w => w.Name))
-               .Include(w => w.Hours.OrderBy(w => w.Name))
-               .SingleAsync(w => w.WeatherId == id);
-
-            return Ok(new Response<Weather>(weather));
         }
         
         // PUT: api/Weathers/5

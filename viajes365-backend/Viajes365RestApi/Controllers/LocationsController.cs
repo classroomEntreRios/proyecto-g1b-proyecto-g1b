@@ -55,8 +55,6 @@ namespace Viajes365RestApi.Controllers
             .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
             .Take(validFilter.PageSize)
             .Include(l => l.City)
-            .Include(l => l.Attractions)
-            .Include(l => l.Tours)
             .ToListAsync();
                 result.ForEach(a => locations.Add(_mapper.Map<LocationDto>(a)));
                 PagedResponse<List<LocationDto>> pagedResponse = Pagination.CreatePagedReponse<LocationDto>(locations, validFilter, totalElements, _uriService, route);
@@ -68,19 +66,18 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<LocationDto>> GetLocation(long id)
         {
-            var location = await _context.Locations
-                .Include(l => l.City)
-                .Include(l => l.Attractions)
-                .Include(l => l.Tours)
-                .SingleAsync(l => l.LocationId == id);
-
-            if (location == null)
+            try
+            {
+                var location = await _context.Locations
+                      .Include(l => l.City)
+                      .SingleAsync(l => l.LocationId == id);
+                LocationDto model = _mapper.Map<LocationDto>(location);
+                return Ok(new Response<LocationDto>(model));
+            }
+            catch (Exception)
             {
                 return NotFound(new Response<LocationDto>() { Message = "LOCACION NO ENCONTRADA", ErrorCode = 416 });
-            }
-
-            LocationDto model = _mapper.Map<LocationDto>(location);
-            return Ok(new Response<LocationDto>(model));
+            }           
         }
         
         // PUT: api/locations/5

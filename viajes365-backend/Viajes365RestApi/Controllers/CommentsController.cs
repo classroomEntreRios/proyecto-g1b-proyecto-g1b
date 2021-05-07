@@ -32,7 +32,7 @@ namespace Viajes365RestApi.Controllers
 
         // GET: api/Comments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments([FromQuery] PaginationFilter filter)
+        public async Task<ActionResult<IEnumerable<CommentDto>>> GetComments([FromQuery] PaginationFilter filter, [FromQuery] long topicId)
         {
             List<CommentDto> comments = new List<CommentDto>();
             var route = Request.Path.Value;
@@ -47,11 +47,31 @@ namespace Viajes365RestApi.Controllers
             }
             else
             {
-             var result = await _context.Comments
-                .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
-                .Take(validFilter.PageSize)
-                .ToListAsync();
-                result.ForEach(c => comments.Add(_mapper.Map<CommentDto>(c)));
+                if (topicId == 0L)
+                {
+                    var result = await _context.Comments
+                        .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                        .Take(validFilter.PageSize).ToListAsync();
+                    result.ForEach(c => comments.Add(_mapper.Map<CommentDto>(c)));
+                }
+                else {
+                    var topic = await _context.Topics
+                        .Include(t => t.Comments)
+                        .ThenInclude(c => c.User)
+                        .SingleAsync(t=>t.TopicId == topicId);
+                    if (topic == null) {
+
+                        return NotFound(new PagedResponse<List<CommentDto>>() { Message = "NO HAY RESULTADOS CON LOS PARAMETROS INDICADOS", ErrorCode = 416 });
+                    }
+                    else {
+                        var result = topic.Comments
+                         .Skip((validFilter.PageNumber - 1) * validFilter.PageSize)
+                         .Take(validFilter.PageSize).ToList();
+                        result.ForEach(c => comments.Add(_mapper.Map<CommentDto>(c)));
+                    }
+                  
+                }
+            
                 PagedResponse<List<CommentDto>> pagedResponse = Pagination.CreatePagedReponse<CommentDto>(comments, validFilter, totalElements, _uriService, route);
                 return Ok(pagedResponse);
             }
@@ -61,20 +81,19 @@ namespace Viajes365RestApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CommentDto>> GetComment(long id)
         {
-            var comment = await _context.Comments.FindAsync(id);
-
-            if (comment == null)
+            try
+            {
+                var comment = await _context.Comments
+                            .Include(c => c.User)
+                            .Include(c => c.Topic)
+                            .SingleAsync(c => c.CommentId == id);
+                return Ok(new Response<CommentDto>(_mapper.Map<CommentDto>(comment)));
+            }
+            catch (System.Exception)
             {
                 return NotFound(new Response<CommentDto>() { Message = "COMENTARIO NO ENCONTRADO", ErrorCode = 416 });
             }
-            else {
-                comment = await _context.Comments
-                       .Include(c => c.User)
-                       .Include(c => c.Topic)
-                       .SingleAsync(c => c.CommentId == id);
-            }
-
-            return Ok(new Response<CommentDto>(_mapper.Map<CommentDto>(comment)));
+            
         }
 
         // PUT: api/Comments/5
