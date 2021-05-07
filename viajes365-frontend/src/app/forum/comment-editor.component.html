@@ -21,16 +21,17 @@
       [init]="{
         base_url: '/tinymce',
         suffix: '.min',
-        height: 200,
+        height: 150,
         menubar: false,
         language: 'es_MX',
+        language_url: '../../assets/langs/es_MX.js',
         plugins: [
           'advlist autolink lists link image charmap print preview anchor',
           'searchreplace visualblocks code fullscreen',
           'insertdatetime media table paste code help wordcount',
           'emoticons'
         ],
-        toolbar: 'undo redo | bold italic backcolor | removeformat | emoticons'
+        toolbar: 'undo redo | bold italic | removeformat | emoticons'
       }"
     ></editor>
     Caracteres restantes: {{ chars }}

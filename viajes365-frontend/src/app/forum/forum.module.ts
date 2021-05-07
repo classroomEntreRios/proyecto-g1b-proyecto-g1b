@@ -7,12 +7,14 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ForumRoutingModule } from './forum-routing.module';
 import { CommentEditorComponent } from './comment-editor.component';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
+import { TopicEditorComponent } from './topic-editor.component';
 
 @NgModule({
   declarations: [
     TopicsListComponent,
     CommentsComponent,
     CommentEditorComponent,
+    TopicEditorComponent,
   ],
   imports: [
     CommonModule,
