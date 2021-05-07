@@ -13,7 +13,7 @@
         class="bi-person-lines-fill"
         style="color: black; margin-right: 8px"
       ></i
-      >Comentarios acerca de: <strong>{{ currentTopic.name }}</strong>
+      >Comentarios acerca de: <strong>{{ currentTopic?.name }}</strong>
     </h4>
     <hr />
     <!-- <a routerLink="../add" class="btn btn-sm btn-success mb-2">Agregar Usuario</a> -->
@@ -55,7 +55,9 @@
                     }
             "
           >
-            <td>{{ comment.body }}</td>
+            <td>
+              <div [innerHtml]="comment.body"></div>
+            </td>
             <td>{{ comment.user.firstName }}, {{ comment.user.lastName }}</td>
             <td>{{ comment.status }}</td>
             <td>{{ comment.active ? "Sí" : "No" }}</td>
@@ -122,8 +124,12 @@
           </tr>
           <tr>
             <td colspan="12">
-              <div class="form-group" style="float: right">
-                <button [disabled]="loading" class="btn btn-primary me-2">
+              <div style="float: right">
+                <button
+                  [disabled]="loading"
+                  class="btn btn-primary me-2"
+                  routerLink="/forum/comment-editor/{{ currentTopic.topicId }}"
+                >
                   <span
                     *ngIf="loading"
                     class="spinner-border spinner-border-sm mr-1"
