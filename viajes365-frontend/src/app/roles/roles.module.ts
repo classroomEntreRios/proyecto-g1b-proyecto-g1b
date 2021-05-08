@@ -4,6 +4,7 @@ import { RolesListComponent } from './roles-list.component';
 import { RoleEditorComponent } from './role-editor.component';
 import { RolesRoutingModule } from './roles-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [RolesListComponent, RoleEditorComponent],
@@ -12,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule,
     RolesRoutingModule,
+    NgxPaginationModule
   ]
 })
 export class RolesModule { }
