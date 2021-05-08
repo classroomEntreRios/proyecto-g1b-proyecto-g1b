@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Topic } from '@app/_models';
+import { Topic, User } from '@app/_models';
 import { PaginatedResponse } from '@app/_rest';
 import { PaginationControls } from '@app/_rest/pagination.controls';
-import { TopicService } from '@app/_services';
+import { AccountService, TopicService } from '@app/_services';
 import { first } from 'rxjs/operators';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
@@ -14,9 +14,16 @@ import localeEs from '@angular/common/locales/es';
 export class TopicsListComponent extends PaginationControls implements OnInit {
   page!: PaginatedResponse<Topic>;
   topicsCollection!: Topic[];
+  currentUser!: User;
+  isAdmin = false;
 
-  constructor(private topicService: TopicService) {
+  constructor(
+    private topicService: TopicService,
+    private accountService: AccountService
+  ) {
     super();
+    this.currentUser = this.accountService.userValue;
+    this.isAdmin = this.currentUser.role.roleName == 'Administrador';
     registerLocaleData(localeEs, 'es');
   }
 
@@ -39,9 +46,9 @@ export class TopicsListComponent extends PaginationControls implements OnInit {
       .pipe(first())
       .subscribe(
         () =>
-          (this.topicsCollection = this.topicsCollection.filter(
-            (x) => x.topicId !== id
-          ))
+        (this.topicsCollection = this.topicsCollection.filter(
+          (x) => x.topicId !== id
+        ))
       );
   }
 

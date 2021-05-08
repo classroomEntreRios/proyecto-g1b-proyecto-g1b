@@ -49,17 +49,18 @@ export class CommentEditorComponent implements OnInit {
     await this.commentService.create(comment).subscribe(
       (c) => {
         console.log('mensage: ' + this.message);
-        this.back();
+        this.getBack();
       },
       (error) => {
         console.log(error);
-        this.back();
+        this.getBack();
       }
     );
   }
 
-  back(): void {
+  getBack(): void {
     this.loading = false;
+    console.log('/forum/comments/' + this.topic.topicId)
     this.router.navigateByUrl('/forum/comments/' + this.topic.topicId);
   }
 

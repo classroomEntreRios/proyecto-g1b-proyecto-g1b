@@ -41,12 +41,12 @@ export class TopicEditorComponent implements OnInit {
     }
 
     this.form = this.fb.group({
-      topicid: [''],
+      topicid: ['0'],
       name: ['', Validators.required],
       summary: ['', Validators.required],
       status: ['aprobado', Validators.required],
-      pinned: ['', Validators.required],
-      active: ['', Validators.required],
+      pinned: [false, Validators.required],
+      active: [true, Validators.required],
       userid: [this.currentUser.userId.toString(), Validators.required],
     });
 
