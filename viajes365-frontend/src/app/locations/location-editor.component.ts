@@ -14,39 +14,7 @@ import { first } from 'rxjs/operators';
 })
 export class LocationEditorComponent implements OnInit {
     citiesCollection!: City[];
-//     citiesCollection = [
-// {"name":"Bovril", "code": 42829},
-// {"name":"Caseros", "code": 42866},
-// {"name": "Chajari", "code": 42881},
-// {"name": "Colón", "code": 43437},
-// {"name":"Colonia San Justo", "code": 43326},
-// {"name": "Colonia Santa Maria", "code": 43350},
-// {"name":"Concepcion del Uruguay", "code": 42922},
-// {"name": "Concordia", "code": 42923},   
-// {"name":"Crespo", "code": 42940},
-// {"name":"Federacion", "code": 42987},
-// {"name":"Federal", "code": 42988},
-// {"name":"Gualeguay", "code": 43033},
-// {"name": "Gualeguaychú", "code": 43034},
-// {"name": "La Paz", "code": 43095},
-// {"name":"Larroque", "code": 43115},
-// {"name": "Los Conquistadores", "code": 43145},
-// {"name": "Paraná", "code": 43214},
-// {"name": "San Gustavo", "code": 43317},
-// {"name": "San Jose de Feliciano", "code": 43321},
-// {"name":"Macia", "code": 43157},
-// {"name":"Santa Ana", "code": 43340},
-// {"name":"Santa Elena", "code": 43344},
-// {"name":"Sauce de luna", "code": 43364},
-// {"name":"Segui", "code": 43366},
-// {"name":"Tabossi", "code": 43376},
-// {"name":"Ubajay", "code": 43401},
-// {"name":"Victoria", "code": 43416},
-// {"name":"Villaguay", "code": 43464},
-// {"name":"Villa elisa", "code": 43437},
-// {"name":"Villa Hernandarias", "code": 43443}
-// ];
-      
+
   currentLocation!: Location;
   form!: FormGroup;
   id!: number;
