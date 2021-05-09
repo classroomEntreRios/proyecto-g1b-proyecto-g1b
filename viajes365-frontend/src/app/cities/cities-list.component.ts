@@ -69,7 +69,7 @@ export class CitiesListComponent extends PaginationControls implements OnInit {
         this.totalRegister = this.page.totalElements;
       }
     } catch (error) {
-      // this.notificationService.showDialog(DialogTypesEnum.Error, error.message);
+      // this.notificationService.showDialog(DialogTypesEnum.Error, error.message); 
     }
   }
 
