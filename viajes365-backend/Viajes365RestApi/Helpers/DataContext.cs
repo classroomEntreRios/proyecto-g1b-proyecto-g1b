@@ -44,6 +44,8 @@ namespace Viajes365RestApi.Helpers
         public DbSet<Weather> Weathers { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
+        public DbSet<Chatcomment> Chatcomments { get; set; }
+        public DbSet<Chat> Chats { get; set; }
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
         {
@@ -84,6 +86,8 @@ namespace Viajes365RestApi.Helpers
             new UserBuilder().Configure(mb.Entity<User>());
             new TopicBuilder().Configure(mb.Entity<Topic>());
             new CommentBuilder().Configure(mb.Entity<Comment>());
+            new ChatBuilder().Configure(mb.Entity<Chat>());
+            new ChatcommentBuilder().Configure(mb.Entity<Chatcomment>());
         }
 
         private void OnBeforeSaving()

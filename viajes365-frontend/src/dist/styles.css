@@ -427,3 +427,20 @@ footer {
     padding-left: calc(var(--nav-width) + 188px);
   }
 }
+image-cropper {
+  height: 25vh;
+  outline-color: darkslategray;
+  outline-style: dashed;
+}
+
+.l-sidebar.col {
+  margin-left: 15%;
+}
+
+.l-sidebar.card {
+  overflow-wrap: normal;
+}
+
+.l-sidebar.card-body {
+  padding: 0%;
+}

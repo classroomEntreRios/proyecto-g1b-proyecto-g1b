@@ -1,8 +1,5 @@
 ﻿using AutoMapper;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Viajes365RestApi.Dtos;
 using Viajes365RestApi.Entities;
 
@@ -36,6 +33,11 @@ namespace Viajes365RestApi.Extensions
             CreateMap<TourDto, Tour>();
             CreateMap<Photo, PhotoDto>();
             CreateMap<PhotoDto, Photo>();
+            CreateMap<Chat, ChatDto>();
+            CreateMap<ChatDto, Chat>();
+            CreateMap<Chatcomment, ChatcommentDto>();
+            CreateMap<ChatcommentDto, Chatcomment>();
+            CreateMap<Chat, ChatChatcommentDto>();
             CreateMap<LocalityDto, Locality>();
             CreateMap<InformationDto, Information>();
             CreateMap<WeatherUpdateDto, Weather>();

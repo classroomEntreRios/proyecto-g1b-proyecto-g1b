@@ -41,7 +41,7 @@ const routes: Routes = [
   { path: 'attractions', redirectTo: 'attractions/attractionslist', pathMatch: 'full' },
   { path: 'tours', redirectTo: 'tours/tourslist', pathMatch: 'full' },
   { path: 'cities', redirectTo: 'cities/citieslist', pathMatch: 'full' },
-  { path: 'chats', redirectTo: 'chats/chatslist', pathMatch: 'full' },
+  { path: 'chats', redirectTo: 'chats/chatroom', pathMatch: 'full' },
   { path: 'roles', redirectTo: 'roles/roleslist', pathMatch: 'full' },
   { path: 'locations', redirectTo: 'locations/locationslist', pathMatch: 'full' },
   { path: 'photos', redirectTo: 'photos/photoslist', pathMatch: 'full' },
