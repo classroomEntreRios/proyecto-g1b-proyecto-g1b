@@ -472,11 +472,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "CityId", "Active", "Code", "Created", "CreatorId", "LastId", "Name", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, 43437, new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428), 1L, 1L, "Colón", new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428) },
-                    { 2L, true, 42923, new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428), 1L, 1L, "Concordia", new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428) },
-                    { 3L, true, 42987, new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428), 1L, 1L, "Federación", new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428) },
-                    { 4L, true, 43034, new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428), 1L, 1L, "Gualeguaychú", new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428) },
-                    { 5L, true, 43214, new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428), 1L, 1L, "Paraná", new DateTime(2021, 5, 9, 13, 0, 16, 854, DateTimeKind.Utc).AddTicks(6428) }
+                    { 1L, true, 43437, new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561), 1L, 1L, "Colón", new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561) },
+                    { 2L, true, 42923, new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561), 1L, 1L, "Concordia", new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561) },
+                    { 3L, true, 42987, new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561), 1L, 1L, "Federación", new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561) },
+                    { 4L, true, 43034, new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561), 1L, 1L, "Gualeguaychú", new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561) },
+                    { 5L, true, 43214, new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561), 1L, 1L, "Paraná", new DateTime(2021, 5, 9, 14, 57, 46, 375, DateTimeKind.Utc).AddTicks(9561) }
                 });
 
             migrationBuilder.InsertData(
@@ -484,8 +484,8 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "PhotoId", "Active", "AttractionId", "Created", "CreatorId", "Description", "LastId", "Name", "Path", "Summary", "TourId", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, null, new DateTime(2021, 5, 9, 13, 0, 16, 847, DateTimeKind.Utc).AddTicks(4337), 1L, "Imagén de Perfil", 1L, "UserAvatar1", "StaticFiles\\Images\\Avatars\\user-avatar1.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 9, 13, 0, 16, 847, DateTimeKind.Utc).AddTicks(4337) },
-                    { 2L, true, null, new DateTime(2021, 5, 9, 13, 0, 16, 847, DateTimeKind.Utc).AddTicks(4337), 1L, "Imagén de Perfil", 1L, "UserAvatar2", "StaticFiles\\Images\\Avatars\\user-avatar2.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 9, 13, 0, 16, 847, DateTimeKind.Utc).AddTicks(4337) }
+                    { 1L, true, null, new DateTime(2021, 5, 9, 14, 57, 46, 367, DateTimeKind.Utc).AddTicks(4922), 1L, "Imagén de Perfil", 1L, "UserAvatar1", "StaticFiles\\Images\\Avatars\\user-avatar1.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 9, 14, 57, 46, 367, DateTimeKind.Utc).AddTicks(4922) },
+                    { 2L, true, null, new DateTime(2021, 5, 9, 14, 57, 46, 367, DateTimeKind.Utc).AddTicks(4922), 1L, "Imagén de Perfil", 1L, "UserAvatar2", "StaticFiles\\Images\\Avatars\\user-avatar2.png", "Avatar Sin Foto", null, new DateTime(2021, 5, 9, 14, 57, 46, 367, DateTimeKind.Utc).AddTicks(4922) }
                 });
 
             migrationBuilder.InsertData(
@@ -493,16 +493,16 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                 columns: new[] { "RoleId", "Active", "Created", "CreatorId", "LastId", "RoleName", "Updated" },
                 values: new object[,]
                 {
-                    { 1L, true, new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008), 1L, 1L, "Usuario", new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008) },
-                    { 2L, true, new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008), 1L, 1L, "Administrador", new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008) },
-                    { 3L, false, new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008), 1L, 1L, "Moderador", new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008) },
-                    { 4L, false, new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008), 1L, 1L, "Anónimo", new DateTime(2021, 5, 9, 13, 0, 16, 869, DateTimeKind.Utc).AddTicks(4008) }
+                    { 1L, true, new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312), 1L, 1L, "Usuario", new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312) },
+                    { 2L, true, new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312), 1L, 1L, "Administrador", new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312) },
+                    { 3L, false, new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312), 1L, 1L, "Moderador", new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312) },
+                    { 4L, false, new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312), 1L, 1L, "Anónimo", new DateTime(2021, 5, 9, 14, 57, 46, 394, DateTimeKind.Utc).AddTicks(7312) }
                 });
 
             migrationBuilder.InsertData(
                 table: "Locations",
                 columns: new[] { "LocationId", "Active", "CityId", "Created", "CreatorId", "FullAddress", "LastId", "Latitude", "LocationName", "Longitude", "Note", "Updated" },
-                values: new object[] { 1L, true, 5L, new DateTime(2021, 5, 9, 13, 0, 16, 839, DateTimeKind.Utc).AddTicks(255), 1L, "Sin datos", 1L, 0.0, "Sin Locación", 0.0, "Por defecto", new DateTime(2021, 5, 9, 13, 0, 16, 839, DateTimeKind.Utc).AddTicks(255) });
+                values: new object[] { 1L, true, 5L, new DateTime(2021, 5, 9, 14, 57, 46, 356, DateTimeKind.Utc).AddTicks(4646), 1L, "Sin datos", 1L, 0.0, "Sin Locación", 0.0, "Por defecto", new DateTime(2021, 5, 9, 14, 57, 46, 356, DateTimeKind.Utc).AddTicks(4646) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attractions_LocationId",
