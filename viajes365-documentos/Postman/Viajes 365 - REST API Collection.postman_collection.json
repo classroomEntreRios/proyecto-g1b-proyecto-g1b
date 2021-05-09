@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "7f92f229-7c1b-4e6d-ae17-7f4821c813d7",
+		"_postman_id": "5d9257e4-8cd8-42b4-80c4-6b32c144c0ee",
 		"name": "Viajes 365 - REST API Collection",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -463,7 +463,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Topico de Prueba 2\",\r\n    \"summary\": \"Aca pones el texto enriquecido\",\r\n    \"status\": \"Normal\",\r\n    \"pinned\": false,\r\n    \"userid\": 1\r\n}",
+							"raw": "{\r\n    \"topicid\": 0,\r\n    \"name\": \"Paseos por Parque Urquiza\",\r\n    \"summary\": \"Déjanos tus comentarios o sugerencias\",\r\n    \"status\": \"aprobado\",\r\n    \"pinned\": true,\r\n    \"active\": true,\r\n    \"userid\": \"1\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -576,6 +576,20 @@
 			"item": [
 				{
 					"name": "listado de Comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}comments",
+							"host": [
+								"{{LOCAL_SERVER}}comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listado de Comments x TopicId",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -1500,6 +1514,292 @@
 							"raw": "{{LOCAL_SERVER}}weathers/1",
 							"host": [
 								"{{LOCAL_SERVER}}weathers"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CHATS",
+			"item": [
+				{
+					"name": "listado de Chats",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chats",
+							"host": [
+								"{{LOCAL_SERVER}}chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un Chat",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatid\": 0,\r\n    \"nick\": \"Pepe Moreno\",\r\n    \"email\": \"pepemoreno@gmail.com\",\r\n    \"status\": \"aprobado\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chats",
+							"host": [
+								"{{LOCAL_SERVER}}chats"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por Chat Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatid\": 1,\r\n    \"nick\": \"Patoruzu\",\r\n    \"email\": \"indiojuntadi@gmail.com\",\r\n    \"status\": \"abierto\",\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chats/1",
+							"host": [
+								"{{LOCAL_SERVER}}chats"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por Chat Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chats/2",
+							"host": [
+								"{{LOCAL_SERVER}}chats"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Chat Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chats/1",
+							"host": [
+								"{{LOCAL_SERVER}}chats"
+							],
+							"path": [
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "(borra ademas todos los comentarios)",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN_AUTH}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "CHATCOMMENTS",
+			"item": [
+				{
+					"name": "listado de Chatcomments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "listado de Chatcomments x ChatId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments?chatid=2",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
+							],
+							"query": [
+								{
+									"key": "chatid",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un Chatcomment",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatcommentId\": 0,\r\n    \"message\": \"bien bien pero decime como llego a la plaza 33?\",\r\n    \"status\": \"pendiente de respuesta\",\r\n    \"isResponse\": false,\r\n    \"userId\": 1,\r\n    \"chatId\": 3,\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "modificar por Chatcomment Id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"chatcommentId\": 2,\r\n    \"message\": \"Hola como llego a la plaza de mayo?\",\r\n    \"status\": \"pendiente de respuesta\",\r\n    \"isResponse\": false,\r\n    \"userId\": 1,\r\n    \"chatId\": 2,\r\n    \"active\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments/2",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obtener por Chatcomment Id",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments/2",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "borrar por Chatcomment Id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{LOCAL_SERVER}}chatcomments/1",
+							"host": [
+								"{{LOCAL_SERVER}}chatcomments"
 							],
 							"path": [
 								"1"

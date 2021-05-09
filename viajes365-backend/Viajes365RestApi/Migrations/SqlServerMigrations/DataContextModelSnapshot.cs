@@ -237,55 +237,95 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             CityId = 1L,
                             Active = true,
                             Code = 43437,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Colón",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Colón",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             CityId = 2L,
                             Active = true,
                             Code = 42923,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Concordia",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Concordia",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             CityId = 3L,
                             Active = true,
                             Code = 42987,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Federación",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Federación",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             CityId = 4L,
                             Active = true,
                             Code = 43034,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Gualeguaychú",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Gualeguaychú",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             CityId = 5L,
                             Active = true,
                             Code = 43214,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143),
                             CreatorId = 1L,
                             LastId = 1L,
                             Name = "Paraná",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 477, DateTimeKind.Utc).AddTicks(4143)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            Name = "Paraná",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 731, DateTimeKind.Utc).AddTicks(2144)
+>>>>>>> US#03TK#41_Abm_cities
                         });
                 });
 
@@ -566,7 +606,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             LocationId = 1L,
                             Active = true,
                             CityId = 5L,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 455, DateTimeKind.Utc).AddTicks(9315),
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 712, DateTimeKind.Utc).AddTicks(274),
+>>>>>>> US#03TK#41_Abm_cities
                             CreatorId = 1L,
                             FullAddress = "Sin datos",
                             LastId = 1L,
@@ -574,7 +618,11 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                             LocationName = "Sin Locación",
                             Longitude = 0.0,
                             Note = "Por defecto",
+<<<<<<< HEAD
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 455, DateTimeKind.Utc).AddTicks(9315)
+=======
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 712, DateTimeKind.Utc).AddTicks(274)
+>>>>>>> US#03TK#41_Abm_cities
                         });
                 });
 
@@ -641,27 +689,43 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             PhotoId = 1L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 467, DateTimeKind.Utc).AddTicks(7988),
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 723, DateTimeKind.Utc).AddTicks(1966),
+>>>>>>> US#03TK#41_Abm_cities
                             CreatorId = 1L,
                             Description = "Imagén de Perfil",
                             LastId = 1L,
                             Name = "UserAvatar1",
                             Path = "StaticFiles\\Images\\Avatars\\user-avatar1.png",
                             Summary = "Avatar Sin Foto",
+<<<<<<< HEAD
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 467, DateTimeKind.Utc).AddTicks(7988)
+=======
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 723, DateTimeKind.Utc).AddTicks(1966)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             PhotoId = 2L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 467, DateTimeKind.Utc).AddTicks(7988),
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 723, DateTimeKind.Utc).AddTicks(1966),
+>>>>>>> US#03TK#41_Abm_cities
                             CreatorId = 1L,
                             Description = "Imagén de Perfil",
                             LastId = 1L,
                             Name = "UserAvatar2",
                             Path = "StaticFiles\\Images\\Avatars\\user-avatar2.png",
                             Summary = "Avatar Sin Foto",
+<<<<<<< HEAD
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 467, DateTimeKind.Utc).AddTicks(7988)
+=======
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 723, DateTimeKind.Utc).AddTicks(1966)
+>>>>>>> US#03TK#41_Abm_cities
                         });
                 });
 
@@ -709,41 +773,73 @@ namespace Viajes365RestApi.Migrations.SqlServerMigrations
                         {
                             RoleId = 1L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Usuario",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Usuario",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             RoleId = 2L,
                             Active = true,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Administrador",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Administrador",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             RoleId = 3L,
                             Active = false,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Moderador",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Moderador",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359)
+>>>>>>> US#03TK#41_Abm_cities
                         },
                         new
                         {
                             RoleId = 4L,
                             Active = false,
+<<<<<<< HEAD
                             Created = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430),
                             CreatorId = 1L,
                             LastId = 1L,
                             RoleName = "Anónimo",
                             Updated = new DateTime(2021, 5, 8, 23, 10, 4, 494, DateTimeKind.Utc).AddTicks(4430)
+=======
+                            Created = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359),
+                            CreatorId = 1L,
+                            LastId = 1L,
+                            RoleName = "Anónimo",
+                            Updated = new DateTime(2021, 5, 8, 19, 26, 28, 748, DateTimeKind.Utc).AddTicks(6359)
+>>>>>>> US#03TK#41_Abm_cities
                         });
                 });
 
