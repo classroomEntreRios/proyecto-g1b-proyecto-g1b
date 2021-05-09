@@ -15,7 +15,6 @@ using Viajes365RestApi.Wrappers;
 
 namespace Viajes365RestApi.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ChatsController : ControllerBase

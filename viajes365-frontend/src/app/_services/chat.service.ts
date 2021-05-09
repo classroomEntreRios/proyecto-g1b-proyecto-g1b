@@ -1,9 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Chat } from '@app/_models';
+import { Chat, User } from '@app/_models';
 import { PaginatedResponse, SingleObjectResponse } from '@app/_rest';
 import { environment } from '@environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { AccountService } from './account.service';
 
 const baseUrl = `${environment.apiUrl}/chats`;
 
@@ -11,8 +12,13 @@ const baseUrl = `${environment.apiUrl}/chats`;
 export class ChatService {
   private subject = new Subject<any>();
   private actualChat = new Subject<Chat>();
+  private actualChatUser = new Subject<User>();
+  private chatUser!: User;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private accountService: AccountService
+  ) {}
 
   getAll(): Observable<PaginatedResponse<Chat>> {
     return this.http.get<PaginatedResponse<Chat>>(`${baseUrl}`);
@@ -60,5 +66,35 @@ export class ChatService {
 
   getActualChat(): Observable<Chat> {
     return this.actualChat.asObservable();
+  }
+
+  // actualChatUser methods
+
+  setActualChatUser(user: User): void {
+    this.actualChatUser.next(user);
+  }
+
+  clearActualChatUser(): void {
+    this.actualChatUser.next();
+  }
+
+  getActualChatUser(): Observable<User> {
+    return this.actualChatUser.asObservable();
+  }
+
+  // login chatUser for logged and anonymous user
+  login(nick: any, email: any) {
+    if (!this.accountService.userValue) {
+      this.chatUser = this.accountService.userValue;
+      this.chatUser.nick = nick;
+      this.chatUser.chatEmail = email;
+      this.actualChatUser.next(this.chatUser);
+    } else {
+      this.chatUser = new User();
+      this.chatUser.nick = nick;
+      this.chatUser.chatEmail = email;
+      this.actualChatUser.next(this.chatUser);
+    }
+    return this.actualChatUser.asObservable();
   }
 }
