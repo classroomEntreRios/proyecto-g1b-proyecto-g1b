@@ -7,9 +7,10 @@ import { ForumRoutingModule } from '@app/forum/forum-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { AttractionsRoutingModule } from './attractions-routing.module';
+import { UnderConstructionComponent } from '@app/_components/underconstruction.component';
 
 @NgModule({
-  declarations: [AttractionsListComponent, AttractionsEditorComponent],
+  declarations: [AttractionsListComponent, AttractionsEditorComponent, UnderConstructionComponent],
   imports: [
     CommonModule,
     AttractionsRoutingModule,
@@ -17,7 +18,7 @@ import { AttractionsRoutingModule } from './attractions-routing.module';
     ForumRoutingModule,
     NgxPaginationModule,
     FormsModule,
-    EditorModule,
+    EditorModule
   ],
   providers: [
     {
