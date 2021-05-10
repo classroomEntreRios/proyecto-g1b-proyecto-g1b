@@ -60,19 +60,54 @@ namespace Viajes365RestApi.Controllers
 
         // GET: api/Chats/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ChatDto>> GetChat(long id)
+        public async Task<ActionResult<ChatDto>> GetChat(long id, [FromQuery] string nick, string chatemail)
         {
-            try
+            if (id > 0L)
             {
-                var chat = await _context.Chats
-                            .Include(t => t.Chatcomments)
-                            .SingleAsync(t => t.ChatId == id);
-                return Ok(new Response<ChatDto>(_mapper.Map<ChatDto>(chat)));
+                try
+                {
+                    var chat = await _context.Chats
+                                .Include(t => t.Chatcomments)
+                                .SingleAsync(t => t.ChatId == id);
+                    return Ok(new Response<ChatDto>(_mapper.Map<ChatDto>(chat)));
+                }
+                catch (System.Exception)
+                {
+                    return NotFound(new Response<ChatDto>() { Message = "CHAT NO ENCONTRADO", ErrorCode = 416 });
+                }
             }
-            catch (System.Exception)
-            {
-                return NotFound(new Response<ChatDto>() { Message = "CHAT NO ENCONTRADO", ErrorCode = 416 });
+            else {
+                if (chatemail?.Length > 0)
+                {
+                    try
+                    {
+                        var chat = await _context.Chats
+                                    .Include(t => t.Chatcomments)
+                                    .SingleAsync(t => t.Email == chatemail);
+                        return Ok(new Response<ChatDto>(_mapper.Map<ChatDto>(chat)));
+                    }
+                    catch (System.Exception)
+                    {
+                        return NotFound(new Response<ChatDto>() { Message = "CHAT POR EMAIL NO ENCONTRADO", ErrorCode = 416 });
+                    }
+                }
+
+                if (nick?.Length > 0) {
+                    try
+                    {
+                        var chat = await _context.Chats
+                                    .Include(t => t.Chatcomments)
+                                    .SingleAsync(t => t.Nick == nick);
+                        return Ok(new Response<ChatDto>(_mapper.Map<ChatDto>(chat)));
+                    }
+                    catch (System.Exception)
+                    {
+                        return NotFound(new Response<ChatDto>() { Message = "CHAT POR APODO NO ENCONTRADO", ErrorCode = 416 });
+                    }
+                }
             }
+            return NotFound(new Response<ChatDto>() { Message = "CHAT NO ENCONTRADO", ErrorCode = 416 });
+
         }
 
         // PUT: api/Chats/5

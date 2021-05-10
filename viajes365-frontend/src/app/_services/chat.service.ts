@@ -28,6 +28,18 @@ export class ChatService {
     return this.http.get<SingleObjectResponse<Chat>>(`${baseUrl}/${id}`);
   }
 
+  getByEmail(email: string): Observable<SingleObjectResponse<Chat>> {
+    return this.http.get<SingleObjectResponse<Chat>>(
+      `${baseUrl}/0?chatemail=${email}`
+    );
+  }
+
+  getByNick(nick: string): Observable<SingleObjectResponse<Chat>> {
+    return this.http.get<SingleObjectResponse<Chat>>(
+      `${baseUrl}/0?nick=${nick}`
+    );
+  }
+
   create(params: any): Observable<any> {
     return this.http.post(baseUrl, params);
   }
@@ -82,19 +94,24 @@ export class ChatService {
     return this.actualChatUser.asObservable();
   }
 
+  public get userValue(): User {
+    return this.chatUser;
+  }
+
   // login chatUser for logged and anonymous user
-  login(nick: any, email: any) {
+  login(nick: any, email: any): User {
     if (!this.accountService.userValue) {
       this.chatUser = this.accountService.userValue;
       this.chatUser.nick = nick;
       this.chatUser.chatEmail = email;
       this.actualChatUser.next(this.chatUser);
+      return this.chatUser;
     } else {
       this.chatUser = new User();
       this.chatUser.nick = nick;
       this.chatUser.chatEmail = email;
       this.actualChatUser.next(this.chatUser);
+      return this.chatUser;
     }
-    return this.actualChatUser.asObservable();
   }
 }

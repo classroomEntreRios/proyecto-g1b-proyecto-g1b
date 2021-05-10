@@ -39,7 +39,7 @@ namespace Viajes365RestApi.Builders
                     FirstName = "Admin",
                     LastName = "Modo Dios",
                     UserName = "admin",
-                    Email = "admin@viajar365.com",
+                    Email = "admin@viajes365.com",
                     Password = "admin",
                     TermsAndConditionsChecked = true,
                     PhotoId = 1L
@@ -59,7 +59,7 @@ namespace Viajes365RestApi.Builders
                     FirstName = "Fulano",
                     LastName = "DeTal",
                     UserName = "user",
-                    Email = "user@viajar365.com",
+                    Email = "user@viajes365.com",
                     Password = "user",
                     TermsAndConditionsChecked = true,
                     PhotoId = 2L

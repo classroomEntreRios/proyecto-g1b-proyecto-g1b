@@ -15,13 +15,16 @@ export class ChatLoginComponent implements OnInit {
   form!: FormGroup;
   loading = false;
   submitted = false;
+  chatUser!: User;
+  currentUser!: User;
 
   constructor(
     private formBuilder: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private chatService: ChatService,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
@@ -49,20 +52,16 @@ export class ChatLoginComponent implements OnInit {
     }
 
     this.loading = true;
-    this.chatService
-      .login(this.f.nick.value, this.f.email.value)
-      .pipe(first())
-      .subscribe({
-        next: (u: User) => {
-          // get return url from query parameters or default to home page
-          const returnUrl = '/chats/chatroom';
-          //console.log(u.returnUrl);
-          this.router.navigateByUrl(returnUrl);
-        },
-        error: () => {
-          // this.alertService.error('Usuario y/o clave incorrectos');
-          this.loading = false;
-        },
-      });
+    this.chatUser = this.chatService.login(
+      this.f.nick.value,
+      this.f.email.value
+    );
+    if (this.chatUser.chatEmail != '') {
+      this.loading = false;
+      this.router.navigateByUrl('/chats/chatroom');
+    } else {
+      this.loading = false;
+      alert('Error en los datos revise y vuelva a intentar');
+    }
   }
 }

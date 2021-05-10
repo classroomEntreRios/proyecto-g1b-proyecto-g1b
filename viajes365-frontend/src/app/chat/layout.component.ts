@@ -9,19 +9,7 @@ import { ChatService } from '@app/_services/chat.service';
   templateUrl: './layout.component.html',
 })
 export class LayoutComponent implements OnInit {
-  userChat!: User;
+  constructor() {}
 
-  constructor(private router: Router, private chatService: ChatService) {
-    this.chatService.getActualChatUser().subscribe((u) => (this.userChat = u));
-  }
-
-  ngOnInit(): void {
-    if (!this.userChat) {
-      this.router.navigateByUrl('chats/login');
-    } else {
-      if (this.userChat.nick == '' && this.userChat.email == '') {
-        this.router.navigateByUrl('chats/login');
-      }
-    }
-  }
+  ngOnInit(): void {}
 }
