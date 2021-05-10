@@ -48,14 +48,14 @@ export class DashboardComponent implements OnInit {
     {
       title: 'Galería',
       image: 'assets/images/dashboard-images/galery.svg',
-      text: 'Altas bajas y modificaciones de fotos. Una imagen dice mas que mil palabras.',
+      text: 'Altas bajas y modificaciones de fotos. Una imagen dice mas que mil palabras sin dudas.',
       buttontext: 'Editar Galería',
       route: '/photos'
     },
     {
       title: 'Roles',
       image: 'assets/images/dashboard-images/role.svg',
-      text: 'Altas bajas y modificaciones de roles del sistema. El orden primero.',
+      text: 'Altas bajas y modificaciones de roles del sistema. El orden primero y los roles segundo.',
       buttontext: 'Editar Roles',
       route: '/roles'
     },
@@ -76,10 +76,17 @@ export class DashboardComponent implements OnInit {
     {
       title: 'Clima',
       image: 'assets/images/dashboard-images/weather.svg',
-      text: 'Ajusta tus historicos de consultas automaticas del servicio de clima.',
+      text: 'Ajusta tus historicos de consultas automaticas del servicio de clima desde aqui.',
       buttontext: 'Editar Climas',
       route: '/weathers'
     },
+    {
+      title: 'Foro',
+      image: 'assets/images/dashboard-images/foro.svg',
+      text: 'Ajusta tus historicos de consultas automaticas del servicio de clima desde aqui..',
+      buttontext: 'Editar Climas',
+      route: '/weathers'
+    }
   ];
 
   constructor(private alertService: AlertService) { }

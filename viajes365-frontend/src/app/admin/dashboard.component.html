@@ -19,8 +19,8 @@
 
 <div class="row row-cols-1 row-cols-md-3 g-4">
   <div class="col" *ngFor="let card of cardsCollection">
-    <div class="card">
-      <img src="{{card.image}}" class="card-img-top" alt="..." style="padding: 30px;">
+    <div class="card" style="width: 18rem;">
+      <img src="{{card.image}}" class="card-img-top" alt="..." style="padding: 25px;">
       <div class="card-body">
         <h5 class="card-title">{{ card.title }}</h5>
         <p class="card-text">{{ card.text }}</p>
