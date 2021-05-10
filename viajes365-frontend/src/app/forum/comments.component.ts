@@ -45,20 +45,23 @@ export class CommentsComponent extends PaginationControls implements OnInit {
   }
 
   deleteComment(id: number): void {
-    const comment = this.commentsCollection.find((x) => x.commentId === id);
-    if (!comment) {
-      return;
+    var r = confirm('Estas seguro de borrar el comentario?');
+    if (r) {
+      const comment = this.commentsCollection.find((x) => x.commentId === id);
+      if (!comment) {
+        return;
+      }
+      comment.isDeleting = true;
+      this.commentService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.commentsCollection = this.commentsCollection.filter(
+              (x) => x.commentId !== id
+            ))
+        );
     }
-    comment.isDeleting = true;
-    this.commentService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-          (this.commentsCollection = this.commentsCollection.filter(
-            (x) => x.commentId !== id
-          ))
-      );
   }
 
   async getPage(pageNumber: number) {

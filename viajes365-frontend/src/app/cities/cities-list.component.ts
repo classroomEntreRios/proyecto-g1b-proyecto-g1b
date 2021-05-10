@@ -10,7 +10,7 @@ import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-cities-list',
-  templateUrl: './cities-list.component.html'
+  templateUrl: './cities-list.component.html',
 })
 export class CitiesListComponent extends PaginationControls implements OnInit {
   page!: PaginatedResponse<City>;
@@ -30,7 +30,6 @@ export class CitiesListComponent extends PaginationControls implements OnInit {
 
   async ngOnInit(): Promise<void> {
     await this.cityService.getAll().subscribe((paged) => {
-      
       this.citiesCollection = paged.listElements;
       console.log(this.citiesCollection);
       this.page = paged;
@@ -39,22 +38,23 @@ export class CitiesListComponent extends PaginationControls implements OnInit {
   }
 
   deleteCity(id: number): void {
-    console.log("delete id: ", id);
-    
-    const city = this.citiesCollection.find((x) => x.cityId === id);
-    if (!city) {
-      return;
+    var r = confirm('Estas seguro de borrar la ciudad?');
+    if (r) {
+      const city = this.citiesCollection.find((x) => x.cityId === id);
+      if (!city) {
+        return;
+      }
+      city.isDeleting = true;
+      this.cityService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.citiesCollection = this.citiesCollection.filter(
+              (x) => x.cityId !== id
+            ))
+        );
     }
-    city.isDeleting = true;
-    this.cityService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-        (this.citiesCollection = this.citiesCollection.filter(
-          (x) => x.cityId !== id
-        ))
-      );
   }
 
   async getPage(pageNumber: number) {
@@ -69,8 +69,7 @@ export class CitiesListComponent extends PaginationControls implements OnInit {
         this.totalRegister = this.page.totalElements;
       }
     } catch (error) {
-      // this.notificationService.showDialog(DialogTypesEnum.Error, error.message); 
+      // this.notificationService.showDialog(DialogTypesEnum.Error, error.message);
     }
   }
-
 }

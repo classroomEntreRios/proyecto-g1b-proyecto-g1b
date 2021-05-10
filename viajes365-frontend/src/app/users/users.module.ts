@@ -7,12 +7,14 @@ import { ListComponent } from './list.component';
 import { AddEditComponent } from './add-edit.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { EditProfileComponent } from './edit-profile.component';
 
 @NgModule({
   declarations: [
     LayoutComponent,
     ListComponent,
-    AddEditComponent
+    AddEditComponent,
+    EditProfileComponent
   ],
   imports: [
     CommonModule,

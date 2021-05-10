@@ -31,6 +31,10 @@ const underconstructionModule = () =>
   import('./under-construction/under-construction.module').then(
     (m) => m.UnderConstructionModule
   );
+const confirmdialogsModule = () =>
+  import('./confirm-dialog/confirm-dialog.module').then(
+    (m) => m.ConfirmDialogModule
+  );
 
 const routes: Routes = [
   // static home page
@@ -70,6 +74,11 @@ const routes: Routes = [
     redirectTo: 'underconstruction/infopage',
     pathMatch: 'full',
   },
+  {
+    path: 'confirmdialog',
+    redirectTo: 'confirmdialog/deleteconfirm',
+    pathMatch: 'full',
+  },
 
   // child loadings
   { path: 'account', loadChildren: accountModule, pathMatch: 'prefix' },
@@ -87,6 +96,11 @@ const routes: Routes = [
   {
     path: 'underconstruction',
     loadChildren: underconstructionModule,
+    pathMatch: 'prefix',
+  },
+  {
+    path: 'confirmdialog',
+    loadChildren: confirmdialogsModule,
     pathMatch: 'prefix',
   },
 

@@ -23,20 +23,23 @@ export class ListComponent extends PaginationControls implements OnInit {
   }
 
   deleteUser(id: number): void {
-    const user = this.usersCollection.find((x) => x.userId === id);
-    if (!user) {
-      return;
+    var r = confirm('Estas seguro de Borrar el usuario?');
+    if (r) {
+      const user = this.usersCollection.find((x) => x.userId === id);
+      if (!user) {
+        return;
+      }
+      user.isDeleting = true;
+      this.userService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.usersCollection = this.usersCollection.filter(
+              (x) => x.userId !== id
+            ))
+        );
     }
-    user.isDeleting = true;
-    this.userService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-          (this.usersCollection = this.usersCollection.filter(
-            (x) => x.userId !== id
-          ))
-      );
   }
 
   async getPage(pageNumber: number) {

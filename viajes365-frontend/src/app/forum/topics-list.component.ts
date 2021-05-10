@@ -36,20 +36,23 @@ export class TopicsListComponent extends PaginationControls implements OnInit {
   }
 
   deleteTopic(id: number): void {
-    const topic = this.topicsCollection.find((x) => x.topicId === id);
-    if (!topic) {
-      return;
+    var r = confirm('Estas seguro de borrar el tema?');
+    if (r) {
+      const topic = this.topicsCollection.find((x) => x.topicId === id);
+      if (!topic) {
+        return;
+      }
+      topic.isDeleting = true;
+      this.topicService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.topicsCollection = this.topicsCollection.filter(
+              (x) => x.topicId !== id
+            ))
+        );
     }
-    topic.isDeleting = true;
-    this.topicService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-        (this.topicsCollection = this.topicsCollection.filter(
-          (x) => x.topicId !== id
-        ))
-      );
   }
 
   async getPage(pageNumber: number) {

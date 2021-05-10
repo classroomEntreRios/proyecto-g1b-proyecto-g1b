@@ -9,7 +9,7 @@ import localeEs from '@angular/common/locales/es';
 
 @Component({
   selector: 'app-roles-list',
-  templateUrl: './roles-list.component.html'
+  templateUrl: './roles-list.component.html',
 })
 export class RolesListComponent extends PaginationControls implements OnInit {
   page!: PaginatedResponse<Role>;
@@ -36,20 +36,23 @@ export class RolesListComponent extends PaginationControls implements OnInit {
   }
 
   deleteRole(id: number): void {
-    const role = this.rolesCollection.find((x) => x.roleId === id);
-    if (!role) {
-      return;
+    var r = confirm('Estas seguro de borrar el rol?');
+    if (r) {
+      const role = this.rolesCollection.find((x) => x.roleId === id);
+      if (!role) {
+        return;
+      }
+      role.isDeleting = true;
+      this.roleService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.rolesCollection = this.rolesCollection.filter(
+              (x) => x.roleId !== id
+            ))
+        );
     }
-    role.isDeleting = true;
-    this.roleService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-        (this.rolesCollection = this.rolesCollection.filter(
-          (x) => x.roleId !== id
-        ))
-      );
   }
 
   async getPage(pageNumber: number) {

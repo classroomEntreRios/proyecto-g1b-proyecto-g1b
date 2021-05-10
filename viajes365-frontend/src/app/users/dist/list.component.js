@@ -71,7 +71,10 @@ var ListComponent = /** @class */ (function (_super) {
             var _this = this;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, this.userService.getAll().subscribe(function (paged) { _this.usersCollection = paged.listElements; _this.page = paged; })];
+                    case 0: return [4 /*yield*/, this.userService.getAll().subscribe(function (paged) {
+                            _this.usersCollection = paged.listElements;
+                            _this.page = paged;
+                        })];
                     case 1:
                         _a.sent();
                         this.initPaginated();
@@ -82,14 +85,19 @@ var ListComponent = /** @class */ (function (_super) {
     };
     ListComponent.prototype.deleteUser = function (id) {
         var _this = this;
-        var user = this.usersCollection.find(function (x) { return x.userId === id; });
-        if (!user) {
-            return;
+        var r = confirm('Estas seguro de Borrar el usuario?');
+        if (r) {
+            var user = this.usersCollection.find(function (x) { return x.userId === id; });
+            if (!user) {
+                return;
+            }
+            user.isDeleting = true;
+            this.userService["delete"](id)
+                .pipe(operators_1.first())
+                .subscribe(function () {
+                return (_this.usersCollection = _this.usersCollection.filter(function (x) { return x.userId !== id; }));
+            });
         }
-        user.isDeleting = true;
-        this.userService["delete"](id)
-            .pipe(operators_1.first())
-            .subscribe(function () { return _this.usersCollection = _this.usersCollection.filter(function (x) { return x.userId !== id; }); });
     };
     ListComponent.prototype.getPage = function (pageNumber) {
         return __awaiter(this, void 0, void 0, function () {
@@ -101,7 +109,10 @@ var ListComponent = /** @class */ (function (_super) {
                         _a.trys.push([0, 2, , 3]);
                         this.actualpage = pageNumber;
                         this.calculatePage();
-                        return [4 /*yield*/, this.userService.getAll().subscribe(function (paged) { _this.usersCollection = paged.listElements; _this.page = paged; })];
+                        return [4 /*yield*/, this.userService.getAll().subscribe(function (paged) {
+                                _this.usersCollection = paged.listElements;
+                                _this.page = paged;
+                            })];
                     case 1:
                         _a.sent();
                         if (this.page) {

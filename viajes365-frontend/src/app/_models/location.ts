@@ -1,4 +1,5 @@
 ﻿import { Attraction } from './attraction';
+import { City } from './city';
 import { Photo } from './photo';
 import { Tour } from './tour';
 
@@ -10,6 +11,7 @@ export class Location {
   fullAddress!: string;
   note!: string;
   cityId!: number;
+  city!: City;
   tours!: Tour[];
   attractions!: Attraction[];
   photos!: Photo[];

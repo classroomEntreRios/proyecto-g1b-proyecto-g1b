@@ -30,7 +30,7 @@ export class ChatLoginComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.formBuilder.group({
       nick: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
     });
   }
 

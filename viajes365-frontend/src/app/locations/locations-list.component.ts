@@ -9,12 +9,14 @@ import { LocationService } from '@app/_services/location.service';
 import localeEs from '@angular/common/locales/es';
 import { first } from 'rxjs/operators';
 
-
 @Component({
   selector: 'app-locations-list',
-  templateUrl: './locations-list.component.html'
+  templateUrl: './locations-list.component.html',
 })
-export class LocationsListComponent extends PaginationControls implements OnInit {
+export class LocationsListComponent
+  extends PaginationControls
+  implements OnInit
+{
   page!: PaginatedResponse<Location>;
   locationsCollection!: Location[];
   currentUser!: User;
@@ -38,22 +40,26 @@ export class LocationsListComponent extends PaginationControls implements OnInit
     this.initPaginated();
   }
 
-  
   deleteLocation(id: number): void {
-    const location = this.locationsCollection.find((x) => x.locationId === id);
-    if (!location) {
-      return;
-    }
-    location.isDeleting = true;
-    this.locationService
-      .delete(id)
-      .pipe(first())
-      .subscribe(
-        () =>
-        (this.locationsCollection = this.locationsCollection.filter(
-          (x) => x.locationId !== id
-        ))
+    var r = confirm('Estas seguro de borrar la locación?');
+    if (r) {
+      const location = this.locationsCollection.find(
+        (x) => x.locationId === id
       );
+      if (!location) {
+        return;
+      }
+      location.isDeleting = true;
+      this.locationService
+        .delete(id)
+        .pipe(first())
+        .subscribe(
+          () =>
+            (this.locationsCollection = this.locationsCollection.filter(
+              (x) => x.locationId !== id
+            ))
+        );
+    }
   }
 
   async getPage(pageNumber: number) {
@@ -71,5 +77,4 @@ export class LocationsListComponent extends PaginationControls implements OnInit
       // this.notificationService.showDialog(DialogTypesEnum.Error, error.message);
     }
   }
-
 }
