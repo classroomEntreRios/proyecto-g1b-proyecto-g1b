@@ -14,6 +14,8 @@ export class ChatEditorComponent implements OnInit, OnDestroy {
   currentUser!: User;
   subscription!: Subscription;
   message = '';
+  loading = false;
+  isAdmin = false;
 
   constructor(
     private accountService: AccountService,
@@ -32,7 +34,9 @@ export class ChatEditorComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.isAdmin = this.currentUser.role.roleName == 'Administrador';
+  }
 
   ngOnDestroy() {
     // unsubscribe to ensure no memory leaks
@@ -40,22 +44,30 @@ export class ChatEditorComponent implements OnInit, OnDestroy {
   }
 
   async sendMessage(): Promise<void> {
+    this.loading = true;
     if (this.message.length > 0) {
-      console.log(this.message);
       var chatComment = new Chatcomment();
       chatComment.chatId = this.currentChat.chatId;
       chatComment.message = this.message;
       chatComment.userId = this.currentUser.userId;
-      chatComment.isResponse = true;
+
       chatComment.active = true;
-      chatComment.status =
-        'respuesta de ' +
-        this.currentUser.firstName +
-        ', ' +
-        this.currentUser.lastName +
-        ' el ';
+      if (this.isAdmin) {
+        chatComment.isResponse = true;
+        chatComment.status =
+          'respuesta de ' +
+          this.currentUser.firstName +
+          ', ' +
+          this.currentUser.lastName +
+          ' el ';
+      } else {
+        chatComment.isResponse = false;
+        chatComment.status = 'Consulta pendiente';
+      }
+
       await this.chatCommentsService.create(chatComment).subscribe(
         (res) => {
+          this.loading = false;
           this.message = '';
           this.chatService.setActualChat(this.currentChat);
         },

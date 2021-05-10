@@ -1,4 +1,4 @@
-import { LOCALE_ID, NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, LOCALE_ID, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AttractionsListComponent } from './attractions-list.component';
 import { AttractionsEditorComponent } from './attractions-editor.component';
@@ -7,10 +7,10 @@ import { ForumRoutingModule } from '@app/forum/forum-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { EditorModule, TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 import { AttractionsRoutingModule } from './attractions-routing.module';
-import { UnderConstructionComponent } from '@app/_components/underconstruction.component';
+import { UnderConstructionModule } from '@app/under-construction/under-construction.module';
 
 @NgModule({
-  declarations: [AttractionsListComponent, AttractionsEditorComponent, UnderConstructionComponent],
+  declarations: [AttractionsListComponent, AttractionsEditorComponent],
   imports: [
     CommonModule,
     AttractionsRoutingModule,
@@ -18,8 +18,10 @@ import { UnderConstructionComponent } from '@app/_components/underconstruction.c
     ForumRoutingModule,
     NgxPaginationModule,
     FormsModule,
-    EditorModule
+    EditorModule,
+    UnderConstructionModule,
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: LOCALE_ID,
@@ -29,6 +31,6 @@ import { UnderConstructionComponent } from '@app/_components/underconstruction.c
       provide: TINYMCE_SCRIPT_SRC,
       useValue: 'tinymce/tinymce.min.js', // minified tinymce
     },
-  ]
+  ],
 })
-export class AttractionsModule { }
+export class AttractionsModule {}
